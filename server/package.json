@@ -53,7 +53,10 @@
   },
   "dependencies": {
     "@adonisjs/core": "^5.7.4",
+    "@adonisjs/lucid": "^17.2.0",
     "@adonisjs/repl": "^3.1.10",
+    "@vscode/sqlite3": "^5.0.8",
+    "luxon": "^2.3.1",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21"
