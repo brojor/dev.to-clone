@@ -54,6 +54,7 @@
   "dependencies": {
     "@adonisjs/core": "^5.7.4",
     "@adonisjs/lucid": "^17.2.0",
+    "@adonisjs/lucid-slugify": "^2.1.5",
     "@adonisjs/repl": "^3.1.10",
     "@vscode/sqlite3": "^5.0.8",
     "luxon": "^2.3.1",

@@ -21,7 +21,8 @@
     "./providers/AppProvider",
     "@adonisjs/core",
     "@japa/preset-adonis/TestsProvider",
-    "@adonisjs/lucid"
+    "@adonisjs/lucid",
+    "@adonisjs/lucid-slugify"
   ],
   "aceProviders": [
     "@adonisjs/repl"
