@@ -15,16 +15,17 @@ export default defineComponent({
 <style scoped>
 main {
   border: 1px solid rgb(4, 190, 4);
+  margin: 0 1rem 0 1rem;
   flex-grow: 1;
 }
 
 .sidebar-left {
-  width: 240px;
+  width: 4rem;
   border: 1px solid sandybrown;
 }
 
 .sidebar-right {
-  width: 325px;
+  width: 345px;
   border: 1px solid sandybrown;
 }
 </style>
