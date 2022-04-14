@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
-  <header></header>
+  <header class="main-header"></header>
   <div class="app-container">
     <RouterView />
   </div>
@@ -12,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router';
 
 <style>
 @import '@/assets/base.css';
-header {
+.main-header {
   height: 56px;
   border: 1px solid red;
 }

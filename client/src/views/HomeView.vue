@@ -8,7 +8,7 @@ export default defineComponent({
 
 <template>
   <aside class="sidebar-left"></aside>
-  <main><h1></h1></main>
+  <main></main>
   <aside class="sidebar-right"></aside>
 </template>
 
