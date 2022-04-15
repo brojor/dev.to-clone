@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import content from '../markdown-text';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
+import { computed, onMounted, ref } from 'vue';
+import axios from 'axios';
 
 const md = new MarkdownIt({
   highlight: function (str, lang) {
@@ -15,43 +16,59 @@ const md = new MarkdownIt({
   },
 });
 
-const articleBody = md.render(content);
-// import content from './test-export';
+const post = ref<any>({});
 
-console.log({ articleBody });
+const articleBody = computed(() => {
+  if (post.value.body) {
+    return md.render(post.value.body);
+  }
+  return '';
+});
 
-const imageUrl =
-  'https://res.cloudinary.com/practicaldev/image/fetch/s--8XoR-zPX--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sb1yxfht2b1myzo64lqo.png';
+onMounted(async () => {
+  const { data } = await axios.get('http://localhost:3333');
+  post.value = data[0];
+});
 </script>
 
 <template>
-  <aside class="sidebar-left"></aside>
-  <main>
-    <div class="article-wrapper">
-      <article>
-        <header class="article-header">
-          <figure>
-            <img :src="imageUrl" alt="article cover image" />
-          </figure>
-          <div class="header-meta">
-            <div class="autor-info"></div>
-            <h1>
-              Why Use GitHub Copilot And Copilot Labs: Practical Use Cases for
-              the AI Pair Programmer
-            </h1>
-            <div class="tags"></div>
+  <div class="index-container">
+    <aside class="sidebar-left"></aside>
+    <main>
+      <div class="article-wrapper">
+        <article>
+          <header class="article-header">
+            <figure>
+              <img :src="post.image" alt="article cover image" />
+            </figure>
+            <div class="header-meta">
+              <div class="autor-info"></div>
+              <h1>
+                {{ post.title }}
+              </h1>
+              <div class="tags"></div>
+            </div>
+          </header>
+          <div class="article-body">
+            <span v-html="articleBody"></span>
           </div>
-        </header>
-        <div class="article-body">
-          <span v-html="articleBody"></span>
-        </div>
-      </article>
-    </div>
-  </main>
-  <aside class="sidebar-right"></aside>
+        </article>
+      </div>
+    </main>
+    <aside class="sidebar-right"></aside>
+  </div>
 </template>
 
 <style scoped>
+.index-container {
+  display: grid;
+  column-gap: 1rem;
+  grid-template-columns: 4rem minmax(0, 7fr) 3fr;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 90vh;
+}
 .article-body {
   padding: 2rem 4rem;
   overflow-wrap: break-word;
@@ -59,8 +76,6 @@ const imageUrl =
   overflow: hidden;
   font-size: 1.25rem;
   line-height: 1.875rem;
-}
-header {
 }
 
 figure {

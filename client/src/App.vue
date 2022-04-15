@@ -4,9 +4,7 @@ import { RouterLink, RouterView } from 'vue-router';
 
 <template>
   <header class="main-header"></header>
-  <div class="index-container">
-    <RouterView />
-  </div>
+  <RouterView />
   <footer></footer>
 </template>
 
@@ -19,16 +17,6 @@ import { RouterLink, RouterView } from 'vue-router';
 .main-header {
   height: 56px;
   border: 1px solid red;
-}
-
-.index-container {
-  display: grid;
-  column-gap: 1rem;
-  grid-template-columns: 4rem minmax(0, 7fr) 3fr;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1rem;
-  min-height: 90vh;
 }
 
 footer {
