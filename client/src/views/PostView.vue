@@ -1,7 +1,27 @@
 <script setup lang="ts">
+import content from '../markdown-text';
+import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js';
+
+const md = new MarkdownIt({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang }).value;
+      } catch (__) {}
+    }
+
+    return ''; // use external default escaping
+  },
+});
+
+const articleBody = md.render(content);
+// import content from './test-export';
+
+console.log({ articleBody });
+
 const imageUrl =
   'https://res.cloudinary.com/practicaldev/image/fetch/s--8XoR-zPX--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sb1yxfht2b1myzo64lqo.png';
-
 </script>
 
 <template>
@@ -22,7 +42,9 @@ const imageUrl =
             <div class="tags"></div>
           </div>
         </header>
-        <div class="article-body"></div>
+        <div class="article-body">
+          <span v-html="articleBody"></span>
+        </div>
       </article>
     </div>
   </main>
@@ -30,6 +52,14 @@ const imageUrl =
 </template>
 
 <style scoped>
+.article-body {
+  padding: 2rem 4rem;
+  overflow-wrap: break-word;
+  display: block;
+  overflow: hidden;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+}
 header {
 }
 
@@ -52,24 +82,16 @@ img {
 
 main {
   border: 1px solid rgb(4, 190, 4);
-  margin: 0 1rem 0 1rem;
-  flex-grow: 1;
+  background-color: rgb(23, 23, 23);
 }
 
 .header-meta {
-  padding: 1.5rem 2rem;
+  padding: 2em 4rem;
 }
 
 .autor-info {
   height: 62px;
   border: 1px dashed hotpink;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 1.25;
-  margin-bottom: 0.5rem;
 }
 
 .tags {
@@ -78,12 +100,10 @@ h1 {
 }
 
 .sidebar-left {
-  min-width: 4rem;
   border: 1px solid sandybrown;
 }
 
 .sidebar-right {
-  min-width: 345px;
   border: 1px solid sandybrown;
 }
 </style>

@@ -4,11 +4,11 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
-  --vt-c-black: #181818;
+  --vt-c-black: #000000;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
-  --vt-c-indigo: #2c3e50;
+  --vt-c-indigo: #2a3641;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
@@ -18,7 +18,7 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --vt-c-text-dark-2: rgb(250,250,250);
 }
 
 /* semantic color variables for this project */
@@ -71,4 +71,61 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  margin: 0;
+  margin-bottom: 1.25rem;
+  overflow-wrap: break-word;
+}
+strong {
+  font-weight: 700;
+}
+
+a {
+  color: rgb(129, 140, 248);
+  font-weight: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+pre {
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  overflow: scroll;
+}
+
+code {
+  font-size: 1rem;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono',
+    Menlo, Consolas, monospace;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 0.83rem 0;
+}
+
+h3 {
+  font-size: 1.55rem;
+  margin: 0.625rem 0;
+  font-weight: 700;
+  line-height: 1.95rem;
 }

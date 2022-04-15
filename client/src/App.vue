@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router';
 
 <template>
   <header class="main-header"></header>
-  <div class="app-container">
+  <div class="index-container">
     <RouterView />
   </div>
   <footer></footer>
@@ -12,14 +12,21 @@ import { RouterLink, RouterView } from 'vue-router';
 
 <style>
 @import '@/assets/base.css';
+#app {
+  width: 100vw;
+}
+
 .main-header {
   height: 56px;
   border: 1px solid red;
 }
 
-.app-container {
-  display: flex;
-  margin: 0 50px 0 50px;
+.index-container {
+  display: grid;
+  column-gap: 1rem;
+  grid-template-columns: 4rem minmax(0, 7fr) 3fr;
+  max-width: 1280px;
+  margin: 0 auto;
   padding: 1rem;
   min-height: 90vh;
 }
