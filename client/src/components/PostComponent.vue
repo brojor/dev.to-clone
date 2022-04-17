@@ -24,11 +24,11 @@
         <div class="footer">
           <div class="details">
             <a href="">
-              <svg width="24" height="24"></svg>
+              <HeartIcon class="icon" />
               <span>7 Reactions</span>
             </a>
             <a href="">
-              <svg width="24" height="24"></svg>
+              <CommentIcon class="icon" />
               <span>6 Comments</span>
             </a>
           </div>
@@ -43,6 +43,8 @@
 </template>
 
 <script setup lang="ts">
+import HeartIcon from './icons/HeartIcon.vue';
+import CommentIcon from './icons/CommentIcon.vue';
 defineProps<{
   title: string;
   user: { name: string; avatar: string };
@@ -52,6 +54,10 @@ defineProps<{
 </script>
 
 <style>
+.icon {
+  margin-right: 0.25rem;
+  fill: #d6d6d7;
+}
 article {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
   cursor: pointer;
@@ -146,6 +152,7 @@ article {
 }
 .details a {
   display: flex;
+  align-items: center;
   text-decoration: none;
   padding: 4px 12px 4px 8px;
   border-radius: 6px;
