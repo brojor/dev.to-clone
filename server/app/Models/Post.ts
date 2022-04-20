@@ -1,6 +1,14 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
+import Tag from './Tag'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -17,6 +25,17 @@ export default class Post extends BaseModel {
 
   @column()
   public body: string
+
+  // @belongsTo(() => Tag, {
+  //   localKey: 'id',
+  // })
+  // public tag: BelongsTo<typeof Tag>
+
+  @manyToMany(() => Tag, {
+    pivotTable: 'post_tags', // nemusel bych zadávat, pokud by se moje pivotTable jmenovala post_tag [singular_singular]
+    pivotColumns: ['tag_id'],
+  })
+  public tags: ManyToMany<typeof Tag>
 
   @column()
   @slugify({

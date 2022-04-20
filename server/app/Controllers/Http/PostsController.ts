@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Post from 'App/Models/Post'
+import Tags from 'Database/migrations/1650179644652_tags'
 
 export default class PostsController {
   public async store({ request, response }: HttpContextContract) {
@@ -11,9 +12,18 @@ export default class PostsController {
   }
 
   public async show({ response }: HttpContextContract) {
-    const posts = await Post.all()
-
-    response.status(200)
-    return posts
+    // const posts = await Post.all()
+    const posts = await Post.query().preload('tags')
+    return posts.map((post) =>
+      post.serialize({
+        relations: {
+          tags: {
+            fields: {
+              pick: ['name'],
+            },
+          },
+        },
+      })
+    )
   }
 }

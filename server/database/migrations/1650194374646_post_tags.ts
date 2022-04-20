@@ -1,17 +1,14 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Posts extends BaseSchema {
-  protected tableName = 'posts'
+export default class PostTags extends BaseSchema {
+  protected tableName = 'post_tags'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('title')
-      table.string('image')
-      table.string('author')
-      table.string('body')
-      table.specificType('stringarray', 'text ARRAY')
-      table.string('slug')
+      table.integer('post_id').unsigned().references('id').inTable('posts')
+      table.integer('tag_id').unsigned().references('id').inTable('tags')
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
