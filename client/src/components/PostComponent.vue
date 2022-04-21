@@ -13,7 +13,7 @@
         </div>
         <div>
           <div class="author-name">{{ author.name }}</div>
-          <div class="publish-date">{{ publishedAt }}</div>
+          <div class="publish-date">{{ date }}</div>
         </div>
       </div>
       <div class="post-bottom">
@@ -48,6 +48,7 @@
 import HeartIcon from './icons/HeartIcon.vue';
 import CommentIcon from './icons/CommentIcon.vue';
 import { computed } from '@vue/runtime-core';
+import { DateTime } from 'luxon';
 
 type Tag = {
   name: string;
@@ -76,9 +77,22 @@ const {
 } = defineProps<{
   title: string;
   author: Author;
-  published_at: Date;
+  published_at: string;
   tags: Tag[];
 }>();
+
+const date = computed(() => {
+  const currentYear = DateTime.now().year;
+
+  const dateObj = DateTime.fromISO(publishedAt);
+  const part1 = dateObj.toFormat('LLL dd');
+  const part2 =
+    dateObj.year < currentYear
+      ? `'${dateObj.year.toString().slice(-2)}`
+      : `(${dateObj.toRelative({ locale: 'en' })})`;
+
+  return `${part1} ${part2}`;
+});
 </script>
 
 <style>
