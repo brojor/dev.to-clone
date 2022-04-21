@@ -8,10 +8,6 @@ export default class PostTags extends BaseSchema {
       table.increments('id')
       table.integer('post_id').unsigned().references('id').inTable('posts')
       table.integer('tag_id').unsigned().references('id').inTable('tags')
-
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

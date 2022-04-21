@@ -9,6 +9,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
 import Tag from './Tag'
+import User from './User'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -21,15 +22,13 @@ export default class Post extends BaseModel {
   public image: string
 
   @column()
-  public author: string
+  public userId: number
+
+  @belongsTo(() => User)
+  public author: BelongsTo<typeof User>
 
   @column()
   public body: string
-
-  // @belongsTo(() => Tag, {
-  //   localKey: 'id',
-  // })
-  // public tag: BelongsTo<typeof Tag>
 
   @manyToMany(() => Tag, {
     pivotTable: 'post_tags', // nemusel bych zadávat, pokud by se moje pivotTable jmenovala post_tag [singular_singular]
@@ -43,6 +42,9 @@ export default class Post extends BaseModel {
     fields: ['title'],
   })
   public slug: string
+
+  @column.dateTime()
+  public publishedAt: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

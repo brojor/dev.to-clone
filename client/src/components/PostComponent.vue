@@ -5,19 +5,21 @@
       <div class="post-top">
         <div class="author-picture">
           <a href=""
-            ><img class="avatar-image" :src="avatar" alt="User avatar image"
+            ><img
+              class="avatar-image"
+              :src="author.profile_image"
+              alt="User avatar image"
           /></a>
         </div>
         <div>
-          <!-- <div class="author-name">{{ user.name }}</div> -->
-          <div class="author-name">{{ author }}</div>
-          <div class="publish-date">{{ publishDate }}</div>
+          <div class="author-name">{{ author.name }}</div>
+          <div class="publish-date">{{ publishedAt }}</div>
         </div>
       </div>
       <div class="post-bottom">
         <h3 class="title">{{ title }}</h3>
         <div class="tags">
-          <a v-for="tag in tagsArr" :key="tag" class="tag" href=""
+          <a v-for="(tag, index) in tags" :key="index" class="tag" href=""
             >#{{ tag }}</a
           >
         </div>
@@ -51,23 +53,32 @@ type Tag = {
   name: string;
 };
 
+type Author = {
+  id: number;
+  name: string;
+  username: string;
+  twitter_username: string;
+  github_username: string;
+  summary: string;
+  location: string;
+  website_url: string;
+  profile_image: string;
+  joined_at: string;
+  updated_at: string;
+};
+
 // eslint-disable-next-line vue/no-setup-props-destructure
 const {
   title,
-  avatar = 'https://res.cloudinary.com/practicaldev/image/fetch/s--8VhzF4VG--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/838813/d8e232b0-bea4-4596-accc-698177662588.jpeg',
-  publishDate = new Date(),
+  published_at: publishedAt,
   author = 'John Doe',
   tags,
 } = defineProps<{
   title: string;
-  // user: { name: string; avatar: string };
-  author: string;
-  avatar?: string;
-  publishDate?: Date;
+  author: Author;
+  published_at: Date;
   tags: Tag[];
 }>();
-
-const tagsArr = computed(() => tags.map(({ name }) => name));
 </script>
 
 <style>
