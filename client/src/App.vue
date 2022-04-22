@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import MainHeader from './components/MainHeader.vue';
 </script>
 
 <template>
-  <header class="main-header"></header>
-  <RouterView />
+  <MainHeader />
+  <RouterView class="main-view" />
   <footer></footer>
 </template>
 
 <style>
 @import '@/assets/base.css';
+
 #app {
   width: 100vw;
+  padding-top: 56px;
 }
-
-.main-header {
-  height: 56px;
-  border: 1px solid red;
+.main-view {
+  margin-top: 6rem;
 }
 
 footer {
