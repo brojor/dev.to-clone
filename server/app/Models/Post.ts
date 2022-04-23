@@ -4,12 +4,15 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  HasMany,
+  hasMany,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
 import Tag from './Tag'
 import User from './User'
+import Comment from './Comment'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -42,6 +45,9 @@ export default class Post extends BaseModel {
     fields: ['title'],
   })
   public slug: string
+
+  @hasMany(() => Comment)
+  public comments: HasMany<typeof Comment>
 
   @column.dateTime()
   public publishedAt: DateTime

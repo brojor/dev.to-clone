@@ -27,7 +27,8 @@ export default class PostsController {
   }
 
   public async show() {
-    const posts = await Post.query().preload('tags').preload('author')
+    const posts = await Post.query().preload('tags').preload('author').preload('comments')
+
     return posts
       .map((post) =>
         post.serialize({
@@ -37,6 +38,11 @@ export default class PostsController {
                 pick: ['name'],
               },
             },
+            // comments: {
+            //   fields: {
+            //     pick: ['body'],
+            //   },
+            // },
           },
         })
       )
