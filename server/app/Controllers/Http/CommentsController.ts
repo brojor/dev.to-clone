@@ -5,9 +5,9 @@ import User from 'App/Models/User'
 
 export default class CommentsController {
   public async store({ request, response }: HttpContextContract) {
-    const { user, body, createdAt } = request.body()
-    const postId = 1
-    const post = await Post.findOrFail(postId)
+    const { user, body, createdAt, title } = request.body()
+
+    const post = await Post.findByOrFail('title', title)
 
     const dbUser = await User.firstOrCreate({ username: user.username }, user)
     const comment = await Comment.create({ body, createdAt })
@@ -16,6 +16,6 @@ export default class CommentsController {
     await comment.related('author').associate(dbUser)
 
     response.status(201)
-    return comment
+    return post
   }
 }

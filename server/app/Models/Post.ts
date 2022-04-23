@@ -15,6 +15,11 @@ import User from './User'
 import Comment from './Comment'
 
 export default class Post extends BaseModel {
+  /**
+   * Serialize the `$extras` object as it is
+   */
+  public serializeExtras = true
+
   @column({ isPrimary: true })
   public id: number
 

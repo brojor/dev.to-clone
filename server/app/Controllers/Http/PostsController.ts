@@ -27,7 +27,11 @@ export default class PostsController {
   }
 
   public async show() {
-    const posts = await Post.query().preload('tags').preload('author').preload('comments')
+    const posts = await Post.query()
+      .preload('tags')
+      .preload('author')
+      // .preload('comments')
+      .withCount('comments')
 
     return posts
       .map((post) =>
