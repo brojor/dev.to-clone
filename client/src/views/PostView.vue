@@ -4,6 +4,7 @@ import hljs from 'highlight.js';
 import { computed, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { DateTime } from 'luxon';
+import PrefixedTag from '../components/PrefixedTag.vue';
 
 const md = new MarkdownIt({
   highlight: function (str, lang) {
@@ -44,6 +45,8 @@ onMounted(async () => {
   const { data } = await axios.get('http://localhost:3333');
   post.value = data[0];
 });
+
+const color = [0, 131, 53];
 </script>
 
 <template>
@@ -80,7 +83,13 @@ onMounted(async () => {
               <h1>
                 {{ post.title }}
               </h1>
-              <div class="tags"></div>
+              <div class="tags">
+                <PrefixedTag
+                  v-for="(tag, index) in post.tags"
+                  :key="index"
+                  :tag="tag"
+                />
+              </div>
             </div>
           </header>
           <div class="article-body">
@@ -154,7 +163,7 @@ main {
 }
 
 .header-meta {
-  padding: 2em 4rem;
+  padding: 2rem 4rem 0 4rem;
 }
 
 .autor-info {
@@ -163,8 +172,7 @@ main {
 }
 
 .tags {
-  height: 2rem;
-  border: 1px dashed khaki;
+  display: flex;
 }
 
 .sidebar-left {
