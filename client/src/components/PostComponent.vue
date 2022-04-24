@@ -1,6 +1,5 @@
 <template>
-  <article>
-    <a href=""></a>
+  <article @click="redirectMe">
     <div class="post">
       <div class="post-top">
         <div class="author-picture">
@@ -49,6 +48,7 @@ import HeartIcon from './icons/HeartIcon.vue';
 import CommentIcon from './icons/CommentIcon.vue';
 import { computed } from '@vue/runtime-core';
 import { DateTime } from 'luxon';
+import { useRouter } from 'vue-router';
 
 type Tag = {
   name: string;
@@ -76,14 +76,16 @@ type Author = {
 const {
   title,
   published_at: publishedAt,
-  author = 'John Doe',
+  author,
   tags,
+  slug,
 } = defineProps<{
   title: string;
   author: Author;
   published_at: string;
   tags: Tag[];
   meta: Meta;
+  slug: string;
 }>();
 
 const randomNum = Math.floor(Math.random() * 100);
@@ -100,9 +102,14 @@ const date = computed(() => {
 
   return `${part1} ${part2}`;
 });
+const router = useRouter();
+
+const redirectMe = () => {
+  router.push({ path: `/${author.username}/${slug}` });
+};
 </script>
 
-<style>
+<style scoped>
 .icon {
   margin-right: 0.25rem;
   fill: #d6d6d7;
@@ -113,6 +120,7 @@ article {
   margin-bottom: 0.5rem;
   border-radius: 6px;
   background-color: rgb(23, 23, 23);
+  position: relative;
 }
 .post {
   padding: 1.25rem;

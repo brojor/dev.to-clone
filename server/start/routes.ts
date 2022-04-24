@@ -23,7 +23,9 @@ import Route from '@ioc:Adonis/Core/Route'
 // Route.get('/', async () => {
 //   return { hello: 'world' }
 // })
-Route.get('/', 'PostsController.show')
+Route.get('/', 'PostsController.index')
+
+Route.get('/:author/:slug', 'PostsController.show')
 
 Route.post('/new', 'PostsController.store')
 

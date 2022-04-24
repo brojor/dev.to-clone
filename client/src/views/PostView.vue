@@ -5,6 +5,7 @@ import { computed, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { DateTime } from 'luxon';
 import PrefixedTag from '../components/PrefixedTag.vue';
+import { useRoute } from 'vue-router';
 
 const md = new MarkdownIt({
   highlight: function (str, lang) {
@@ -41,12 +42,18 @@ const date1 = computed(() => {
   return `${part1} • ${part2}`;
 });
 
+const {
+  params: { user, slug },
+} = useRoute();
+
 onMounted(async () => {
-  const { data } = await axios.get('http://localhost:3333');
-  post.value = data[0];
+  const { data } = await axios.get(`http://localhost:3333/${user}/${slug}`);
+  post.value = data;
 });
 
-const color = [0, 131, 53];
+const tags = computed(() => {
+  return post.value.tags.reduce((arr, { name }) => [...arr, name], []);
+});
 </script>
 
 <template>
@@ -76,7 +83,7 @@ const color = [0, 131, 53];
                   </a>
                 </div>
                 <div class="name-and-date">
-                  <a href=""> {{ post.author.name }}</a>
+                  <a href="">{{ post.author.name }}</a>
                   <p>{{ date1 }}</p>
                 </div>
               </div>
@@ -85,7 +92,7 @@ const color = [0, 131, 53];
               </h1>
               <div class="tags">
                 <PrefixedTag
-                  v-for="(tag, index) in post.tags"
+                  v-for="(tag, index) in tags"
                   :key="index"
                   :tag="tag"
                 />
