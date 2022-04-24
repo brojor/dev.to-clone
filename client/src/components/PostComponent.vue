@@ -27,11 +27,11 @@
           <div class="details">
             <a href="">
               <HeartIcon class="icon" />
-              <span>7 Reactions</span>
+              <span>{{ randomNum }} Reactions</span>
             </a>
             <a href="">
               <CommentIcon class="icon" />
-              <span>6 Comments</span>
+              <span>{{ meta.comments_count }} Comments</span>
             </a>
           </div>
           <div class="save">
@@ -52,6 +52,10 @@ import { DateTime } from 'luxon';
 
 type Tag = {
   name: string;
+};
+
+type Meta = {
+  comments_count: number;
 };
 
 type Author = {
@@ -79,7 +83,10 @@ const {
   author: Author;
   published_at: string;
   tags: Tag[];
+  meta: Meta;
 }>();
+
+const randomNum = Math.floor(Math.random() * 100);
 
 const date = computed(() => {
   const currentYear = DateTime.now().year;

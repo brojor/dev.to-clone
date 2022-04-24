@@ -3,6 +3,7 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import { computed, onMounted, ref } from 'vue';
 import axios from 'axios';
+import { DateTime } from 'luxon';
 
 const md = new MarkdownIt({
   highlight: function (str, lang) {
@@ -25,6 +26,20 @@ const articleBody = computed(() => {
   return '';
 });
 
+const date1 = computed(() => {
+  const published = DateTime.fromISO(post.value.published_at);
+  const updated = DateTime.fromISO(post.value.updated_at);
+  const now = DateTime.now();
+  const format = published.year === now.year ? 'dd. L' : 'dd. L. yyyy';
+
+  const part1 = `Posted on ${published.toFormat(format)}`;
+  const part2 = `Updated on ${updated.toFormat(format)}`;
+  if (published.equals(updated)) {
+    return part1;
+  }
+  return `${part1} • ${part2}`;
+});
+
 onMounted(async () => {
   const { data } = await axios.get('http://localhost:3333');
   post.value = data[0];
@@ -36,13 +51,32 @@ onMounted(async () => {
     <aside class="sidebar-left"></aside>
     <main>
       <div class="article-wrapper">
-        <article>
+        <article v-if="post.title">
           <header class="article-header">
             <figure>
-              <img :src="post.image" alt="article cover image" />
+              <img
+                :src="post.image"
+                alt="article cover image"
+                class="cover-image"
+              />
             </figure>
             <div class="header-meta">
-              <div class="autor-info"></div>
+              <div class="autor-info">
+                <div class="avatar-image">
+                  <a href="">
+                    <img
+                      width="40"
+                      height="40"
+                      :src="post.author.profile_image"
+                      alt="Author avatar image"
+                    />
+                  </a>
+                </div>
+                <div class="name-and-date">
+                  <a href=""> {{ post.author.name }}</a>
+                  <p>{{ date1 }}</p>
+                </div>
+              </div>
               <h1>
                 {{ post.title }}
               </h1>
@@ -60,6 +94,25 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.avatar-image img {
+  border-radius: 9999px;
+}
+.name-and-date {
+  padding-left: 0.75rem;
+}
+.name-and-date a {
+  text-decoration: none;
+  color: rgb(212, 212, 212);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+}
+.name-and-date p {
+  color: #a3a3a3;
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  margin: 0;
+}
 .index-container {
   display: grid;
   column-gap: 1rem;
@@ -84,7 +137,7 @@ figure {
   padding-top: 42%;
 }
 
-img {
+.cover-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -105,8 +158,8 @@ main {
 }
 
 .autor-info {
-  height: 62px;
-  border: 1px dashed hotpink;
+  display: flex;
+  margin-bottom: 1.25rem;
 }
 
 .tags {
