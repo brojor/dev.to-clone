@@ -45,6 +45,8 @@ import SearchIcon from './icons/SearchIcon.vue';
 
   background-color: rgb(23, 23, 23);
   box-shadow: rgb(0, 0, 0) 0px 1px 1px 0px;
+
+  z-index: 1;
 }
 
 .header-container {
