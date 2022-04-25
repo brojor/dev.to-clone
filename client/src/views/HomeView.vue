@@ -12,8 +12,6 @@ onMounted(async () => {
   const { data } = await axios.get('http://localhost:3333');
   posts.value = data;
 });
-
-
 </script>
 
 <template>
@@ -22,7 +20,18 @@ onMounted(async () => {
       <MainNav />
     </aside>
     <main>
-      <PostComponent v-for="post in posts" :key="post.id" v-bind="post" />
+      <PostComponent
+        v-for="post in posts"
+        :key="post.id"
+        v-bind="{
+          title: post.title,
+          publishedAt: post.published_at,
+          tags: post.tags,
+          slug: post.slug,
+          author: post.author,
+          meta: post.meta,
+        }"
+      />
     </main>
     <aside class="sidebar-right"></aside>
   </div>

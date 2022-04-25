@@ -73,16 +73,10 @@ type Author = {
 };
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-const {
-  title,
-  published_at: publishedAt,
-  author,
-  tags,
-  slug,
-} = defineProps<{
+const { title, publishedAt, author, tags, slug } = defineProps<{
   title: string;
   author: Author;
-  published_at: string;
+  publishedAt: string;
   tags: Tag[];
   meta: Meta;
   slug: string;
