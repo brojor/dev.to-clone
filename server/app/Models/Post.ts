@@ -13,6 +13,7 @@ import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
 import Tag from './Tag'
 import User from './User'
 import Comment from './Comment'
+import Reaction from './Reaction'
 
 export default class Post extends BaseModel {
   /**
@@ -53,6 +54,9 @@ export default class Post extends BaseModel {
 
   @hasMany(() => Comment)
   public comments: HasMany<typeof Comment>
+
+  @hasMany(() => Reaction)
+  public reactions: HasMany<typeof Reaction>
 
   @column.dateTime()
   public publishedAt: DateTime
