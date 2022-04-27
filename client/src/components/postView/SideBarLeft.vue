@@ -2,9 +2,17 @@
   <aside class="sidebar-left">
     <div class="article-actions">
       <div class="article-actions-inner">
-        <button v-for="(icon, index) in sideIcons" :key="index">
-          <span class="icon"><component :is="icon" /></span>
-          <span class="meta-count">{{ randomNum() }}</span>
+        <button
+          v-for="(reaction, index) in articleReactionCounts"
+          :key="index"
+          @click="handleClick(reaction.category)"
+        >
+          <span class="icon"
+            ><component
+              :is="components[reaction.category]"
+              :isActive="isUsed(reaction.category)"
+          /></span>
+          <span class="meta-count">{{ reaction.count }}</span>
         </button>
         <button>
           <span class="icon"> <DropDownIcon /></span>
@@ -15,13 +23,113 @@
 </template>
 
 <script setup lang="ts">
-import HeartBig from '../icons/HeartBig.vue';
-import UnicornIcon from '../icons/UnicornIcon.vue';
-import BookmarkIcon from '../icons/BookmarkIcon.vue';
-import DropDownIcon from '../icons/DropDownIcon.vue';
+import HeartIcon from '../icons/reactions/HeartIcon.vue';
+import UnicornIcon from '../icons/reactions/UnicornIcon.vue';
+import BookmarkIcon from '../icons/reactions/BookmarkIcon.vue';
+import DropDownIcon from '../icons/reactions/DropDownIcon.vue';
+import { onMounted, ref } from '@vue/runtime-core';
+import axios from 'axios';
 
-const sideIcons = [HeartBig, UnicornIcon, BookmarkIcon];
+const articleReactionCounts = ref([
+  {
+    category: 'heart',
+    count: 0,
+  },
+  {
+    category: 'unicorn',
+    count: 0,
+  },
+  {
+    category: 'readingList',
+    count: 0,
+  },
+]);
+
+type Reaction = {
+  id: number;
+  user_id: number;
+  post_id: number;
+  category: string;
+  created_at: string;
+  updated_at: string;
+};
+
+const userReactions = ref<Reaction[]>([]);
+
+onMounted(async () => {
+  const { data } = await axios.get(
+    'http://127.0.0.1:3333/reactions?article_id=1'
+  );
+  console.log({ data });
+  articleReactionCounts.value = data.articleReactionCounts;
+  userReactions.value = data.reactions;
+});
+
+const components = {
+  like: HeartIcon,
+  unicorn: UnicornIcon,
+  readinglist: BookmarkIcon,
+};
+
 const randomNum = () => Math.floor(Math.random() * 50);
+
+const isUsed = (category: string) =>
+  userReactions.value.some(
+    (userReaction) => userReaction.category === category
+  );
+
+const removeReaction = (category: string) => {
+  userReactions.value = userReactions.value.filter(
+    (userReaction) => userReaction.category !== category
+  );
+
+  const reaction = articleReactionCounts.value.find(
+    (reaction) => reaction.category === category
+  );
+  reaction && reaction.count--;
+};
+
+const addReaction = (category: string, reaction: Reaction) => {
+  userReactions.value.push(reaction);
+
+  const reactionToAdd = articleReactionCounts.value.find(
+    (reaction) => reaction.category === category
+  );
+  reactionToAdd && reactionToAdd.count++;
+};
+
+const handleClick = (category: string) => {
+  console.log({ category });
+  if (isUsed(category)) {
+    axios
+      .delete('http://127.0.0.1:3333/reactions', {
+        data: {
+          category,
+          postId: 1, //todo: get post id from router
+        },
+      })
+      .then(({ data }) => {
+        if (data.result === 'deleted') {
+          removeReaction(category);
+        } else {
+          throw new Error('Failed to delete reaction');
+        }
+      });
+  } else {
+    axios
+      .post('http://127.0.0.1:3333/reactions', {
+        category,
+        postId: 1, //todo: get post id from router
+      })
+      .then(({ data }) => {
+        if (data.result === 'created') {
+          addReaction(category, data.reaction);
+        } else {
+          throw new Error('Failed to create reaction');
+        }
+      });
+  }
+};
 </script>
 
 <style scoped>
