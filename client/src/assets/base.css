@@ -34,6 +34,18 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  
+}
+
+:root {
+  --reaction-like-color: rgb(239, 68, 68);
+  --reaction-like-bg: rgba(  239, 68, 68, 0.1);
+  --reaction-unicorn-color: rgb(5, 150, 105);
+  --reaction-unicorn-bg: rgba(  5, 150, 105, 0.1);
+  --reaction-readinglist-color: rgb(99, 102, 241);
+  --reaction-readinglist-bg: rgba(  99, 102, 241, 0.1);
+  --button-ghost-color: #d6d6d7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -142,4 +154,8 @@ h3 {
   margin: 0.625rem 0;
   font-weight: 700;
   line-height: 1.95rem;
+}
+
+svg {
+  vertical-align: bottom;
 }

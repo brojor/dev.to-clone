@@ -6,6 +6,8 @@
           v-for="(reaction, index) in articleReactionCounts"
           :key="index"
           @click="handleClick(reaction.category)"
+          :name="reaction.category"
+          :is-active="isUsed(reaction.category)"
         >
           <span class="icon"
             ><component
@@ -148,6 +150,38 @@ const handleClick = (category: string) => {
   align-items: center;
   font-family: inherit;
   color: #bdbdbd;
+  cursor: pointer;
+}
+
+.sidebar-left button:hover {
+  color: #f9f9f9;
+}
+.sidebar-left button[name='like']:hover {
+  --reaction-color: var(--reaction-like-color);
+}
+.sidebar-left button[name='unicorn']:hover {
+  --reaction-color: var(--reaction-unicorn-color);
+}
+.sidebar-left button[name='readinglist']:hover {
+  --reaction-color: var(--reaction-readinglist-color);
+}
+.sidebar-left button[name='like'] {
+  --reaction-color: var(--button-ghost-color);
+}
+.sidebar-left button[name='unicorn'] {
+  --reaction-color: var(--button-ghost-color);
+}
+.sidebar-left button[name='readinglist'] {
+  --reaction-color: var(--button-ghost-color);
+}
+.sidebar-left button[name='like'][is-active='true'] {
+  --reaction-color: var(--reaction-like-color);
+}
+.sidebar-left button[name='unicorn'][is-active='true'] {
+  --reaction-color: var(--reaction-unicorn-color);
+}
+.sidebar-left button[name='readinglist'][is-active='true'] {
+  --reaction-color: var(--reaction-readinglist-color);
 }
 .article-actions {
   padding: 0;
@@ -166,8 +200,28 @@ const handleClick = (category: string) => {
 .meta-count {
   font-size: 0.875rem;
   font-weight: normal;
+
+  line-height: 21px;
+}
+button[is-active='true'] .meta-count {
+  color: var(--reaction-color);
 }
 .sidebar-left button .icon {
   padding: 0.5rem;
+  color: var(--reaction-color);
+  border-radius: 50%;
+}
+.sidebar-left button[name='like']:hover .icon {
+  background-color: var(--reaction-like-bg);
+}
+.sidebar-left button[name='unicorn']:hover .icon {
+  background-color: var(--reaction-unicorn-bg);
+}
+.sidebar-left button[name='readinglist']:hover .icon {
+  background-color: var(--reaction-readinglist-bg);
+}
+.sidebar-left button[is-active='true'] .icon {
+  box-shadow: inset 0 0 0 2px var(--reaction-color);
+  border-radius: 50%;
 }
 </style>
