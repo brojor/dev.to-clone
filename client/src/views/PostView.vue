@@ -4,6 +4,7 @@ import axios from 'axios';
 import MainArticle from '../components/MainArticle.vue';
 import { useRoute } from 'vue-router';
 import SideBarLeft from '../components/postView/SideBarLeft.vue';
+import SideBarRight from '../components/postView/SideBarRight.vue';
 
 export interface Post {
   id: number;
@@ -55,7 +56,7 @@ onMounted(async () => {
   <div class="index-container">
     <SideBarLeft />
     <MainArticle v-bind="post" />
-    <aside class="sidebar-right"></aside>
+    <SideBarRight />
   </div>
 </template>
 
@@ -68,9 +69,5 @@ onMounted(async () => {
   margin: 0 auto;
   padding: 1rem;
   min-height: 90vh;
-}
-
-.sidebar-right {
-  border: 1px solid sandybrown;
 }
 </style>

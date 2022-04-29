@@ -18,11 +18,13 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgb(250,250,250);
+  --vt-c-text-dark-2: rgb(250, 250, 250);
 }
 
 /* semantic color variables for this project */
 :root {
+  --white: #ffffff;
+
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
@@ -35,16 +37,26 @@
 
   --section-gap: 160px;
 
-  
+  --card-secondary-bg: rgb(23, 23, 23);
+  --card-secondary-color: rgb(229, 229, 229);
+  --card-secondary-border: rgba(var(--white), 0.1);
+  --card-color-tertiary: rgb(163, 163, 163);
+
+  --link-color: rgb(212, 212, 212);
+
+  --lh-base: 1.5;
+  --button-primary-bg: rgb(79, 70, 229);
+  --button-primary-color: rgb(255, 255, 255);
+
 }
 
 :root {
   --reaction-like-color: rgb(239, 68, 68);
-  --reaction-like-bg: rgba(  239, 68, 68, 0.1);
+  --reaction-like-bg: rgba(239, 68, 68, 0.1);
   --reaction-unicorn-color: rgb(5, 150, 105);
-  --reaction-unicorn-bg: rgba(  5, 150, 105, 0.1);
+  --reaction-unicorn-bg: rgba(5, 150, 105, 0.1);
   --reaction-readinglist-color: rgb(99, 102, 241);
-  --reaction-readinglist-bg: rgba(  99, 102, 241, 0.1);
+  --reaction-readinglist-bg: rgba(99, 102, 241, 0.1);
   --button-ghost-color: #d6d6d7;
 }
 
@@ -97,15 +109,17 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
 }
 
 p {
   font-size: 1.25rem;
   line-height: 1.875rem;
   margin: 0;
-  margin-bottom: 1.25rem;
   overflow-wrap: break-word;
+  margin-bottom: 1.25rem;
 }
+
 strong {
   font-weight: 700;
 }
@@ -119,6 +133,7 @@ img {
   max-width: 100%;
   display: block;
 }
+
 ul {
   padding-left: 1.5rem;
   margin-bottom: 1.25rem;
