@@ -5,34 +5,17 @@
         <div class="avatar-and-name">
           <a href="/username">
             <span class="avatar"
-              ><img
-                src="https://res.cloudinary.com/practicaldev/image/fetch/s--P4HnHvGk--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/6401/db5b0ab6-93a1-4168-9f97-af8d363c1153.png"
-                alt="User avatr"
+              ><img :src="user?.profile_image" alt="User avatr"
             /></span>
-            <span class="name">Cassidy Williams</span>
+            <span class="name">{{ user?.name }}</span>
           </a>
         </div>
         <button class="follow">Follow</button>
-        <p class="summary">bold and brash</p>
-
+        <p class="summary">{{ user?.summary }}</p>
         <ul class="user-meta-data">
-          <li>
-            <div class="key">Location</div>
-            <div class="value">Chicago, IL</div>
-          </li>
-          <li>
-            <div class="key">Education</div>
-            <div class="value">B.S. Computer Science</div>
-          </li>
-          <li>
-            <div class="key">Work</div>
-            <div class="value">
-              Head of Developer Experience and Education at Remote
-            </div>
-          </li>
-          <li>
-            <div class="key">Joined</div>
-            <div class="value">22. 2. 2017</div>
+          <li v-for="(value, key) in meta" :key="key">
+            <div class="key">{{ key }}</div>
+            <div class="value">{{ value }}</div>
           </li>
         </ul>
       </div>
@@ -40,7 +23,37 @@
   </aside>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+import { computed, onMounted, ref } from '@vue/runtime-core';
+import axios from 'axios';
+
+export interface Author {
+  id: number;
+  name: string;
+  username: string;
+  twitter_username: string;
+  github_username: string;
+  summary: string;
+  location: string;
+  website_url: string;
+  profile_image: string;
+  joined_at?: null;
+  updated_at: string;
+}
+
+const user = defineProps<Author>();
+
+const meta = computed(() => {
+  if (!user) return {};
+  const metaKeys = ['work', 'location', 'joined_at', 'education'];
+  return metaKeys.reduce((acc, key) => {
+    if (user[key]) {
+      acc[key] = user[key];
+    }
+    return acc;
+  }, {} as Record<string, string>);
+});
+</script>
 
 <style lang="scss">
 .sidebar-right {

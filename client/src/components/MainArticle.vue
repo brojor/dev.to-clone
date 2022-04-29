@@ -1,6 +1,6 @@
 <template>
   <main class="article-wrapper">
-    <article v-if="post.title">
+    <article>
       <header class="article-header">
         <figure>
           <img

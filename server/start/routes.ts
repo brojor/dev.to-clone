@@ -34,3 +34,5 @@ Route.post('/comments', 'CommentsController.store')
 Route.post('/reactions', 'ReactionsController.store')
 Route.delete('/reactions', 'ReactionsController.destroy')
 Route.get('/reactions', 'ReactionsController.index')
+
+Route.get(':author', 'UsersController.show')

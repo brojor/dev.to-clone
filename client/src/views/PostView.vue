@@ -41,22 +41,29 @@ export interface Meta {
 }
 
 const post = ref<Post>();
+const user = ref<Author>();
 
 const {
-  params: { user, slug },
+  params: { username, slug },
 } = useRoute();
 
 onMounted(async () => {
-  const { data } = await axios.get(`http://localhost:3333/${user}/${slug}`);
-  post.value = data;
+  const { data: postData } = await axios.get(
+    `http://localhost:3333/${username}/${slug}`
+  );
+  post.value = postData;
+  const { data: authorData } = await axios.get(
+    `http://localhost:3333/${username}`
+  );
+  user.value = authorData;
 });
 </script>
 
 <template>
   <div class="index-container">
     <SideBarLeft />
-    <MainArticle v-bind="post" />
-    <SideBarRight />
+    <MainArticle v-if="post" v-bind="post" />
+    <SideBarRight v-if="user" v-bind="user" />
   </div>
 </template>
 
