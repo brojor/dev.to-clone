@@ -7,7 +7,7 @@
           :key="index"
           @click="handleClick(reaction.category)"
           :name="reaction.category"
-          :is-active="isUsed(reaction.category)"
+          :class="{ 'is-active': isUsed(reaction.category) }"
         >
           <span class="icon"
             ><component
@@ -134,55 +134,9 @@ const handleClick = (category: string) => {
 };
 </script>
 
-<style scoped>
-.sidebar-left {
-  /* border: 1px solid sandybrown; */
-  /* display: grid; */
-  display: block;
-  gap: 1rem;
-  justify-content: stretch;
-}
-.sidebar-left button {
-  display: flex;
-  flex-direction: column;
-  border: none;
-  background-color: transparent;
-  align-items: center;
-  font-family: inherit;
-  color: #bdbdbd;
-  cursor: pointer;
-}
+<style lang="scss">
+$reactionTypes: 'like', 'unicorn', 'readinglist';
 
-.sidebar-left button:hover {
-  color: #f9f9f9;
-}
-.sidebar-left button[name='like']:hover {
-  --reaction-color: var(--reaction-like-color);
-}
-.sidebar-left button[name='unicorn']:hover {
-  --reaction-color: var(--reaction-unicorn-color);
-}
-.sidebar-left button[name='readinglist']:hover {
-  --reaction-color: var(--reaction-readinglist-color);
-}
-.sidebar-left button[name='like'] {
-  --reaction-color: var(--button-ghost-color);
-}
-.sidebar-left button[name='unicorn'] {
-  --reaction-color: var(--button-ghost-color);
-}
-.sidebar-left button[name='readinglist'] {
-  --reaction-color: var(--button-ghost-color);
-}
-.sidebar-left button[name='like'][is-active='true'] {
-  --reaction-color: var(--reaction-like-color);
-}
-.sidebar-left button[name='unicorn'][is-active='true'] {
-  --reaction-color: var(--reaction-unicorn-color);
-}
-.sidebar-left button[name='readinglist'][is-active='true'] {
-  --reaction-color: var(--reaction-readinglist-color);
-}
 .article-actions {
   padding: 0;
   display: grid;
@@ -192,36 +146,60 @@ const handleClick = (category: string) => {
   justify-content: stretch;
   top: calc(56px + 1rem + 6vh);
 }
+
 .article-actions-inner {
   display: grid;
   gap: 1rem;
   justify-content: stretch;
 }
-.meta-count {
-  font-size: 0.875rem;
-  font-weight: normal;
 
-  line-height: 21px;
-}
-button[is-active='true'] .meta-count {
-  color: var(--reaction-color);
-}
-.sidebar-left button .icon {
-  padding: 0.5rem;
-  color: var(--reaction-color);
-  border-radius: 50%;
-}
-.sidebar-left button[name='like']:hover .icon {
-  background-color: var(--reaction-like-bg);
-}
-.sidebar-left button[name='unicorn']:hover .icon {
-  background-color: var(--reaction-unicorn-bg);
-}
-.sidebar-left button[name='readinglist']:hover .icon {
-  background-color: var(--reaction-readinglist-bg);
-}
-.sidebar-left button[is-active='true'] .icon {
-  box-shadow: inset 0 0 0 2px var(--reaction-color);
-  border-radius: 50%;
+.sidebar-left {
+  display: block;
+  gap: 1rem;
+  justify-content: stretch;
+  button {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    background-color: transparent;
+    align-items: center;
+    font-family: inherit;
+    color: #bdbdbd;
+    cursor: pointer;
+    &:hover {
+      color: #f9f9f9;
+    }
+    @each $type in $reactionTypes {
+      &[name='#{$type}'] {
+        &.is-active {
+          --reaction-color: var(--reaction-#{$type}-color);
+          .meta-count {
+            color: var(--reaction-color);
+          }
+          .icon {
+            box-shadow: inset 0 0 0 2px var(--reaction-color);
+            border-radius: 50%;
+          }
+        }
+        &:hover {
+          --reaction-color: var(--reaction-#{$type}-color);
+          .icon {
+            background-color: var(--reaction-#{$type}-bg);
+          }
+        }
+      }
+    }
+    .icon {
+      padding: 0.5rem;
+      color: var(--reaction-color);
+      border-radius: 50%;
+    }
+
+    .meta-count {
+      font-size: 0.875rem;
+      font-weight: normal;
+      line-height: 21px;
+    }
+  }
 }
 </style>
