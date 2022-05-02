@@ -5,6 +5,7 @@ import MainArticle from '../components/MainArticle.vue';
 import { useRoute } from 'vue-router';
 import SideBarLeft from '../components/postView/SideBarLeft.vue';
 import SideBarRight from '../components/postView/SideBarRight.vue';
+import ArticleDiscussion from '../components/ArticleDiscussion.vue';
 
 export interface Post {
   id: number;
@@ -62,7 +63,8 @@ onMounted(async () => {
 <template>
   <div class="index-container">
     <SideBarLeft />
-    <MainArticle v-if="post" v-bind="post" />
+    <!-- <MainArticle v-if="post" v-bind="post" /> -->
+    <ArticleDiscussion />
     <SideBarRight v-if="user" v-bind="user" />
   </div>
 </template>

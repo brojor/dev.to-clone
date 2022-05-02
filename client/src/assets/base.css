@@ -38,6 +38,7 @@
   --section-gap: 160px;
 
   --card-secondary-bg: rgb(23, 23, 23);
+  --card-bg: rgb(23, 23, 23);
   --card-secondary-color: rgb(229, 229, 229);
   --card-secondary-border: rgba(var(--white), 0.1);
   --card-color-tertiary: rgb(163, 163, 163);
