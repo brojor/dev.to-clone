@@ -42,13 +42,19 @@
   --card-secondary-color: rgb(229, 229, 229);
   --card-secondary-border: rgba(var(--white), 0.1);
   --card-color-tertiary: rgb(163, 163, 163);
+  --card-color: rgb(250, 250, 250);
+  --card-border: rgba(255, 255, 255, 0.1);
 
   --link-color: rgb(212, 212, 212);
+  --link-color-secondary: rgb(189, 189, 189);
 
   --lh-base: 1.5;
   --button-primary-bg: rgb(79, 70, 229);
   --button-primary-color: rgb(255, 255, 255);
 
+  --button-ghost-color: rgb(214, 214, 214);
+  --button-ghost-color-hover: rgb(249, 249, 249);
+  --button-ghost-bg-hover: rgba(255, 255, 255, 0.035);
 }
 
 :root {

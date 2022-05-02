@@ -6,7 +6,7 @@ import MainHeader from './components/MainHeader.vue';
 <template>
   <MainHeader />
   <RouterView class="main-view" />
-  <footer></footer>
+  <footer class=""></footer>
 </template>
 
 <style>
@@ -20,7 +20,7 @@ import MainHeader from './components/MainHeader.vue';
   margin-top: 6rem;
 }
 
-footer {
+.main-footer {
   border: 1px solid yellow;
   min-height: 5rem;
 }

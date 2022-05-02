@@ -1,0 +1,20 @@
+<template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    role="img"
+  >
+    <title id="aktry0roduf1gcepfltyi4imaacnzwyq">Collapse</title>
+    <path
+      d="M12 10.677L8 6.935 9 6l3 2.807L15 6l1 .935-4 3.742zm0 4.517L9 18l-1-.935 4-3.742 4 3.742-1 .934-3-2.805z"
+    ></path>
+  </svg>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style></style>
