@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Comment from 'App/Models/Comment'
 import Post from 'App/Models/Post'
 import User from 'App/Models/User'
+import { DateTime } from 'luxon'
 
 export default class CommentsController {
   public async store({ request, response }: HttpContextContract) {
@@ -10,12 +11,19 @@ export default class CommentsController {
     const post = await Post.findByOrFail('title', title)
 
     const dbUser = await User.firstOrCreate({ username: user.username }, user)
-    const comment = await Comment.create({ body, createdAt })
+    const comment = await Comment.create({ body, createdAt: DateTime.fromISO(createdAt) })
 
     await comment.related('post').associate(post)
     await comment.related('author').associate(dbUser)
 
     response.status(201)
     return post
+  }
+
+  public async show({ request }: HttpContextContract) {
+    const { id } = request.qs()
+    const comments = await Comment.query().where('post_id', id).preload('author')
+
+    return comments
   }
 }

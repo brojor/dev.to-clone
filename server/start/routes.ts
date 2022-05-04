@@ -30,6 +30,7 @@ Route.get('/:author/:slug', 'PostsController.show')
 Route.post('/new', 'PostsController.store')
 
 Route.post('/comments', 'CommentsController.store')
+Route.get('/comments', 'CommentsController.show')
 
 Route.post('/reactions', 'ReactionsController.store')
 Route.delete('/reactions', 'ReactionsController.destroy')

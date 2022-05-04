@@ -19,70 +19,52 @@
           ></textarea>
         </div>
       </form>
-      <div class="comments-tree">
-        <details :open="isOpen" @click.self="handleClick">
-          <summary>
-            <span>
-              <DetailsCollapseIcon v-if="isOpen" />
-              <DetailExpandIcon v-else />
-            </span>
-            <span v-if="!isOpen">rkleee</span>
-          </summary>
-          <div class="comment-inner">
-            <a href="">
-              <img
-                src="https://res.cloudinary.com/practicaldev/image/fetch/s--ENU8TA7l--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/856017/96d749cb-70d2-4d25-bb88-448609b1312e.jpeg"
-                alt=""
-              />
-            </a>
-            <div class="comment-details">
-              <div class="comment-content">
-                <div class="comment-header">
-                  <div class="user-name">Leonid Medovyy</div>
-                  <span class="delimiter">•</span>
-                  <div class="creation-date">May 1</div>
-                  <div class="comment-dropdown">
-                    <button>
-                      <DropdownDots />
-                    </button>
-                  </div>
-                </div>
-                <div class="comment-body">
-                  <p>Refusing to quit</p>
-                </div>
-              </div>
-              <footer class="comment-footer">
-                <button>
-                  <CommentHeartIcon :isActive="true" />
-                  <span>8&nbsp;likes</span>
-                </button>
-                <button>
-                  <CommentReplyIcon />
-                  <span>Reply</span>
-                </button>
-              </footer>
-            </div>
-          </div>
-        </details>
+      <div class="comments-tree" v-if="comments.length">
+        <CommentNode
+          v-for="comment in comments"
+          :comment="comment"
+          :key="comment.id"
+        />
       </div>
     </div>
   </section>
 </template>
 
 , DetailsCollapseIcon
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from '@vue/runtime-core';
-import DetailExpandIcon from './icons/reactions/DetailExpandIcon.vue';
-import DetailsCollapseIcon from './icons/reactions/DetailsCollapseIcon.vue';
-import DropdownDots from './icons/comment/DropdownDots.vue';
-import CommentHeartIcon from './icons/comment/CommentHeartIcon.vue';
-import CommentReplyIcon from './icons/comment/CommentReplyIcon.vue';
 
-const isOpen = ref(true);
+import CommentNode from './CommentNode.vue';
+import axios from 'axios';
 
-const handleClick = () => {
-  isOpen.value = !isOpen.value;
-};
+export interface Comment {
+  id: number;
+  body: string;
+  post_id: number;
+  user_id: number;
+  created_at?: null;
+  updated_at: string;
+  author: Author;
+}
+export interface Author {
+  id: number;
+  name: string;
+  username: string;
+  twitter_username?: null;
+  github_username: string;
+  summary?: null;
+  location?: null;
+  website_url?: null;
+  profile_image: string;
+  joined_at: string;
+  updated_at: string;
+}
+
+const comments = ref<Comment[]>([]);
+
+axios.get('http://127.0.0.1:3333/comments?id=1').then(({ data }) => {
+  comments.value = data;
+});
 </script>
 
 <style lang="scss">
@@ -136,7 +118,7 @@ details {
     display: flex;
     align-items: flex-start;
     margin-bottom: 1.5rem;
-    a {
+    .avatar {
       margin-top: 0.75rem;
       width: 2rem;
       height: 2rem;

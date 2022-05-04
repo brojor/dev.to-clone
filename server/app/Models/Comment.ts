@@ -35,9 +35,22 @@ export default class Comment extends BaseModel {
   // @belongsTo(() => Comment)
   // public parentId: BelongsTo<typeof Comment>
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({
+    autoCreate: true,
+    serialize: (value: DateTime | null) => {
+      return value ? formatDate(value) : value
+    },
+  })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+}
+
+function formatDate(date: DateTime | null) {
+  const res = date?.setLocale('en').toLocaleString(DateTime.DATE_MED)
+  if (date?.year !== DateTime.now().year) {
+    return res
+  }
+  return res?.split(',')[0]
 }
