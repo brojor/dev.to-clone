@@ -1,7 +1,7 @@
 <template>
-  <details :open="isOpen">
-    <summary>
-      <span @click.prevent.self="handleClick">
+  <details :open="isOpen" @click.prevent>
+    <summary @click="handleClick">
+      <span>
         <DetailsCollapseIcon v-if="isOpen" />
         <DetailExpandIcon v-else />
       </span>
@@ -56,8 +56,7 @@ const props = defineProps({
 
 const isOpen = ref(true);
 
-const handleClick = () => {
-  console.log('clicked!');
+const handleClick = (e) => {
   isOpen.value = !isOpen.value;
 };
 </script>
