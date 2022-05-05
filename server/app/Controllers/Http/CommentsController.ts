@@ -22,7 +22,10 @@ export default class CommentsController {
 
   public async show({ request }: HttpContextContract) {
     const { id } = request.qs()
-    const comments = await Comment.query().where('post_id', id).preload('author')
+    const comments = await Comment.query()
+      .where('post_id', id)
+      .preload('author')
+      .orderBy('created_at', 'desc')
 
     return comments
   }
