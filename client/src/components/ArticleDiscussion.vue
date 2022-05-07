@@ -5,20 +5,7 @@
       <button class="subscribe">Subscribe</button>
     </header>
     <div class="comment-container">
-      <form action="" class="new-comment">
-        <span class="avatar">
-          <img
-            src="https://res.cloudinary.com/practicaldev/image/fetch/s----BXFj9n--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/388717/c8a6ddef-627d-4fc3-ad73-3de02f122ae2.png"
-            alt="avatar image"
-          />
-        </span>
-        <div class="comment">
-          <textarea
-            placeholder="Add to the discussion"
-            name="comment"
-          ></textarea>
-        </div>
-      </form>
+      <CommentForm @newComment="newComment" />
       <div class="comments-tree" v-if="comments.length">
         <CommentNode
           v-for="comment in comments"
@@ -30,11 +17,11 @@
   </section>
 </template>
 
-, DetailsCollapseIcon
 <script setup lang="ts">
 import { computed, ref } from '@vue/runtime-core';
 
 import CommentNode from './CommentNode.vue';
+import CommentForm from './CommentForm.vue';
 import axios from 'axios';
 
 export interface Comment {
@@ -65,6 +52,10 @@ const comments = ref<Comment[]>([]);
 axios.get('http://127.0.0.1:3333/comments?id=1').then(({ data }) => {
   comments.value = data;
 });
+
+const newComment = (comment: Comment) => {
+  comments.value.unshift(comment);
+};
 </script>
 
 <style lang="scss">
@@ -253,10 +244,6 @@ details {
   }
 }
 .comment-container {
-  .new-comment {
-    display: flex;
-    margin-bottom: 1rem;
-  }
   .avatar {
     margin-right: 0.5rem;
     width: 2rem;
@@ -272,24 +259,6 @@ details {
       height: 100%;
       display: inline-block;
       vertical-align: bottom;
-    }
-  }
-  .comment {
-    width: 100%;
-    margin-bottom: 0.5rem;
-    textarea {
-      width: 100%;
-      white-space: pre-wrap;
-      padding: 0.5rem;
-      border-radius: 0.375rem;
-      background-color: rgb(0, 0, 0);
-      font-size: 1rem;
-      font-family: inherit;
-      border: 1px solid rgb(64, 64, 64);
-      line-height: 1.5;
-      &::placeholder {
-        color: rgb(82, 82, 82);
-      }
     }
   }
 }

@@ -19,7 +19,7 @@ export default class Comment extends BaseModel {
   // END komentář náleží jednomu článku (postu)
 
   // komentář náleží jednomu autorovi (userovi)
-  @column()
+  @column({ serializeAs: null })
   public userId: number
 
   @belongsTo(() => User)

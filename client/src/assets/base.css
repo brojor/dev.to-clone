@@ -51,6 +51,14 @@
   --lh-base: 1.5;
   --button-primary-bg: rgb(79, 70, 229);
   --button-primary-color: rgb(255, 255, 255);
+  --button-secondary-bg: rgb(61 61 61);
+  --button-secondary-bg-hover: rgb(87 87 87);
+  --button-secondary-color: rgb(214 214 215);
+  --button-secondary-color-hover: rgb(249 249 249);
+  --button-primary-bg: rgb(79 70 229);
+  --button-primary-bg-hover: rgb(99 102 241);
+  --button-primary-color: rgb(var(--white));
+  --button-primary-color-hover: rgb(var(--white));
 
   --button-ghost-color: rgb(214, 214, 214);
   --button-ghost-color-hover: rgb(249, 249, 249);
