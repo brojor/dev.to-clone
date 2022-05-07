@@ -59,7 +59,7 @@ const items = [
 ];
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .comment-dropdown-inner {
   right: 0;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 15px -3px,
@@ -80,6 +80,7 @@ const items = [
 }
 li {
   font-size: 1rem;
+  cursor: pointer;
 }
 a {
   padding: 0.5rem;
@@ -87,5 +88,10 @@ a {
   text-decoration: none;
   display: flex;
   align-items: center;
+  border-radius: 0.375rem;
+  &:hover {
+    background: var(--link-bg-hover);
+    color: var(--link-color-hover);
+  }
 }
 </style>

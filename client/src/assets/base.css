@@ -47,7 +47,8 @@
 
   --link-color: rgb(212, 212, 212);
   --link-color-secondary: rgb(189, 189, 189);
-
+  --link-bg-hover: rgba(49, 46, 129, .75);
+  --link-color-hover: rgb(165, 180, 252);
   --lh-base: 1.5;
   --button-primary-bg: rgb(79, 70, 229);
   --button-primary-color: rgb(255, 255, 255);
@@ -63,6 +64,8 @@
   --button-ghost-color: rgb(214, 214, 214);
   --button-ghost-color-hover: rgb(249, 249, 249);
   --button-ghost-bg-hover: rgba(255, 255, 255, 0.035);
+
+
 }
 
 :root {
