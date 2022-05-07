@@ -8,9 +8,10 @@
       <CommentForm @newComment="newComment" />
       <div class="comments-tree" v-if="comments.length">
         <CommentNode
-          v-for="comment in comments"
+          v-for="(comment, index) in comments"
           :comment="comment"
           :key="comment.id"
+          :index="index"
         />
       </div>
     </div>

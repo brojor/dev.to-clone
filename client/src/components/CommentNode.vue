@@ -18,9 +18,10 @@
             <span class="delimiter">•</span>
             <div class="creation-date">{{ comment['created_at'] }}</div>
             <div class="comment-dropdown">
-              <button>
-                <DropdownDots />
+              <button name="toggle-dropdown">
+                <DropdownDots @click="toggleDropdown" />
               </button>
+              <CommentDropdown :isOpen="openedDropdown === props.index" />
             </div>
           </div>
           <div class="comment-body" v-html="comment.body"></div>
@@ -47,17 +48,28 @@ import DetailsCollapseIcon from './icons/reactions/DetailsCollapseIcon.vue';
 import DropdownDots from './icons/comment/DropdownDots.vue';
 import CommentHeartIcon from './icons/comment/CommentHeartIcon.vue';
 import CommentReplyIcon from './icons/comment/CommentReplyIcon.vue';
+import CommentDropdown from './CommentDropdown.vue';
+
+import { openedDropdown } from '@/stores/openedDropdown';
 
 const props = defineProps({
   comment: {
     type: Object,
   },
+  index: {
+    type: Number,
+  },
 });
 
 const isOpen = ref(true);
 
-const handleClick = (e) => {
-  isOpen.value = !isOpen.value;
+const toggleDropdown = () => {
+  console.log('toggleDropdown');
+  if (openedDropdown.value == props.index) {
+    openedDropdown.value = null;
+  } else {
+    openedDropdown.value = props.index;
+  }
 };
 </script>
 

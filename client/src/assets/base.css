@@ -112,6 +112,7 @@ dd {
   margin: 0;
 }
 
+
 body {
   min-height: 100vh;
   color: var(--color-text);
@@ -188,4 +189,10 @@ h3 {
 
 svg {
   vertical-align: bottom;
+}
+
+ul[class] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
