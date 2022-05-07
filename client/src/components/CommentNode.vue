@@ -1,6 +1,6 @@
 <template>
   <details :open="isOpen" @click.prevent>
-    <summary @click="handleClick">
+    <summary @click="toggleDetails">
       <span>
         <DetailsCollapseIcon v-if="isOpen" />
         <DetailExpandIcon v-else />
@@ -76,6 +76,10 @@ const toggleDropdown = () => {
 };
 
 const emit = defineEmits(['delete']);
+
+const toggleDetails = () => {
+  isOpen.value = !isOpen.value;
+};
 
 const deleteComment = () => {
   emit('delete', props.comment.id);
