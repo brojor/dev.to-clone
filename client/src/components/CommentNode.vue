@@ -21,7 +21,10 @@
               <button name="toggle-dropdown">
                 <DropdownDots @click="toggleDropdown" />
               </button>
-              <CommentDropdown :isOpen="openedDropdown === props.index" />
+              <CommentDropdown
+                :isOpen="openedDropdown === props.index"
+                @delete="deleteComment"
+              />
             </div>
           </div>
           <div class="comment-body" v-html="comment.body"></div>
@@ -70,6 +73,12 @@ const toggleDropdown = () => {
   } else {
     openedDropdown.value = props.index;
   }
+};
+
+const emit = defineEmits(['delete']);
+
+const deleteComment = () => {
+  emit('delete', props.comment.id);
 };
 </script>
 

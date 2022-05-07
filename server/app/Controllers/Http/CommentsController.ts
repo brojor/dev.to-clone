@@ -44,4 +44,11 @@ export default class CommentsController {
 
     return comments
   }
+
+  public async destroy({ request }: HttpContextContract) {
+    const { id } = request.qs()
+    const comment = await Comment.findByOrFail('id', id)
+    await comment.delete()
+    return comment
+  }
 }

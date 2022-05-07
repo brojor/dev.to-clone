@@ -12,6 +12,7 @@
           :comment="comment"
           :key="comment.id"
           :index="index"
+          @delete="deleteComment"
         />
       </div>
     </div>
@@ -56,6 +57,12 @@ axios.get('http://127.0.0.1:3333/comments?id=1').then(({ data }) => {
 
 const newComment = (comment: Comment) => {
   comments.value.unshift(comment);
+};
+const deleteComment = (id) => {
+  console.log('Mažu komentář: ' + id);
+  axios.delete(`http://127.0.0.1:3333/comments?id=${id}`).then(() => {
+    comments.value = comments.value.filter((comment) => comment.id !== id);
+  });
 };
 </script>
 

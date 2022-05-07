@@ -33,7 +33,8 @@ const props = defineProps({
 const emit = defineEmits(['delete']);
 
 const deleteItem = (item) => {
-    emit('delete', item);
+  emit('delete', item);
+  openedDropdown.value = null;
 };
 
 const items = [
