@@ -87,7 +87,7 @@ const toggleDetails = () => {
 };
 
 const deleteComment = () => {
-  emit('delete', props.comment.id);
+  emit('delete');
 };
 </script>
 

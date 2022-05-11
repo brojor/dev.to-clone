@@ -5,8 +5,11 @@
       <button class="subscribe">Subscribe</button>
     </header>
     <div class="comment-container">
-      <CommentForm @newComment="$emit('newComment')" />
-      <CommentList :comments="props.comments" />
+      <CommentForm @change="$emit('change')" />
+      <CommentList
+        :comments="props.comments"
+        @delete-comment="deleteComment($event)"
+      />
     </div>
   </section>
 </template>
@@ -23,14 +26,18 @@ const props = defineProps<{
   comments: Comment[];
 }>();
 
-const emit = defineEmits(['newComment']);
+const emit = defineEmits(['change']);
 
-// const deleteComment = (id) => {
-//   console.log('Mažu komentář: ' + id);
-//   axios.delete(`http://127.0.0.1:3333/comments?id=${id}`).then(() => {
-//     comments.value = comments.value.filter((comment) => comment.id !== id);
-//   });
-// };
+const deleteComment = async (id) => {
+  console.log('Mažu komentář: ' + id);
+  const { status } = await axios.delete(
+    `http://127.0.0.1:3333/comments?id=${id}`
+  );
+  if (status === 200) {
+    console.log('Komentář byl smazán');
+    emit('change');
+  }
+};
 </script>
 
 <style lang="scss">

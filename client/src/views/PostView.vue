@@ -29,7 +29,7 @@ onMounted(async () => {
   user.value = authorData;
 });
 
-const newComment = async () => {
+const handleCommentChange = async () => {
   const postId = 1;
   const { data } = await axios.get(
     `http://localhost:3333/comments?postId=${postId}`
@@ -42,7 +42,7 @@ const newComment = async () => {
   <div class="index-container">
     <SideBarLeft />
     <!-- <MainArticle v-if="post" v-bind="post" /> -->
-    <ArticleDiscussion :comments="comments" @new-comment="newComment" />
+    <ArticleDiscussion :comments="comments" @change="handleCommentChange" />
     <SideBarRight v-if="user" v-bind="user" />
   </div>
 </template>
