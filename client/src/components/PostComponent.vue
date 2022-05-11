@@ -50,34 +50,14 @@ import { computed } from '@vue/runtime-core';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 
-type Tag = {
-  name: string;
-};
-
-type Meta = {
-  comments_count: number;
-};
-
-type Author = {
-  id: number;
-  name: string;
-  username: string;
-  twitter_username: string;
-  github_username: string;
-  summary: string;
-  location: string;
-  website_url: string;
-  profile_image: string;
-  joined_at: string;
-  updated_at: string;
-};
+import type { Author, Meta, TagsEntity } from '@/interfaces';
 
 // eslint-disable-next-line vue/no-setup-props-destructure
 const { title, publishedAt, author, tags, slug } = defineProps<{
   title: string;
   author: Author;
   publishedAt: string;
-  tags: Tag[];
+  tags: TagsEntity[];
   meta: Meta;
   slug: string;
 }>();

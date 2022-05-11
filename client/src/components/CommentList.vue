@@ -14,34 +14,11 @@
 import { computed } from '@vue/runtime-core';
 import CommentNode from './CommentNode.vue';
 
-export interface Comment {
-  id: number;
-  body: string;
-  post_id: number;
-  user_id: number;
-  created_at?: null;
-  updated_at: string;
-  author: Author;
-  reply_to?: number;
-  children: Comment[];
-}
-export interface Author {
-  id: number;
-  name: string;
-  username: string;
-  twitter_username?: null;
-  github_username: string;
-  summary?: null;
-  location?: null;
-  website_url?: null;
-  profile_image: string;
-  joined_at: string;
-  updated_at: string;
-}
+import type { Comment } from '../interfaces';
+
 const props = defineProps<{
   comments: Comment[];
 }>();
-
 
 const deleteComment = (id) => {
   console.log('DELETE komentář: ' + id);

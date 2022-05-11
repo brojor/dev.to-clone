@@ -48,39 +48,7 @@ import { DateTime } from 'luxon';
 import PrefixedTag from '../components/PrefixedTag.vue';
 import { computed } from 'vue';
 
-export interface Post {
-  id: number;
-  title: string;
-  image: string;
-  user_id: number;
-  body: string;
-  slug: string;
-  published_at: string;
-  created_at: string;
-  updated_at: string;
-  tags?: TagsEntity[] | null;
-  author: Author;
-  meta: Meta;
-}
-export interface TagsEntity {
-  name: string;
-}
-export interface Author {
-  id: number;
-  name: string;
-  username: string;
-  twitter_username: string;
-  github_username: string;
-  summary: string;
-  location: string;
-  website_url: string;
-  profile_image: string;
-  joined_at?: null;
-  updated_at: string;
-}
-export interface Meta {
-  comments_count: number;
-}
+import type { Post } from '../interfaces';
 
 const post = defineProps<Post>();
 

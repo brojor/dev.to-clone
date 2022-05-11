@@ -7,39 +7,7 @@ import SideBarLeft from '../components/postView/SideBarLeft.vue';
 import SideBarRight from '../components/postView/SideBarRight.vue';
 import ArticleDiscussion from '../components/ArticleDiscussion.vue';
 
-export interface Post {
-  id: number;
-  title: string;
-  image: string;
-  user_id: number;
-  body: string;
-  slug: string;
-  published_at: string;
-  created_at: string;
-  updated_at: string;
-  tags?: TagsEntity[] | null;
-  author: Author;
-  meta: Meta;
-}
-export interface TagsEntity {
-  name: string;
-}
-export interface Author {
-  id: number;
-  name: string;
-  username: string;
-  twitter_username: string;
-  github_username: string;
-  summary: string;
-  location: string;
-  website_url: string;
-  profile_image: string;
-  joined_at?: null;
-  updated_at: string;
-}
-export interface Meta {
-  comments_count: number;
-}
+import type { Post, Author, Comment } from '../interfaces';
 
 const post = ref<Post>();
 const comments = ref<Comment[]>([]);
@@ -63,7 +31,9 @@ onMounted(async () => {
 
 const newComment = async () => {
   const postId = 1;
-  const { data } = await axios.get(`http://localhost:3333/comments?postId=${postId}`);
+  const { data } = await axios.get(
+    `http://localhost:3333/comments?postId=${postId}`
+  );
   comments.value = data;
 };
 </script>
