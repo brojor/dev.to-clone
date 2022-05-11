@@ -22,7 +22,7 @@
                 <DropdownDots @click="toggleDropdown" />
               </button>
               <CommentDropdown
-                :isOpen="openedDropdown === props.index"
+                :isOpen="openedDropdown === props.comment.id"
                 @delete="deleteComment"
               />
             </div>
@@ -96,10 +96,10 @@ const addReply = async (text) => {
 
 const toggleDropdown = () => {
   console.log('toggleDropdown');
-  if (openedDropdown.value == props.index) {
+  if (openedDropdown.value == props.comment.id) {
     openedDropdown.value = null;
   } else {
-    openedDropdown.value = props.index;
+    openedDropdown.value = props.comment.id;
   }
 };
 
