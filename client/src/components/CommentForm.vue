@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm" class="new-comment">
+  <form @submit.prevent class="new-comment">
     <span class="avatar">
       <img
         src="https://res.cloudinary.com/practicaldev/image/fetch/s----BXFj9n--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/388717/c8a6ddef-627d-4fc3-ad73-3de02f122ae2.png"
@@ -11,16 +11,14 @@
         <textarea
           placeholder="Add to the discussion"
           name="comment"
-          v-model="bodyMarkdown"
+          v-model="text"
         ></textarea>
       </div>
       <div class="comment-buttons">
-        <button type="submit" :disabled="bodyMarkdown.length < 1">
+        <button @click="submitForm" type="submit" :disabled="text.length < 1">
           Submit
         </button>
-        <button type="button" :disabled="bodyMarkdown.length < 1">
-          Preview
-        </button>
+        <button type="button" :disabled="text.length < 1">Preview</button>
       </div>
     </div>
   </form>
@@ -30,19 +28,15 @@
 import { ref } from '@vue/reactivity';
 import axios from 'axios';
 
-const emit = defineEmits(['change']);
-const submitForm = async () => {
-  const { status } = await axios.post('http://127.0.0.1:3333/comments', {
-    bodyMarkdown: bodyMarkdown.value,
-    postId: 1,
-  });
-  if (status === 201) {
-    emit('change');
-    bodyMarkdown.value = '';
-  }
-};
+const emit = defineEmits(['submit']);
 
-const bodyMarkdown = ref('');
+const text = ref('');
+
+const submitForm = () => {
+  console.log('submituju');
+  emit('submit', text.value);
+  text.value = '';
+};
 </script>
 
 <style scoped lang="scss">

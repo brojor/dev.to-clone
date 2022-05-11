@@ -29,12 +29,13 @@
           </div>
           <div class="comment-body" v-html="comment.body"></div>
         </div>
-        <footer class="comment-footer">
+        <CommentForm v-if="openToReply" @submit="addReply" />
+        <footer v-else class="comment-footer">
           <button>
             <CommentHeartIcon :isActive="true" />
             <span>8&nbsp;likes</span>
           </button>
-          <button>
+          <button @click="handleReply">
             <CommentReplyIcon />
             <span>Reply</span>
           </button>
@@ -52,9 +53,11 @@ import DropdownDots from './icons/comment/DropdownDots.vue';
 import CommentHeartIcon from './icons/comment/CommentHeartIcon.vue';
 import CommentReplyIcon from './icons/comment/CommentReplyIcon.vue';
 import CommentDropdown from './CommentDropdown.vue';
+import CommentForm from './CommentForm.vue';
 
 import { openedDropdown } from '@/stores/openedDropdown';
 import { computed } from '@vue/runtime-core';
+import axios from 'axios';
 
 const props = defineProps({
   comment: {
@@ -65,11 +68,31 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['delete', 'change']);
+
 const paddingLeft = computed(() => {
   return `${props.comment.level_index * 1.75}rem`;
 });
 
 const isOpen = ref(true);
+const openToReply = ref(false);
+
+const handleReply = () => {
+  console.log('otevírám');
+  openToReply.value = true;
+};
+
+const addReply = async (text) => {
+  const { status } = await axios.post('http://127.0.0.1:3333/comments', {
+    bodyMarkdown: text,
+    postId: 1,
+    replyTo: props.comment.id,
+  });
+  if (status === 201) {
+    emit('change');
+    openToReply.value = false;
+  }
+};
 
 const toggleDropdown = () => {
   console.log('toggleDropdown');
@@ -79,8 +102,6 @@ const toggleDropdown = () => {
     openedDropdown.value = props.index;
   }
 };
-
-const emit = defineEmits(['delete']);
 
 const toggleDetails = () => {
   isOpen.value = !isOpen.value;

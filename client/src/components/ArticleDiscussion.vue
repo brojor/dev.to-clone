@@ -5,10 +5,11 @@
       <button class="subscribe">Subscribe</button>
     </header>
     <div class="comment-container">
-      <CommentForm @change="$emit('change')" />
+      <CommentForm @submit="addNewComment" />
       <CommentList
         :comments="props.comments"
         @delete-comment="deleteComment($event)"
+        @change="$emit('change')"
       />
     </div>
   </section>
@@ -27,6 +28,16 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['change']);
+
+const addNewComment = async (text: string) => {
+  const { status } = await axios.post('http://127.0.0.1:3333/comments', {
+    bodyMarkdown: text,
+    postId: 1,
+  });
+  if (status === 201) {
+    emit('change');
+  }
+};
 
 const deleteComment = async (id) => {
   console.log('Mažu komentář: ' + id);
