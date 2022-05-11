@@ -32,11 +32,14 @@ import axios from 'axios';
 
 const emit = defineEmits(['newComment']);
 const submitForm = async () => {
-  const { data } = await axios.post('http://127.0.0.1:3333/comments', {
+  const { status } = await axios.post('http://127.0.0.1:3333/comments', {
     bodyMarkdown: bodyMarkdown.value,
+    postId: 1,
   });
-  emit('newComment', data);
-  bodyMarkdown.value = '';
+  if (status === 201) {
+    emit('newComment');
+    bodyMarkdown.value = '';
+  }
 };
 
 const bodyMarkdown = ref('');

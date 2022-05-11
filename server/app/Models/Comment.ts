@@ -10,30 +10,14 @@ export default class Comment extends BaseModel {
   @column()
   public body: string
 
-  // komentář náleží jednomu článku (postu)
   @column()
   public postId: number
 
-  @belongsTo(() => Post)
-  public post: BelongsTo<typeof Post>
-  // END komentář náleží jednomu článku (postu)
-
-  // komentář náleží jednomu autorovi (userovi)
   @column({ serializeAs: null })
   public userId: number
 
-  @belongsTo(() => User)
-  public author: BelongsTo<typeof User>
-  // END komentář náleží jednomu autorovi (userovi)
-
-  // @belongsTo(() => User)
-  // public author: BelongsTo<typeof User>
-
-  // @hasMany(() => Comment)
-  // public children: HasMany<typeof Comment>
-
-  // @belongsTo(() => Comment)
-  // public parentId: BelongsTo<typeof Comment>
+  @column()
+  public replyTo: number
 
   @column.dateTime({
     autoCreate: true,
@@ -45,6 +29,24 @@ export default class Comment extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public rootParentId: number
+
+  @column()
+  public levelIndex: number
+
+  @belongsTo(() => User)
+  public author: BelongsTo<typeof User>
+
+  @belongsTo(() => Post)
+  public post: BelongsTo<typeof Post>
+
+  @hasMany(() => Comment, { foreignKey: 'replyTo' })
+  public responses: HasMany<typeof Comment>
+
+  @belongsTo(() => Comment, { foreignKey: 'replyTo' })
+  public parent: BelongsTo<typeof Comment>
 }
 
 function formatDate(date: DateTime | null) {

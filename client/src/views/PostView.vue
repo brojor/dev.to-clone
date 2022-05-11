@@ -42,6 +42,7 @@ export interface Meta {
 }
 
 const post = ref<Post>();
+const comments = ref<Comment[]>([]);
 const user = ref<Author>();
 
 const {
@@ -49,22 +50,29 @@ const {
 } = useRoute();
 
 onMounted(async () => {
-  const { data: postData } = await axios.get(
-    `http://localhost:3333/${username}/${slug}`
-  );
-  post.value = postData;
+  const { data } = await axios.get(`http://localhost:3333/${username}/${slug}`);
+
+  post.value = data.post;
+  comments.value = data.comments;
+
   const { data: authorData } = await axios.get(
     `http://localhost:3333/${username}`
   );
   user.value = authorData;
 });
+
+const newComment = async () => {
+  const postId = 1;
+  const { data } = await axios.get(`http://localhost:3333/comments?postId=${postId}`);
+  comments.value = data;
+};
 </script>
 
 <template>
   <div class="index-container">
     <SideBarLeft />
     <!-- <MainArticle v-if="post" v-bind="post" /> -->
-    <ArticleDiscussion />
+    <ArticleDiscussion :comments="comments" @new-comment="newComment" />
     <SideBarRight v-if="user" v-bind="user" />
   </div>
 </template>

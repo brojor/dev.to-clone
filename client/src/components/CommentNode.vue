@@ -54,6 +54,7 @@ import CommentReplyIcon from './icons/comment/CommentReplyIcon.vue';
 import CommentDropdown from './CommentDropdown.vue';
 
 import { openedDropdown } from '@/stores/openedDropdown';
+import { computed } from '@vue/runtime-core';
 
 const props = defineProps({
   comment: {
@@ -62,6 +63,10 @@ const props = defineProps({
   index: {
     type: Number,
   },
+});
+
+const paddingLeft = computed(() => {
+  return `${props.comment.level_index * 1.75}rem`;
 });
 
 const isOpen = ref(true);
@@ -86,4 +91,8 @@ const deleteComment = () => {
 };
 </script>
 
-<style></style>
+<style scoped>
+details {
+  padding-left: v-bind(paddingLeft);
+}
+</style>

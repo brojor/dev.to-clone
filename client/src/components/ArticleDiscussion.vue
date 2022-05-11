@@ -5,16 +5,8 @@
       <button class="subscribe">Subscribe</button>
     </header>
     <div class="comment-container">
-      <CommentForm @newComment="newComment" />
-      <div class="comments-tree" v-if="comments.length">
-        <CommentNode
-          v-for="(comment, index) in comments"
-          :comment="comment"
-          :key="comment.id"
-          :index="index"
-          @delete="deleteComment"
-        />
-      </div>
+      <CommentForm @newComment="$emit('newComment')" />
+      <CommentList :comments="comments" />
     </div>
   </section>
 </template>
@@ -22,9 +14,9 @@
 <script setup lang="ts">
 import { computed, ref } from '@vue/runtime-core';
 
-import CommentNode from './CommentNode.vue';
 import CommentForm from './CommentForm.vue';
 import axios from 'axios';
+import CommentList from './CommentList.vue';
 
 export interface Comment {
   id: number;
@@ -34,6 +26,8 @@ export interface Comment {
   created_at?: null;
   updated_at: string;
   author: Author;
+  reply_to?: number;
+  children: Comment[];
 }
 export interface Author {
   id: number;
@@ -49,21 +43,18 @@ export interface Author {
   updated_at: string;
 }
 
-const comments = ref<Comment[]>([]);
+const { comments } = defineProps<{
+  comments: Comment[];
+}>();
 
-axios.get('http://127.0.0.1:3333/comments?id=1').then(({ data }) => {
-  comments.value = data;
-});
+const emit = defineEmits(['newComment']);
 
-const newComment = (comment: Comment) => {
-  comments.value.unshift(comment);
-};
-const deleteComment = (id) => {
-  console.log('Mažu komentář: ' + id);
-  axios.delete(`http://127.0.0.1:3333/comments?id=${id}`).then(() => {
-    comments.value = comments.value.filter((comment) => comment.id !== id);
-  });
-};
+// const deleteComment = (id) => {
+//   console.log('Mažu komentář: ' + id);
+//   axios.delete(`http://127.0.0.1:3333/comments?id=${id}`).then(() => {
+//     comments.value = comments.value.filter((comment) => comment.id !== id);
+//   });
+// };
 </script>
 
 <style lang="scss">

@@ -1,10 +1,13 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
+import Comment from 'App/Models/Comment'
 import Post from 'App/Models/Post'
 import Tag from 'App/Models/Tag'
 import User from 'App/Models/User'
 
 import { DateTime } from 'luxon'
+import CommentService from '../Services/CommentService'
+import CommentsController from './CommentsController'
 
 export default class PostsController {
   public async index() {
@@ -50,8 +53,6 @@ export default class PostsController {
 
   public async show({ params }: HttpContextContract) {
     const user = await User.findByOrFail('username', params.author)
-    // console.log({ user })
-    // console.log({ user_id: user.id, slug: params.slug })
     const post = await Post.query()
       .where({
         user_id: user.id,
@@ -62,19 +63,11 @@ export default class PostsController {
       .withCount('comments')
       .firstOrFail()
 
-    // const post = await Post.query().where(
-    //   'slug',
-    //   '10-github-repositories-every-developer-should-know'
-    // )
+    const comments = await CommentService.getCommentsForPost(post)
 
-    return post.serialize({
-      relations: {
-        tags: {
-          fields: {
-            pick: ['name'],
-          },
-        },
-      },
-    })
+    return {
+      post,
+      comments,
+    }
   }
 }
