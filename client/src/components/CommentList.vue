@@ -8,8 +8,8 @@
         @change="$emit('change')"
       />
       <CommentList
-        v-if="comment.children.length"
-        :comments="comment.children"
+        v-if="comment.responses.length"
+        :comments="comment.responses"
         @change="$emit('change')"
         @delete-comment="$emit('deleteComment', $event)"
       />

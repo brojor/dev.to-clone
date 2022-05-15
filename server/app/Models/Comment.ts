@@ -48,7 +48,7 @@ export default class Comment extends BaseModel {
   @hasMany(() => Comment, { foreignKey: 'replyTo', localKey: 'id' })
   public responses: HasMany<typeof Comment>
 
-  @belongsTo(() => Comment, { foreignKey: 'replyTo' })
+  @belongsTo(() => Comment, { foreignKey: 'replyTo', localKey: 'id' })
   public parent: BelongsTo<typeof Comment>
 }
 

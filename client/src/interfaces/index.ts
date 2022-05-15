@@ -8,7 +8,7 @@ export interface Comment {
   root_parent_id?: number;
   level_index: number;
   author: Author;
-  children: Comment[];
+  responses: Comment[];
 }
 
 export interface Author {
