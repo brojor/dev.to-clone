@@ -4,13 +4,14 @@
       <CommentNode
         :comment="comment"
         :index="index"
-        @delete="$emit('deleteComment', comment.id)"
+        @delete="$emit('deleteComment', $event)"
         @change="$emit('change')"
       />
       <CommentList
         v-if="comment.children.length"
         :comments="comment.children"
         @change="$emit('change')"
+        @delete-comment="$emit('deleteComment', $event)"
       />
     </li>
   </ul>
@@ -28,7 +29,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['deleteComment', 'change']);
 
-const deleteComment = (id) => {
-  console.log('DELETE komentář: ' + id);
-};
+// const deleteComment = (id) => {
+//   console.log('DELETE komentář: ' + id);
+// };
 </script>

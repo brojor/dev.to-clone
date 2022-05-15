@@ -23,7 +23,7 @@
               </button>
               <CommentDropdown
                 :isOpen="openedDropdown === props.comment.id"
-                @delete="deleteComment"
+                @delete="deleteComment(comment.id)"
               />
             </div>
           </div>
@@ -107,8 +107,8 @@ const toggleDetails = () => {
   isOpen.value = !isOpen.value;
 };
 
-const deleteComment = () => {
-  emit('delete');
+const deleteComment = (id) => {
+  emit('delete', id);
 };
 </script>
 

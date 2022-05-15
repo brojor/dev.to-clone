@@ -6,7 +6,7 @@ export default class AlterCommentsAddParentIds extends BaseSchema {
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
       // table.integer('parent_id').unsigned()
-      table.integer('reply_to').unsigned().references('comments.id').nullable()
+      table.integer('reply_to').unsigned().references('comments.id').nullable().onDelete('CASCADE')
 
       table.integer('root_parent_id').unsigned().references('comments.id')
       table.integer('level_index').notNullable().defaultTo(0)
