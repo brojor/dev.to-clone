@@ -5,14 +5,22 @@
         <DetailsCollapseIcon v-if="isOpen" />
         <DetailExpandIcon v-else />
       </span>
-      <span v-if="!isOpen">{{ comment.author.name }}</span>
+      <span v-if="!isOpen && !comment.is_archived">{{
+        comment.author.name
+      }}</span>
+      <span v-if="!isOpen && comment.is_archived">Comment deleted</span>
     </summary>
     <div class="comment-inner">
       <a href="" class="avatar">
-        <img :src="comment.author.profile_image" alt="" />
+        <img
+          v-if="!comment.is_archived"
+          :src="comment.author.profile_image"
+          alt=""
+        />
+        <img v-else :src="anonymousUser.profile_image" alt="" />
       </a>
       <div class="comment-details">
-        <div class="comment-content">
+        <div v-if="!comment.is_archived" class="comment-content">
           <div class="comment-header">
             <div class="user-name">{{ comment.author.name }}</div>
             <span class="delimiter">•</span>
@@ -29,8 +37,14 @@
           </div>
           <div class="comment-body" v-html="comment.body"></div>
         </div>
+        <div v-else class="comment-content">
+          <p class="comment-deleted">Comment deleted</p>
+        </div>
         <CommentForm v-if="openToReply" @submit="addReply" />
-        <footer v-else class="comment-footer">
+        <footer
+          v-if="!openToReply && !comment.is_archived"
+          class="comment-footer"
+        >
           <button>
             <CommentHeartIcon :isActive="true" />
             <span>8&nbsp;likes</span>
@@ -58,6 +72,11 @@ import CommentForm from './CommentForm.vue';
 import { openedDropdown } from '@/stores/openedDropdown';
 import { computed } from '@vue/runtime-core';
 import axios from 'axios';
+
+const anonymousUser = {
+  profile_image:
+    'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y',
+};
 
 const props = defineProps({
   comment: {
@@ -115,5 +134,12 @@ const deleteComment = (id) => {
 <style scoped>
 details {
   padding-left: v-bind(paddingLeft);
+}
+.comment-deleted {
+  padding: 1.5rem;
+  text-align: center;
+  opacity: 50%;
+  font-size: 0.875rem;
+  margin-bottom: 0;
 }
 </style>
