@@ -27,10 +27,53 @@ export default class CommentsController {
     return comments
   }
 
-  public async destroy({ request }: HttpContextContract) {
+  public async destroy({ request, response }: HttpContextContract) {
     const { id } = request.qs()
     const comment = await Comment.findByOrFail('id', id)
-    await comment.delete()
-    return comment
+
+    if (await hasChildren(comment)) {
+      comment.merge({
+        body: '<p>[Comment deleted]</p>',
+        isArchived: true,
+      })
+      await comment.save()
+    } else {
+      await comment.delete()
+    }
+
+    await deleteParentIfisArchivedAndEmpty(comment)
+
+    return response.status(200)
   }
+}
+
+async function hasChildren(comment: Comment) {
+  const children = await Comment.query().where('replyTo', comment.id)
+  return children.length > 0
+}
+
+// async function deleteParentIfisArchivedAndEmpty(comment: Comment) {
+//   if (hasParent(comment)) {
+//     const parentComment = await Comment.findBy('id', comment.replyTo)
+//     if (parentComment?.isArchived) {
+//       const siblings = await Comment.query().where('replyTo', parentComment.id)
+//       if (siblings.length === 0) {
+//         await parentComment.delete()
+//         await deleteParentIfisArchivedAndEmpty(parentComment)
+//       }
+//     }
+//   }
+// }
+
+async function deleteParentIfisArchivedAndEmpty(comment: Comment) {
+  if (comment.replyTo === null) return
+
+  const parentComment = await Comment.findByOrFail('id', comment.replyTo)
+  if (!parentComment.isArchived) return
+
+  const siblings = await Comment.query().where('replyTo', parentComment.id)
+  if (siblings.length > 0) return
+
+  await parentComment.delete()
+  await deleteParentIfisArchivedAndEmpty(parentComment)
 }

@@ -6,13 +6,14 @@ export default class AlterCommentsAddParentIds extends BaseSchema {
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
       // table.integer('parent_id').unsigned()
-      table.integer('reply_to').unsigned().references('comments.id').nullable().onDelete('CASCADE')
+      table.integer('reply_to').unsigned().references('comments.id').nullable()
 
       table.integer('root_parent_id').unsigned().references('comments.id')
       table.integer('level_index').notNullable().defaultTo(0)
 
       // table.string('name').nullable()
       // table.integer('state_id').unsigned().notNullable()
+      table.boolean('is_archived').notNullable().defaultTo(false)
     })
   }
 
@@ -23,6 +24,7 @@ export default class AlterCommentsAddParentIds extends BaseSchema {
 
       table.dropColumn('root_parent_id')
       table.dropColumn('level_index')
+      table.dropColumn('is_archived')
     })
   }
 }

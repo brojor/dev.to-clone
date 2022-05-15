@@ -41,10 +41,11 @@ const addNewComment = async (text: string) => {
 
 const deleteComment = async (id) => {
   console.log('Mažu komentář: ' + id);
-  const { status } = await axios.delete(
+  const { status, data } = await axios.delete(
     `http://127.0.0.1:3333/comments?id=${id}`
   );
   if (status === 200) {
+    console.log(data);
     console.log('Komentář byl smazán');
     emit('change');
   }

@@ -36,13 +36,16 @@ export default class Comment extends BaseModel {
   @column()
   public levelIndex: number
 
+  @column()
+  public isArchived: boolean
+
   @belongsTo(() => User)
   public author: BelongsTo<typeof User>
 
   @belongsTo(() => Post)
   public post: BelongsTo<typeof Post>
 
-  @hasMany(() => Comment, { foreignKey: 'replyTo' })
+  @hasMany(() => Comment, { foreignKey: 'replyTo', localKey: 'id' })
   public responses: HasMany<typeof Comment>
 
   @belongsTo(() => Comment, { foreignKey: 'replyTo' })
