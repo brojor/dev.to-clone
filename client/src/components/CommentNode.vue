@@ -47,7 +47,10 @@
             v-if="!openToReply && !comment.is_archived"
             class="comment-footer"
           >
-            <button :class="{ isActive: likedByUser }">
+            <button
+              :class="{ isActive: likedByUser }"
+              @click="toggleLikeComment"
+            >
               <CommentHeartIcon :isActive="likedByUser" />
               <span>{{ reactionsCount }}&nbsp;likes</span>
             </button>
@@ -167,6 +170,28 @@ const likedByUser = computed(() => {
     (reaction) => reaction.user_id === userId
   );
 });
+
+const toggleLikeComment = async () => {
+  if (likedByUser.value) {
+    const response = await axios.delete('http://127.0.0.1:3333/reactions/', {
+      data: {
+        reactableId: props.comment.id,
+        reactableType: 'comment',
+      },
+    });
+    if (response.status === 200) {
+      emit('change');
+    }
+  } else {
+    const response = await axios.post('http://127.0.0.1:3333/reactions/', {
+      reactableId: props.comment.id,
+      reactableType: 'comment',
+    });
+    if (response.status === 201) {
+      emit('change');
+    }
+  }
+};
 </script>
 
 <style scoped>

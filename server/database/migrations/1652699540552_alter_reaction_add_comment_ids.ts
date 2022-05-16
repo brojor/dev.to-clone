@@ -5,7 +5,12 @@ export default class AlterReactionAddCommentIds extends BaseSchema {
 
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('comment_id').unsigned().references('comments.id').nullable()
+      table
+        .integer('comment_id')
+        .unsigned()
+        .references('comments.id')
+        .nullable()
+        .onDelete('CASCADE')
     })
   }
 

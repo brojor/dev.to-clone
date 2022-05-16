@@ -5,7 +5,7 @@ import Reaction from 'App/Models/Reaction'
 import User from 'App/Models/User'
 
 export default class ReactionsController {
-  public async store({ request }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     const userId = 1 // todo replace with logged in user
     const { reactableType, reactableId, category = 'like' } = request.body()
 
@@ -17,6 +17,7 @@ export default class ReactionsController {
         const postReaction = await Reaction.create({ category })
         await postReaction.related('post').associate(post)
         await postReaction.related('user').associate(user)
+        response.status(201)
         return { category, result: 'created', reaction: postReaction }
 
       case 'comment':
@@ -24,21 +25,34 @@ export default class ReactionsController {
         const commentReaction = await Reaction.create({ category })
         await commentReaction.related('comment').associate(comment)
         await commentReaction.related('user').associate(user)
+        response.status(201)
         return { category, result: 'created', reaction: commentReaction }
     }
   }
 
   public async destroy({ request }: HttpContextContract) {
     const userId = 1 // todo replace with logged in user
-    const { postId, category } = request.body()
-    const reaction = await Reaction.query()
-      .where('post_id', postId)
-      .where('user_id', userId)
-      .where('category', category)
-      .firstOrFail()
-    await reaction.delete()
+    const { reactableType, reactableId, category = 'like' } = request.body()
 
-    return { category, result: 'deleted' }
+    switch (reactableType) {
+      case 'post':
+        const postReaction = await Reaction.query()
+          .where('post_id', reactableId)
+          .where('user_id', userId)
+          .where('category', category)
+          .firstOrFail()
+        await postReaction.delete()
+        return { category, result: 'deleted' }
+
+      case 'comment':
+        const commentReaction = await Reaction.query()
+          .where('comment_id', reactableId)
+          .where('user_id', userId)
+          .where('category', category)
+          .firstOrFail()
+        await commentReaction.delete()
+        return { category, result: 'deleted' }
+    }
   }
 
   public async index({ request }: HttpContextContract) {
