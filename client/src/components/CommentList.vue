@@ -1,20 +1,14 @@
 <template>
-  <ul class="comments-tree">
-    <li v-for="(comment, index) in comments" :key="index">
-      <CommentNode
-        :comment="comment"
-        :index="index"
-        @delete="$emit('deleteComment', $event)"
-        @change="$emit('change')"
-      />
-      <CommentList
-        v-if="comment.responses.length"
-        :comments="comment.responses"
-        @change="$emit('change')"
-        @delete-comment="$emit('deleteComment', $event)"
-      />
-    </li>
-  </ul>
+  <div class="comments-tree">
+    <CommentNode
+      v-for="(comment, index) in comments"
+      :key="index"
+      :comment="comment"
+      :index="index"
+      @delete="$emit('deleteComment', $event)"
+      @change="$emit('change')"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">

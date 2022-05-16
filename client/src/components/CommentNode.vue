@@ -5,56 +5,67 @@
         <DetailsCollapseIcon v-if="isOpen" />
         <DetailExpandIcon v-else />
       </span>
-      <span v-if="!isOpen && !comment.is_archived">{{
-        comment.author.name
-      }}</span>
+      <span v-if="!isOpen && !comment.is_archived"
+        >{{ comment.author.name }} {{ numOfResponses }}</span
+      >
+      <!-- <span> {{ numOfResponses }}</span> -->
       <span v-if="!isOpen && comment.is_archived">Comment deleted</span>
     </summary>
-    <div class="comment-inner">
-      <a href="" class="avatar">
-        <img
-          v-if="!comment.is_archived"
-          :src="comment.author.profile_image"
-          alt=""
-        />
-        <img v-else :src="anonymousUser.profile_image" alt="" />
-      </a>
-      <div class="comment-details">
-        <div v-if="!comment.is_archived" class="comment-content">
-          <div class="comment-header">
-            <div class="user-name">{{ comment.author.name }}</div>
-            <span class="delimiter">•</span>
-            <div class="creation-date">{{ comment['created_at'] }}</div>
-            <div class="comment-dropdown">
-              <button name="toggle-dropdown">
-                <DropdownDots @click="toggleDropdown" />
-              </button>
-              <CommentDropdown
-                :isOpen="openedDropdown === props.comment.id"
-                @delete="deleteComment(comment.id)"
-              />
+    <div class="comment-node">
+      <div class="comment-inner">
+        <a href="" class="avatar">
+          <img
+            v-if="!comment.is_archived"
+            :src="comment.author.profile_image"
+            alt=""
+          />
+          <img v-else :src="anonymousUser.profile_image" alt="" />
+        </a>
+        <div class="comment-details">
+          <div v-if="!comment.is_archived" class="comment-content">
+            <div class="comment-header">
+              <div class="user-name">{{ comment.author.name }}</div>
+              <span class="delimiter">•</span>
+              <div class="creation-date">{{ comment['created_at'] }}</div>
+              <div class="comment-dropdown">
+                <button name="toggle-dropdown">
+                  <DropdownDots @click="toggleDropdown" />
+                </button>
+                <CommentDropdown
+                  :isOpen="openedDropdown === props.comment.id"
+                  @delete="deleteComment(comment.id)"
+                />
+              </div>
             </div>
+            <div class="comment-body" v-html="comment.body"></div>
           </div>
-          <div class="comment-body" v-html="comment.body"></div>
+          <div v-else class="comment-content">
+            <p class="comment-deleted">Comment deleted</p>
+          </div>
+          <CommentForm v-if="openToReply" @submit="addReply" />
+          <footer
+            v-if="!openToReply && !comment.is_archived"
+            class="comment-footer"
+          >
+            <button>
+              <CommentHeartIcon :isActive="true" />
+              <span>8&nbsp;likes</span>
+            </button>
+            <button @click="handleReply">
+              <CommentReplyIcon />
+              <span>Reply</span>
+            </button>
+          </footer>
         </div>
-        <div v-else class="comment-content">
-          <p class="comment-deleted">Comment deleted</p>
-        </div>
-        <CommentForm v-if="openToReply" @submit="addReply" />
-        <footer
-          v-if="!openToReply && !comment.is_archived"
-          class="comment-footer"
-        >
-          <button>
-            <CommentHeartIcon :isActive="true" />
-            <span>8&nbsp;likes</span>
-          </button>
-          <button @click="handleReply">
-            <CommentReplyIcon />
-            <span>Reply</span>
-          </button>
-        </footer>
       </div>
+      <CommentNode
+        v-for="(comment, index) in comment.responses"
+        :key="index"
+        :comment="comment"
+        :index="index"
+        @delete="$emit('delete', $event)"
+        @change="$emit('change')"
+      />
     </div>
   </details>
 </template>
@@ -129,6 +140,21 @@ const toggleDetails = () => {
 const deleteComment = (id) => {
   emit('delete', id);
 };
+
+const allResponses = (responses, arr = []) => {
+  for (const response of responses) {
+    arr.push(response.id);
+    if (response.responses.length) {
+      arr.push(...allResponses(response.responses));
+    }
+  }
+  return arr;
+};
+
+const numOfResponses = computed(() => {
+  const responses = allResponses(props.comment.responses);
+  return responses.length ? `+ ${responses.length} replies` : '';
+});
 </script>
 
 <style scoped>
