@@ -2,8 +2,15 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Post from './Post'
+import Reaction from './Reaction'
 
 export default class Comment extends BaseModel {
+  public serializeExtras() {
+    return {
+      reactions_count: this.$extras.reactions_count,
+    }
+  }
+
   @column({ isPrimary: true })
   public id: number
 
@@ -50,6 +57,9 @@ export default class Comment extends BaseModel {
 
   @belongsTo(() => Comment, { foreignKey: 'replyTo', localKey: 'id' })
   public parent: BelongsTo<typeof Comment>
+
+  @hasMany(() => Reaction)
+  public reactions: HasMany<typeof Reaction>
 }
 
 function formatDate(date: DateTime | null) {

@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Comment from 'App/Models/Comment'
 import Post from 'App/Models/Post'
 import Reaction from 'App/Models/Reaction'
 import User from 'App/Models/User'
@@ -6,15 +7,25 @@ import User from 'App/Models/User'
 export default class ReactionsController {
   public async store({ request }: HttpContextContract) {
     const userId = 1 // todo replace with logged in user
-    const { postId, category } = request.body()
-    console.log({ postId, category })
-    const post = await Post.findOrFail(postId)
-    const user = await User.findOrFail(userId)
-    const reaction = await Reaction.create({ category })
-    await reaction.related('post').associate(post)
-    await reaction.related('user').associate(user)
+    const { reactableType, reactableId, category = 'like' } = request.body()
 
-    return { category, result: 'created', reaction }
+    const user = await User.findOrFail(userId)
+
+    switch (reactableType) {
+      case 'post':
+        const post = await Post.findOrFail(reactableId)
+        const postReaction = await Reaction.create({ category })
+        await postReaction.related('post').associate(post)
+        await postReaction.related('user').associate(user)
+        return { category, result: 'created', reaction: postReaction }
+
+      case 'comment':
+        const comment = await Comment.findOrFail(reactableId)
+        const commentReaction = await Reaction.create({ category })
+        await commentReaction.related('comment').associate(comment)
+        await commentReaction.related('user').associate(user)
+        return { category, result: 'created', reaction: commentReaction }
+    }
   }
 
   public async destroy({ request }: HttpContextContract) {

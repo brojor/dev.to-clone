@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Post from './Post'
+import Comment from './Comment'
 
 type Category = 'like' | 'readinglist' | 'unicorn'
 
@@ -18,6 +19,11 @@ export default class Reaction extends BaseModel {
   public postId: number
   @belongsTo(() => Post)
   public post: BelongsTo<typeof Post>
+
+  @column()
+  public commentId: number
+  @belongsTo(() => Comment)
+  public comment: BelongsTo<typeof Comment>
 
   @column()
   public category: Category

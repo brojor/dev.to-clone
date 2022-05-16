@@ -49,7 +49,7 @@
           >
             <button>
               <CommentHeartIcon :isActive="true" />
-              <span>8&nbsp;likes</span>
+              <span>{{ comment.reactions_count }}&nbsp;likes</span>
             </button>
             <button @click="handleReply">
               <CommentReplyIcon />
