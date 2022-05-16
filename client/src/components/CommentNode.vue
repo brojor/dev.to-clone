@@ -47,9 +47,9 @@
             v-if="!openToReply && !comment.is_archived"
             class="comment-footer"
           >
-            <button>
-              <CommentHeartIcon :isActive="true" />
-              <span>{{ comment.reactions_count }}&nbsp;likes</span>
+            <button :class="{ isActive: likedByUser }">
+              <CommentHeartIcon :isActive="likedByUser" />
+              <span>{{ reactionsCount }}&nbsp;likes</span>
             </button>
             <button @click="handleReply">
               <CommentReplyIcon />
@@ -83,6 +83,8 @@ import CommentForm from './CommentForm.vue';
 import { openedDropdown } from '@/stores/openedDropdown';
 import { computed } from '@vue/runtime-core';
 import axios from 'axios';
+
+const userId = 1;
 
 const anonymousUser = {
   profile_image:
@@ -154,6 +156,16 @@ const allResponses = (responses, arr = []) => {
 const numOfResponses = computed(() => {
   const responses = allResponses(props.comment.responses);
   return responses.length ? `+ ${responses.length} replies` : '';
+});
+
+const reactionsCount = computed(() => {
+  return props.comment.reactions.length;
+});
+
+const likedByUser = computed(() => {
+  return props.comment.reactions.some(
+    (reaction) => reaction.user_id === userId
+  );
 });
 </script>
 

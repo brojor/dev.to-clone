@@ -5,12 +5,6 @@ import Post from './Post'
 import Reaction from './Reaction'
 
 export default class Comment extends BaseModel {
-  public serializeExtras() {
-    return {
-      reactions_count: this.$extras.reactions_count,
-    }
-  }
-
   @column({ isPrimary: true })
   public id: number
 

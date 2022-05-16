@@ -194,6 +194,9 @@ details {
             background-color: var(--button-ghost-bg-hover);
             color: var(--color-hover);
           }
+          &.isActive {
+            background-color: rgba(239, 68, 68, 0.1);
+          }
           svg {
             margin-right: 0.25rem;
           }

@@ -5,7 +5,7 @@ import Post from 'App/Models/Post'
 const recursiveCallback = (builder: HasManyQueryBuilderContract<typeof Comment, any>) => {
   builder.preload('author')
   builder.preload('responses', recursiveCallback)
-  builder.withCount('reactions')
+  builder.preload('reactions')
 }
 
 export default class CommentService {
@@ -16,7 +16,7 @@ export default class CommentService {
       .whereNull('replyTo')
       .preload('author')
       .preload('responses', recursiveCallback)
-      .withCount('reactions')
+      .preload('reactions')
       .orderBy('created_at', 'asc')
 
     return comments

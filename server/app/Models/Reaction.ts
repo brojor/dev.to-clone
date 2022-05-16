@@ -7,30 +7,30 @@ import Comment from './Comment'
 type Category = 'like' | 'readinglist' | 'unicorn'
 
 export default class Reaction extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
-  @column()
+  @column({})
   public userId: number
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @column()
+  @column({ serializeAs: null })
   public postId: number
   @belongsTo(() => Post)
   public post: BelongsTo<typeof Post>
 
-  @column()
+  @column({ serializeAs: null })
   public commentId: number
-  @belongsTo(() => Comment)
+  @belongsTo(() => Comment, { serializeAs: null })
   public comment: BelongsTo<typeof Comment>
 
-  @column()
+  @column({ serializeAs: null })
   public category: Category
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 }
