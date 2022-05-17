@@ -119,7 +119,7 @@ details {
     }
     .comment-details {
       width: 100%;
-      margin-left: 0.5rem;
+      // margin-left: 0.5rem;
 
       .comment-content {
         border-radius: 0.375rem;
