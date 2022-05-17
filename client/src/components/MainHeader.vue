@@ -1,12 +1,12 @@
 <template>
   <header class="main-header">
     <div class="header-container">
-      <a href="" class="site-logo"
+      <router-link to="/" class="site-logo"
         ><img
           src="https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png"
           alt="Site logo image"
           class="site-logo-img"
-      /></a>
+      /></router-link>
       <div class="search-bar">
         <input type="text" name="search-bar" id="" placeholder="Search..." />
         <button class="submit-btn">
