@@ -15,7 +15,7 @@
         <textarea
           :class="{ 'is-expanded': isExpanded }"
           ref="textarea"
-          placeholder="Add to the discussion"
+          :placeholder="placeholder"
           name="comment"
           v-model="text"
         ></textarea>
@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { ref } from '@vue/reactivity';
-import { onMounted } from '@vue/runtime-core';
+import { computed, onMounted } from '@vue/runtime-core';
 import axios from 'axios';
 import CommentToolbox from './CommentToolbox.vue';
 
@@ -45,6 +45,10 @@ const isExpanded = ref(false);
 
 const textarea = ref<HTMLElement | null>(null);
 
+const placeholder = computed(() => {
+  return props.isTopLevel ? 'Add to the discussion' : 'Reply...';
+});
+
 const props = defineProps({
   isTopLevel: {
     type: Boolean,
@@ -53,7 +57,6 @@ const props = defineProps({
 });
 
 const submitForm = () => {
-  console.log('submituju');
   emit('submit', text.value);
   text.value = '';
 };
