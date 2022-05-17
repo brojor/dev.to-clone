@@ -37,7 +37,11 @@
       <div class="article-body">
         <span v-html="articleBody"></span>
       </div>
-      <ArticleDiscussion :comments="comments" @change="handleCommentChange" />
+      <ArticleDiscussion
+        :comments="comments"
+        :comments-count="post.meta.comments_count"
+        @change="handleCommentChange"
+      />
     </article>
   </main>
 </template>

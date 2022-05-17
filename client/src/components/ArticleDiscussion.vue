@@ -1,7 +1,7 @@
 <template>
   <section class="comments">
     <header>
-      <h2>Discussion (10)</h2>
+      <h2>Discussion ({{ props.commentsCount }})</h2>
       <button class="subscribe">Subscribe</button>
     </header>
     <div class="comment-container">
@@ -25,6 +25,7 @@ import axios from 'axios';
 
 const props = defineProps<{
   comments: Comment[];
+  commentsCount: number;
 }>();
 
 const emit = defineEmits(['change']);
