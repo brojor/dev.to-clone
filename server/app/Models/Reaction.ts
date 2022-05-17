@@ -25,7 +25,7 @@ export default class Reaction extends BaseModel {
   @belongsTo(() => Comment, { serializeAs: null })
   public comment: BelongsTo<typeof Comment>
 
-  @column({ serializeAs: null })
+  @column()
   public category: Category
 
   @column.dateTime({ autoCreate: true, serializeAs: null })

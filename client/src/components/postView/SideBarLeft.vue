@@ -48,12 +48,8 @@ const articleReactionCounts = ref([
 ]);
 
 type Reaction = {
-  id: number;
   user_id: number;
-  post_id: number;
   category: string;
-  created_at: string;
-  updated_at: string;
 };
 
 const userReactions = ref<Reaction[]>([]);
@@ -106,8 +102,9 @@ const handleClick = (category: string) => {
     axios
       .delete('http://127.0.0.1:3333/reactions', {
         data: {
+          reactableType: 'post',
+          reactableId: 1, // todo: get this from props/state/router
           category,
-          postId: 1, //todo: get post id from router
         },
       })
       .then(({ data }) => {
@@ -120,8 +117,9 @@ const handleClick = (category: string) => {
   } else {
     axios
       .post('http://127.0.0.1:3333/reactions', {
+        reactableType: 'post',
+        reactableId: 1, // todo: get this from props/state/router
         category,
-        postId: 1, //todo: get post id from router
       })
       .then(({ data }) => {
         if (data.result === 'created') {
