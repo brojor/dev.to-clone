@@ -7,15 +7,17 @@
       />
     </span>
     <div class="comment-form-inner">
-      <div class="comment">
+      <div class="comment" @click.once="isExpanded = true">
         <textarea
+          :class="{ 'is-expanded': isExpanded }"
           ref="textarea"
           placeholder="Add to the discussion"
           name="comment"
           v-model="text"
         ></textarea>
+        <CommentToolbox v-if="isExpanded" />
       </div>
-      <div class="comment-buttons">
+      <div class="comment-buttons" v-if="isExpanded">
         <button @click="submitForm" type="submit" :disabled="text.length < 1">
           Submit
         </button>
@@ -29,10 +31,15 @@
 import { ref } from '@vue/reactivity';
 import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
+import CommentToolbox from './CommentToolbox.vue';
 
 const emit = defineEmits(['submit']);
 
 const text = ref('');
+
+const isExpanded = ref(false);
+
+const textarea = ref<HTMLElement | null>(null);
 
 const props = defineProps({
   isTopLevel: {
@@ -47,11 +54,10 @@ const submitForm = () => {
   text.value = '';
 };
 
-const textarea = ref<HTMLElement | null>(null);
-
 onMounted(() => {
   if (!props.isTopLevel) {
     textarea.value?.focus();
+    isExpanded.value = true;
   }
 });
 </script>
@@ -103,6 +109,14 @@ onMounted(() => {
 .comment {
   width: 100%;
   margin-bottom: 0.5rem;
+  background: var(--form-bg);
+  border: 1px solid rgb(64, 64, 64);
+  border-radius: 0.375rem;
+  &:focus-within {
+    background-color: var(--form-bg-focus);
+    border-color: var(--form-border-focus);
+    box-shadow: 0 0 0 1px var(--form-border-focus);
+  }
   textarea {
     color: rgb(250, 250, 250);
     width: 100%;
@@ -112,8 +126,13 @@ onMounted(() => {
     background-color: rgb(0, 0, 0);
     font-size: 1rem;
     font-family: inherit;
-    border: 1px solid rgb(64, 64, 64);
+
+    border: none;
+    outline: none;
     line-height: 1.5;
+    &.is-expanded {
+      height: 128px;
+    }
     &::placeholder {
       color: rgb(82, 82, 82);
     }

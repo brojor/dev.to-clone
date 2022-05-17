@@ -63,7 +63,16 @@
 
   --button-ghost-color: rgb(214, 214, 214);
   --button-ghost-color-hover: rgb(249, 249, 249);
+  --button-ghost-dimmed-color: rgb(163, 163, 163);
+  --button-ghost-dimmed-color-hover: rgb(249, 249, 249, );
+  --button-ghost-bg: transparent;
   --button-ghost-bg-hover: rgba(255, 255, 255, 0.035);
+
+  --form-bg: rgb(0, 0, 0);
+  --form-bg-focus: rgb(0, 0, 0);
+  --form-border-focus: rgb(129 140 248);
+
+
 
 
 }
