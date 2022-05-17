@@ -5,7 +5,7 @@
       <button class="subscribe">Subscribe</button>
     </header>
     <div class="comment-container">
-      <CommentForm @submit="addNewComment" show-avatar />
+      <CommentForm @submit="addNewComment" is-top-level />
       <CommentList
         :comments="props.comments"
         @delete-comment="deleteComment($event)"

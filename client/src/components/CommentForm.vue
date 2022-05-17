@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent class="new-comment">
-    <span class="avatar" v-if="showAvatar">
+    <span class="avatar" v-if="isTopLevel">
       <img
         src="https://res.cloudinary.com/practicaldev/image/fetch/s----BXFj9n--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/388717/c8a6ddef-627d-4fc3-ad73-3de02f122ae2.png"
         alt="avatar image"
@@ -9,6 +9,7 @@
     <div class="comment-form-inner">
       <div class="comment">
         <textarea
+          ref="textarea"
           placeholder="Add to the discussion"
           name="comment"
           v-model="text"
@@ -26,6 +27,7 @@
 
 <script setup lang="ts">
 import { ref } from '@vue/reactivity';
+import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
 
 const emit = defineEmits(['submit']);
@@ -33,7 +35,7 @@ const emit = defineEmits(['submit']);
 const text = ref('');
 
 const props = defineProps({
-  showAvatar: {
+  isTopLevel: {
     type: Boolean,
     default: false,
   },
@@ -44,6 +46,14 @@ const submitForm = () => {
   emit('submit', text.value);
   text.value = '';
 };
+
+const textarea = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  if (!props.isTopLevel) {
+    textarea.value?.focus();
+  }
+});
 </script>
 
 <style scoped lang="scss">
