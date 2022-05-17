@@ -9,11 +9,15 @@ import CommentService from '../Services/CommentService'
 
 export default class CommentsController {
   public async store({ request, response }: HttpContextContract) {
-    const { postId, bodyMarkdown: body, replyTo } = request.body()
+    const { postId, bodyMarkdown, replyTo } = request.body()
+
+    const dirtyHtml = marked.parse(bodyMarkdown)
+    const cleanHtml = sanitizeHtml(dirtyHtml)
+
 
     const levelIndex = replyTo ? (await Comment.findByOrFail('id', replyTo)).levelIndex + 1 : 0
 
-    await Comment.create({ postId, body, userId: 1, replyTo, levelIndex })
+    await Comment.create({ postId, body: cleanHtml, userId: 1, replyTo, levelIndex })
 
     return response.status(201)
   }
@@ -52,18 +56,6 @@ async function hasChildren(comment: Comment) {
   return children.length > 0
 }
 
-// async function deleteParentIfisArchivedAndEmpty(comment: Comment) {
-//   if (hasParent(comment)) {
-//     const parentComment = await Comment.findBy('id', comment.replyTo)
-//     if (parentComment?.isArchived) {
-//       const siblings = await Comment.query().where('replyTo', parentComment.id)
-//       if (siblings.length === 0) {
-//         await parentComment.delete()
-//         await deleteParentIfisArchivedAndEmpty(parentComment)
-//       }
-//     }
-//   }
-// }
 
 async function deleteParentIfisArchivedAndEmpty(comment: Comment) {
   if (comment.replyTo === null) return
