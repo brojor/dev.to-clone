@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent class="new-comment">
+  <form
+    @submit.prevent
+    class="new-comment"
+    :class="{ 'is-expanded': isExpanded }"
+  >
     <span class="avatar" v-if="isTopLevel">
       <img
         src="https://res.cloudinary.com/practicaldev/image/fetch/s----BXFj9n--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/388717/c8a6ddef-627d-4fc3-ad73-3de02f122ae2.png"
@@ -66,7 +70,9 @@ onMounted(() => {
 .new-comment {
   display: flex;
   margin-bottom: 1rem;
-  padding-top: 1rem;
+  &.is-expanded {
+    margin-top: 1rem;
+  }
   .comment-form-inner {
     width: 100%;
   }
@@ -117,6 +123,7 @@ onMounted(() => {
     border-color: var(--form-border-focus);
     box-shadow: 0 0 0 1px var(--form-border-focus);
   }
+
   textarea {
     color: rgb(250, 250, 250);
     width: 100%;

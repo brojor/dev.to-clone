@@ -1,48 +1,28 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import axios from 'axios';
 import MainArticle from '../components/MainArticle.vue';
 import { useRoute } from 'vue-router';
 import SideBarLeft from '../components/postView/SideBarLeft.vue';
 import SideBarRight from '../components/postView/SideBarRight.vue';
-import ArticleDiscussion from '../components/ArticleDiscussion.vue';
-
 import type { Post, Author, Comment } from '../interfaces';
+import axios from 'axios';
 
-const post = ref<Post>();
-const comments = ref<Comment[]>([]);
 const user = ref<Author>();
 
-const {
-  params: { username, slug },
-} = useRoute();
+const username = 'pb';
 
 onMounted(async () => {
-  const { data } = await axios.get(`http://localhost:3333/${username}/${slug}`);
-
-  post.value = data.post;
-  comments.value = data.comments;
-
   const { data: authorData } = await axios.get(
     `http://localhost:3333/${username}`
   );
   user.value = authorData;
 });
-
-const handleCommentChange = async () => {
-  const postId = 1;
-  const { data } = await axios.get(
-    `http://localhost:3333/comments?postId=${postId}`
-  );
-  comments.value = data;
-};
 </script>
 
 <template>
   <div class="index-container">
     <SideBarLeft />
-    <!-- <MainArticle v-if="post" v-bind="post" /> -->
-    <ArticleDiscussion :comments="comments" @change="handleCommentChange" />
+    <MainArticle />
     <SideBarRight v-if="user" v-bind="user" />
   </div>
 </template>

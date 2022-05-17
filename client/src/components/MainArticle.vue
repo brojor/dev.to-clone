@@ -1,6 +1,6 @@
 <template>
-  <main class="article-wrapper">
-    <article>
+  <main class="article-wrapper" v-if="post">
+    <article class="article">
       <header class="article-header">
         <figure>
           <img
@@ -37,6 +37,7 @@
       <div class="article-body">
         <span v-html="articleBody"></span>
       </div>
+      <ArticleDiscussion :comments="comments" @change="handleCommentChange" />
     </article>
   </main>
 </template>
@@ -46,32 +47,32 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import { DateTime } from 'luxon';
 import PrefixedTag from '../components/PrefixedTag.vue';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import axios from 'axios';
+import ArticleDiscussion from './ArticleDiscussion.vue';
 
-import type { Post } from '../interfaces';
+import type { Post, Author, Comment } from '../interfaces';
+import { useRoute } from 'vue-router';
 
-const post = defineProps<Post>();
+/* REFs */
+const post = ref<Post>();
+const comments = ref<Comment[]>([]);
 
-const md = new MarkdownIt({
-  highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(str, { language: lang }).value;
-      } catch (__) {}
-    }
+/* CONSTs */
+const {
+  params: { username, slug },
+} = useRoute();
 
-    return ''; // use external default escaping
-  },
-});
-
+/* COMPUTED */
 const articleBody = computed(() => {
-  if (post.body) {
-    return md.render(post.body);
+  if (post.value?.body) {
+    return md.render(post.value.body);
   }
   return '';
 });
+
 const date1 = computed(() => {
-  const published = DateTime.fromISO(post.published_at);
+  const published = DateTime.fromISO(post.value.published_at);
   const updated = DateTime.fromISO(post.updated_at);
   const now = DateTime.now();
   const format = published.year === now.year ? 'dd. L' : 'dd. L. yyyy';
@@ -85,11 +86,51 @@ const date1 = computed(() => {
 });
 
 const tags = computed(() => {
-  return post.tags.reduce((arr, { name }) => [...arr, name], []);
+  return post.value?.tags?.reduce((arr, { name }) => [...arr, name], []);
+});
+
+/** HOOKS */
+onMounted(async () => {
+  const { data } = await axios.get(`http://localhost:3333/${username}/${slug}`);
+
+  post.value = data.post;
+  comments.value = data.comments;
+});
+
+/** METHODS */
+const handleCommentChange = async () => {
+  const postId = 1;
+  const { data } = await axios.get(
+    `http://localhost:3333/comments?postId=${postId}`
+  );
+  comments.value = data;
+};
+
+/** OTHER */
+const md = new MarkdownIt({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang }).value;
+      } catch (__) {}
+    }
+
+    return ''; // use external default escaping
+  },
 });
 </script>
 
 <style>
+.article {
+  border-radius: 0.375rem;
+  background: var(--card-bg);
+  color: var(--card-color);
+  box-shadow: 0 0 0 1px var(--card-border);
+}
+.article-header {
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
 .avatar-image img {
   border-radius: 9999px;
 }

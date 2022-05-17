@@ -43,7 +43,7 @@
   --card-secondary-border: rgba(var(--white), 0.1);
   --card-color-tertiary: rgb(163, 163, 163);
   --card-color: rgb(250, 250, 250);
-  --card-border: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.15);
 
   --link-color: rgb(212, 212, 212);
   --link-color-secondary: rgb(189, 189, 189);
@@ -146,6 +146,9 @@ p {
   margin: 0;
   overflow-wrap: break-word;
   margin-bottom: 1.25rem;
+}
+p:last-child {
+  margin-bottom: 0;
 }
 
 strong {
