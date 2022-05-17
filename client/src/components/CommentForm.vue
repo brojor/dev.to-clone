@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent class="new-comment">
-    <span class="avatar">
+    <span class="avatar" v-if="showAvatar">
       <img
         src="https://res.cloudinary.com/practicaldev/image/fetch/s----BXFj9n--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/388717/c8a6ddef-627d-4fc3-ad73-3de02f122ae2.png"
         alt="avatar image"
@@ -32,6 +32,13 @@ const emit = defineEmits(['submit']);
 
 const text = ref('');
 
+const props = defineProps({
+  showAvatar: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const submitForm = () => {
   console.log('submituju');
   emit('submit', text.value);
@@ -43,6 +50,7 @@ const submitForm = () => {
 .new-comment {
   display: flex;
   margin-bottom: 1rem;
+  padding-top: 1rem;
   .comment-form-inner {
     width: 100%;
   }
