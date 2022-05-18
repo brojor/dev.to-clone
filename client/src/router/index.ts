@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'post',
       component: () => import('../views/PostView.vue'),
     },
+    {
+      path: '/new',
+      name: 'new',
+      component: () => import('../views/NewPost.vue'),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // always scroll to top
