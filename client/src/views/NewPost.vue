@@ -89,7 +89,75 @@ const toggleUrl = () => {
   }
 };
 
+const list = () => {
+  const { selectionStart, selectionEnd, value: textContent } = textarea.value!;
+
+  const alreadyExist =
+    textContent.slice(selectionStart - 3, selectionStart) === '1. ' ||
+    /\d. /.test(textContent.slice(selectionStart, selectionEnd));
+  console.log({ alreadyExist });
+
+  if (alreadyExist) {
+    if (selectionStart === selectionEnd) {
+      const firstPart = textContent.slice(0, selectionStart);
+      const lastPart = textContent.slice(selectionEnd);
+      const newline =
+        textContent.charAt(selectionStart - 1) === '\n' || selectionStart === 0
+          ? ''
+          : '\n\n';
+
+      textarea.value.value = `${firstPart.slice(0, -3)}${lastPart}`;
+      textarea.value.selectionStart = selectionStart - 3;
+      textarea.value.selectionEnd = selectionStart - 3;
+    } else {
+      console.log('složitá situace');
+      const firstPart = textContent.slice(0, selectionStart);
+      const middlePart = textContent.slice(selectionStart, selectionEnd);
+      const lastPart = textContent.slice(selectionEnd);
+      const result = middlePart.replace(/\d. /g, '');
+      textarea.value.value = `${firstPart}${result}${lastPart}`;
+      const offset = result.split('\n').length * 3;
+      console.log({ offset });
+      textarea.value.selectionStart = selectionStart;
+      textarea.value.selectionEnd = selectionEnd - offset;
+    }
+  } else {
+    const firstPart = textContent.slice(0, selectionStart);
+    const middlePart = textContent.slice(selectionStart, selectionEnd);
+    const lastPart = textContent.slice(selectionEnd);
+    if (selectionStart === selectionEnd) {
+      const newlineBefore =
+        textContent.charAt(selectionStart - 1) === '\n' || selectionStart === 0
+          ? ''
+          : '\n\n';
+      const newlineAfter =
+        textContent.charAt(selectionStart) === '\n' ? '' : '\n';
+
+      textarea.value.value = `${firstPart}${newlineBefore}1. ${newlineAfter}${lastPart}`;
+      const offset = newlineBefore ? 5 : 3;
+      textarea.value.selectionStart = selectionStart + offset;
+      textarea.value.selectionEnd = selectionStart + offset;
+    } else {
+      console.log('složitá situace pro vložení');
+      const items = middlePart.split('\n');
+      console.log({ items });
+      const string = items
+        .reduce((str, item, index) => {
+          return str + `${index + 1}. ${item}\n`;
+        }, '')
+        .slice(0, -1);
+      textarea.value.value = `${firstPart}${string}${lastPart}`;
+      const offset = items.length * 3;
+      textarea.value.selectionStart = selectionStart;
+      textarea.value.selectionEnd = selectionEnd + offset;
+    }
+  }
+
+  textarea.value.focus();
+};
+
 const buttons = [
+  { name: 'list', method: list },
   {
     name: 'bold',
     sign: '**',
