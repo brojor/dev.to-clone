@@ -1,7 +1,9 @@
 <template>
   <h1>this is new post</h1>
   <textarea ref="textarea" cols="30" rows="10"></textarea>
-  <button @click="bold">bold</button>
+  <button v-for="btn in buttons" :key="btn.name" @click="btn.method(btn.sign)">
+    {{ btn.name }}
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -38,21 +40,43 @@ const removePairSign = (textarea: HTMLTextAreaElement, sign: string) => {
   textarea.focus();
 };
 
-const bold = async () => {
-  const sign = '**';
+const pairSign = (sign: string) => {
   const { selectionStart, selectionEnd, value: textContent } = textarea.value!;
 
-  const before = textContent.slice(selectionStart - 2, selectionStart);
-  const after = textContent.slice(selectionEnd, selectionEnd + 2);
+  const before = textContent.slice(selectionStart - 2, selectionStart).trim();
+  const after = textContent.slice(selectionEnd, selectionEnd + 2).trim();
 
   console.log({ before, after, sign });
 
   if (before === after && after === sign) {
-    removePairSign(textarea.value!, sign);
+    removePairSign(textarea.value, sign);
   } else {
-    addPairSign(textarea.value!, sign);
+    addPairSign(textarea.value, sign);
   }
 };
+
+const buttons = [
+  {
+    name: 'bold',
+    sign: '**',
+    method: pairSign,
+  },
+  {
+    name: 'italic',
+    sign: '__',
+    method: pairSign,
+  },
+  {
+    name: 'code',
+    sign: '`',
+    method: pairSign,
+  },
+  {
+    name: 'strikethrough',
+    sign: '~~',
+    method: pairSign,
+  },
+];
 </script>
 
 <style></style>
