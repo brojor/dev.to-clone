@@ -40,13 +40,14 @@ const removePairSign = (textarea: HTMLTextAreaElement, sign: string) => {
   textarea.focus();
 };
 
-const pairSign = (sign: string) => {
+const togglePairSign = (sign: string) => {
   const { selectionStart, selectionEnd, value: textContent } = textarea.value!;
 
-  const before = textContent.slice(selectionStart - 2, selectionStart).trim();
-  const after = textContent.slice(selectionEnd, selectionEnd + 2).trim();
-
-  console.log({ before, after, sign });
+  const before = textContent.slice(
+    selectionStart - sign.length,
+    selectionStart
+  );
+  const after = textContent.slice(selectionEnd, selectionEnd + sign.length);
 
   if (before === after && after === sign) {
     removePairSign(textarea.value, sign);
@@ -55,27 +56,61 @@ const pairSign = (sign: string) => {
   }
 };
 
+const toggleUrl = () => {
+  if (textarea.value) {
+    const { selectionStart, selectionEnd, value: textContent } = textarea.value;
+    const alreadyExist =
+      textContent.substring(selectionStart - 2, selectionStart) === '](' &&
+      textContent.charAt(selectionEnd) === ')';
+
+    if (alreadyExist) {
+      const beforeSelection = textContent.slice(0, selectionStart);
+
+      const startIndex = beforeSelection.lastIndexOf('[');
+      const endIndex = beforeSelection.lastIndexOf(']');
+      const urlName = beforeSelection.substring(startIndex + 1, endIndex);
+
+      const firstPart = textContent.slice(0, startIndex);
+      const lastPart = textContent.slice(selectionEnd + 1);
+
+      textarea.value.value = `${firstPart}${urlName}${lastPart}`;
+
+      textarea.value.selectionStart = startIndex;
+      textarea.value.selectionEnd = startIndex + urlName.length;
+    } else {
+      const firstPart = textContent.slice(0, selectionStart);
+      const middlePart = textContent.slice(selectionStart, selectionEnd);
+      const lastPart = textContent.slice(selectionEnd);
+      textarea.value.value = `${firstPart}[${middlePart}](url)${lastPart}`;
+      textarea.value.selectionStart = selectionEnd + 3;
+      textarea.value.selectionEnd = selectionEnd + 6;
+    }
+    textarea.value.focus();
+  }
+};
+
 const buttons = [
   {
     name: 'bold',
     sign: '**',
-    method: pairSign,
+    method: togglePairSign,
   },
   {
     name: 'italic',
-    sign: '__',
-    method: pairSign,
+    sign: '_',
+    method: togglePairSign,
   },
   {
     name: 'code',
     sign: '`',
-    method: pairSign,
+    method: togglePairSign,
   },
   {
     name: 'strikethrough',
     sign: '~~',
-    method: pairSign,
+    method: togglePairSign,
   },
+  { name: 'url', method: toggleUrl },
 ];
 </script>
 
