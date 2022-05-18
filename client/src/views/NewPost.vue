@@ -106,6 +106,12 @@ const buttons = [
     method: togglePairSign,
   },
   {
+    name: 'codeBlock',
+    sign: '\n```\n',
+    method: togglePairSign,
+  },
+
+  {
     name: 'strikethrough',
     sign: '~~',
     method: togglePairSign,
