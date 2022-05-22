@@ -1,13 +1,18 @@
 <template>
   <h1>this is new post</h1>
   <textarea ref="textarea" cols="30" rows="10"></textarea>
-  <button v-for="btn in buttons" :key="btn.name" @click="btn.method(btn.sign)">
+  <button
+    v-for="btn in buttons"
+    :key="btn.name"
+    :data-test="btn.name"
+    @click="btn.method(btn.sign)"
+  >
     {{ btn.name }}
   </button>
 </template>
 
 <script setup lang="ts">
-import { ref } from '@vue/reactivity';
+import { ref } from "@vue/reactivity";
 
 const textarea = ref<HTMLTextAreaElement | null>(null);
 
@@ -60,14 +65,14 @@ const toggleUrl = () => {
   if (textarea.value) {
     const { selectionStart, selectionEnd, value: textContent } = textarea.value;
     const alreadyExist =
-      textContent.substring(selectionStart - 2, selectionStart) === '](' &&
-      textContent.charAt(selectionEnd) === ')';
+      textContent.substring(selectionStart - 2, selectionStart) === "](" &&
+      textContent.charAt(selectionEnd) === ")";
 
     if (alreadyExist) {
       const beforeSelection = textContent.slice(0, selectionStart);
 
-      const startIndex = beforeSelection.lastIndexOf('[');
-      const endIndex = beforeSelection.lastIndexOf(']');
+      const startIndex = beforeSelection.lastIndexOf("[");
+      const endIndex = beforeSelection.lastIndexOf("]");
       const urlName = beforeSelection.substring(startIndex + 1, endIndex);
 
       const firstPart = textContent.slice(0, startIndex);
@@ -89,102 +94,101 @@ const toggleUrl = () => {
   }
 };
 
-const list = () => {
-  const { selectionStart, selectionEnd, value: textContent } = textarea.value!;
-
-  const alreadyExist =
-    textContent.slice(selectionStart - 3, selectionStart) === '1. ' ||
-    /\d. /.test(textContent.slice(selectionStart, selectionEnd));
-  console.log({ alreadyExist });
-
-  if (alreadyExist) {
-    if (selectionStart === selectionEnd) {
-      const firstPart = textContent.slice(0, selectionStart);
-      const lastPart = textContent.slice(selectionEnd);
-      const newline =
-        textContent.charAt(selectionStart - 1) === '\n' || selectionStart === 0
-          ? ''
-          : '\n\n';
-
-      textarea.value.value = `${firstPart.slice(0, -3)}${lastPart}`;
-      textarea.value.selectionStart = selectionStart - 3;
-      textarea.value.selectionEnd = selectionStart - 3;
-    } else {
-      console.log('složitá situace');
-      const firstPart = textContent.slice(0, selectionStart);
-      const middlePart = textContent.slice(selectionStart, selectionEnd);
-      const lastPart = textContent.slice(selectionEnd);
-      const result = middlePart.replace(/\d. /g, '');
-      textarea.value.value = `${firstPart}${result}${lastPart}`;
-      const offset = result.split('\n').length * 3;
-      console.log({ offset });
-      textarea.value.selectionStart = selectionStart;
-      textarea.value.selectionEnd = selectionEnd - offset;
-    }
-  } else {
+const list = ({ ordered }: { ordered: boolean }) => {
+  const sign = ordered ? "1. " : "- ";
+  if (textarea.value) {
+    const { selectionStart, selectionEnd, value: textContent } = textarea.value;
     const firstPart = textContent.slice(0, selectionStart);
     const middlePart = textContent.slice(selectionStart, selectionEnd);
     const lastPart = textContent.slice(selectionEnd);
+
     if (selectionStart === selectionEnd) {
-      const newlineBefore =
-        textContent.charAt(selectionStart - 1) === '\n' || selectionStart === 0
-          ? ''
-          : '\n\n';
-      const newlineAfter =
-        textContent.charAt(selectionStart) === '\n' ? '' : '\n';
+      const alreadyExist =
+        textContent.slice(selectionStart - sign.length, selectionStart) ===
+        sign;
 
-      textarea.value.value = `${firstPart}${newlineBefore}1. ${newlineAfter}${lastPart}`;
-      const offset = newlineBefore ? 5 : 3;
-      textarea.value.selectionStart = selectionStart + offset;
-      textarea.value.selectionEnd = selectionStart + offset;
+      if (alreadyExist) {
+        textarea.value.value = `${firstPart.slice(0, -sign.length)}${lastPart}`;
+        textarea.value.selectionStart = selectionStart - sign.length;
+        textarea.value.selectionEnd = selectionStart - sign.length;
+      } else {
+        const newlineBefore =
+          textContent.charAt(selectionStart - 1) === "\n" ||
+          selectionStart === 0
+            ? ""
+            : "\n\n";
+        const newlineAfter =
+          textContent.charAt(selectionStart) === "\n" || selectionStart === 0
+            ? ""
+            : "\n";
+
+        textarea.value.value = `${firstPart}${newlineBefore}${sign}${newlineAfter}${lastPart}`;
+        const offset = newlineBefore ? sign.length + 2 : sign.length;
+        textarea.value.selectionStart = selectionStart + offset;
+        textarea.value.selectionEnd = selectionStart + offset;
+      }
     } else {
-      console.log('složitá situace pro vložení');
-      const items = middlePart.split('\n');
-      console.log({ items });
-      const string = items
-        .reduce((str, item, index) => {
-          return str + `${index + 1}. ${item}\n`;
-        }, '')
-        .slice(0, -1);
-      textarea.value.value = `${firstPart}${string}${lastPart}`;
-      const offset = items.length * 3;
+      const regex = ordered ? /\d. /g : /- /g;
+      const alreadyExist = regex.test(
+        textContent.slice(selectionStart, selectionEnd)
+      );
+      const items = middlePart.split("\n");
+      const offset = items.length * sign.length;
+      if (alreadyExist) {
+        const result = middlePart.replace(regex, "");
+        textarea.value.value = `${firstPart}${result}${lastPart}`;
+        textarea.value.selectionEnd = selectionEnd - offset;
+      } else {
+        const list = makeList(items, { ordered });
+        textarea.value.value = `${firstPart}${list}${lastPart}`;
+        textarea.value.selectionEnd = selectionEnd + offset;
+      }
       textarea.value.selectionStart = selectionStart;
-      textarea.value.selectionEnd = selectionEnd + offset;
     }
+    textarea.value.focus();
   }
-
-  textarea.value.focus();
 };
 
+function makeList(items: string[], { ordered }: { ordered: boolean }) {
+  console.log("makelist ordered? ", ordered);
+  return items
+    .reduce((str, item, index) => {
+      const symbol = ordered ? `${index + 1}.` : "-";
+      return str + `${symbol} ${item}\n`;
+    }, "")
+    .slice(0, -1);
+}
+
 const buttons = [
-  { name: 'list', method: list },
+  { name: "ol", method: () => list({ ordered: true }) },
+  { name: "ul", method: () => list({ ordered: false }) },
   {
-    name: 'bold',
-    sign: '**',
+    name: "bold",
+    sign: "**",
     method: togglePairSign,
   },
   {
-    name: 'italic',
-    sign: '_',
+    name: "italic",
+    sign: "_",
     method: togglePairSign,
   },
   {
-    name: 'code',
-    sign: '`',
+    name: "code",
+    sign: "`",
     method: togglePairSign,
   },
   {
-    name: 'codeBlock',
-    sign: '\n```\n',
+    name: "codeBlock",
+    sign: "\n```\n",
     method: togglePairSign,
   },
 
   {
-    name: 'strikethrough',
-    sign: '~~',
+    name: "strikethrough",
+    sign: "~~",
     method: togglePairSign,
   },
-  { name: 'url', method: toggleUrl },
+  { name: "link", method: toggleUrl },
 ];
 </script>
 
