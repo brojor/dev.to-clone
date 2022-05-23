@@ -24,6 +24,7 @@
 /* semantic color variables for this project */
 :root {
   --white: #ffffff;
+  --article-form-actions-height: 88px;
 
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -47,18 +48,26 @@
 
   --content-rhythm: var(--content-font-size);
   --content-font-size: 1.25rem;
+  --content-padding-y: 2rem;
+  --content-padding-x: 4rem;
 
-  --link-color: rgb(212, 212, 212);
-  --link-color-secondary: rgb(189, 189, 189);
-  --link-bg-hover: rgba(49, 46, 129, .75);
-  --link-color-hover: rgb(165, 180, 252);
-  --lh-base: 1.5;
+
+  --body-color: rgb(250, 250, 250);
   --button-primary-bg: rgb(79, 70, 229);
   --button-primary-color: rgb(255, 255, 255);
   --button-secondary-bg: rgb(61 61 61);
   --button-secondary-bg-hover: rgb(87 87 87);
   --button-secondary-color: rgb(214 214 215);
   --button-secondary-color-hover: rgb(249 249 249);
+
+  --button-outlined-bg: transparent;
+  --button-outlined-bg-hover: rgba(255, 255, 255, 0.04);
+  --button-outlined-border: rgb(61, 61, 61);
+  --button-outlined-border-hover: rgb(87, 87, 87);
+  --button-outlined-color: rgb(214, 214, 215);
+  --button-outlined-color-hover: rgb(249, 249, 249);
+
+
   --button-primary-bg: rgb(79 70 229);
   --button-primary-bg-hover: rgb(99 102 241);
   --button-primary-color: rgb(var(--white));
@@ -71,7 +80,17 @@
   --button-ghost-bg: transparent;
   --button-ghost-bg-hover: rgba(255, 255, 255, 0.035);
 
+  --header-height: 56px;
+  --layout-padding: 1rem;
+  --layout-gap: 1rem;
+
   --lh-tight: 1.25;
+  --lh-base: 1.5;
+
+  --link-color: rgb(212, 212, 212);
+  --link-color-secondary: rgb(189, 189, 189);
+  --link-bg-hover: rgba(49, 46, 129, .75);
+  --link-color-hover: rgb(165, 180, 252);
 
   --form-bg: rgb(0, 0, 0);
   --form-bg-focus: rgb(0, 0, 0);
@@ -83,8 +102,8 @@
 
   --fw-bold: 700;
 
-
-
+  --site-width: 1280px;
+  --toolbar-padding-right: 4rem;
 }
 
 :root {

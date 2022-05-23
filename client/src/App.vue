@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import MainHeader from './components/MainHeader.vue';
+import { computed } from "@vue/runtime-core";
+import { RouterLink, RouterView, useRoute } from "vue-router";
+import MainHeader from "./components/MainHeader.vue";
+
+const showHeader = computed(() => {
+  const route = useRoute();
+
+  return route.name !== "new";
+});
 </script>
 
 <template>
-  <MainHeader />
+  <MainHeader v-if="showHeader" />
   <RouterView class="main-view" />
   <footer class=""></footer>
 </template>
 
 <style>
-@import '@/assets/base.css';
+@import "@/assets/base.css";
 
 #app {
   width: 100vw;

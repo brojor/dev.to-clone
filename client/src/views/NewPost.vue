@@ -1,5 +1,38 @@
 <template>
-  <h1>this is new post</h1>
+  <form action="">
+    <header></header>
+    <main>
+      <div class="form-content-top">
+        <div class="cover">
+          <label>
+            Add a cover image
+            <input type="file" accept="image/*" />
+          </label>
+        </div>
+        <div class="title">
+          <textarea placeholder="New post title here..."></textarea>
+        </div>
+        <div class="tags">
+          <input type="text" placeholder="Add up to 4 tags..." />
+        </div>
+      </div>
+      <div class="form-content-body">
+        <div class="toolbar-wrapper">
+          <div class="toolbar"></div>
+        </div>
+        <div class="body-textarea-container">
+          <textarea
+            placeholder="Write your post content here..."
+            name="body-markdown"
+          ></textarea>
+        </div>
+      </div>
+    </main>
+    <aside></aside>
+    <footer></footer>
+  </form>
+
+  <!-- <h1>this is new post</h1>
   <textarea ref="textarea" cols="30" rows="10"></textarea>
   <button
     v-for="btn in buttons"
@@ -8,7 +41,7 @@
     @click="btn.method(btn.sign)"
   >
     {{ btn.name }}
-  </button>
+  </button> -->
 </template>
 
 <script setup lang="ts">
@@ -192,4 +225,181 @@ const buttons = [
 ];
 </script>
 
-<style></style>
+<style>
+#app {
+  padding-top: 0;
+}
+</style>
+
+<style scoped>
+form {
+  display: grid;
+  grid-template-columns: 64px 7fr 3fr;
+
+  max-width: var(--site-width);
+  display: grid;
+  padding: 0 var(--layout-padding);
+  height: 100vh;
+  gap: 0 var(--layout-gap);
+  margin: 0 auto;
+  font-size: 1rem;
+
+  grid-template-rows: min-content 1fr min-content;
+}
+.form-content-top {
+  padding: var(--content-padding-y) var(--content-padding-x);
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+.form-content-top .cover {
+  margin-bottom: 1.25rem;
+}
+.form-content-top .title {
+  margin-bottom: 0.5rem;
+}
+.form-content-top textarea {
+  min-height: 60px;
+  max-height: 60px;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.25;
+
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  width: 100%;
+  box-shadow: none;
+  resize: none;
+  transition: none;
+  font-family: inherit;
+
+  color: var(--body-color);
+}
+::placeholder {
+  color: #575757;
+  opacity: 1;
+}
+.tags input {
+  outline: none;
+  border: none;
+  color: var(--body-color);
+  background-color: var(--bg-color);
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.5;
+}
+.tags input::placeholder {
+  color: #757575;
+}
+
+.form-content-body {
+  flex: 1 0 auto;
+  position: relative;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 0.375rem 0.375rem;
+  padding: var(--content-padding-y) var(--content-padding-x);
+}
+.form-content-body .toolbar-wrapper {
+  position: sticky;
+  top: 0;
+  background: rgb(9, 9, 9);
+  padding: 0.5rem var(--content-padding-x);
+  padding-right: var(--toolbar-padding-right, 0);
+  overflow-x: auto;
+  flex-shrink: 0;
+  margin: calc(var(--content-padding-y) * -1)
+    calc(var(--content-padding-x) * -1) 1.5rem
+    calc(var(--content-padding-x) * -1);
+}
+.toolbar {
+  margin-left: -0.5rem;
+  width: 686px;
+  height: 40px;
+}
+
+header {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding: 0;
+
+  width: 886px;
+  height: 56px;
+  border: 1px solid gold;
+}
+
+main {
+  height: calc(
+    100vh - var(--header-height) - var(--article-form-actions-height)
+  );
+  grid-column-start: 2;
+  grid-column-end: 2;
+  border-radius: 0.375rem;
+  background: var(--card-bg);
+  color: var(--card-color);
+  box-shadow: 0 0 0 1px var(--card-border);
+
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: anywhere;
+  overflow: auto;
+}
+.body-textarea-container {
+  min-height: 27px;
+  height: 100%;
+}
+
+textarea[name="body-markdown"] {
+  min-height: 27px;
+  height: 100% !important;
+  font-size: 1.125rem;
+  font-family: var(--ff-monospace);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  width: 100%;
+  box-shadow: none;
+  resize: none;
+  transition: none;
+  color: var(--body-color);
+  line-height: 1.5;
+}
+aside {
+  border: 1px solid chartreuse;
+}
+footer {
+  grid-column-start: 2;
+  grid-column-end: span 2;
+
+  width: 1168px;
+  height: 88px;
+  border: 1px solid violet;
+}
+
+label {
+  cursor: pointer;
+  padding: 6px 14px;
+  background: var(--button-outlined-bg);
+  border: var(--button-outlined-border);
+  color: var(--button-outlined-color);
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 0.375rem;
+  display: inline-block;
+  font-weight: 500;
+}
+
+label:hover {
+  background: var(--button-outlined-bg-hover);
+  border-color: var(--button-outlined-border-hover);
+  color: var(--button-outlined-color-hover);
+}
+
+input[type="file"] {
+  display: none;
+}
+</style>
