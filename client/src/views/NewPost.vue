@@ -29,7 +29,12 @@
       </div>
     </main>
     <aside></aside>
-    <footer></footer>
+    <footer>
+      <button class="btn btn-primary">Publish</button>
+      <button class="btn">Save draft</button>
+      <button class="btn icon-alone"><OptionsIcon /></button>
+      <button class="btn">Revert new changes</button>
+    </footer>
   </form>
 
   <!-- <h1>this is new post</h1>
@@ -46,6 +51,7 @@
 
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
+import OptionsIcon from "../components/icons/OptionsIcon.vue";
 
 const textarea = ref<HTMLTextAreaElement | null>(null);
 
@@ -374,10 +380,21 @@ aside {
 footer {
   grid-column-start: 2;
   grid-column-end: span 2;
+  height: var(--article-form-actions-height);
+  display: flex;
+  align-items: center;
+}
 
-  width: 1168px;
-  height: 88px;
-  border: 1px solid violet;
+footer button:nth-child(-n + 2) {
+  margin-right: 0.5rem;
+}
+footer button:last-child {
+  font-weight: normal;
+  font-size: 0.875rem;
+}
+
+.icon-alone {
+  padding: 0.5rem;
 }
 
 label {
