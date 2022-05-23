@@ -1,6 +1,20 @@
 <template>
   <form action="">
-    <header></header>
+    <header>
+      <router-link to="/" class="site-logo">
+        <img
+          src="https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png"
+          alt="DEV Community"
+      /></router-link>
+      <span>Create Post</span>
+      <nav>
+        <button type="button" class="tabs-item active">Edit</button>
+        <button type="button" class="tabs-item">Preview</button>
+      </nav>
+      <button class="btn icon-alone form-close">
+        <CloseIcon />
+      </button>
+    </header>
     <main>
       <div class="form-content-top">
         <div class="cover">
@@ -52,6 +66,7 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
 import OptionsIcon from "../components/icons/OptionsIcon.vue";
+import CloseIcon from "../components/icons/CloseIcon.vue";
 
 const textarea = ref<HTMLTextAreaElement | null>(null);
 
@@ -251,6 +266,7 @@ form {
   font-size: 1rem;
 
   grid-template-rows: min-content 1fr min-content;
+
 }
 .form-content-top {
   padding: var(--content-padding-y) var(--content-padding-x);
@@ -331,9 +347,60 @@ header {
   grid-column-end: 3;
   padding: 0;
 
-  width: 886px;
-  height: 56px;
-  border: 1px solid gold;
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+}
+
+header .site-logo {
+  max-width: 200px;
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  margin-right: var(--layout-gap);
+}
+header .site-logo img {
+  height: calc(var(--header-height) - 1rem);
+}
+
+header span {
+  flex: 1 1 0% !important;
+  font-weight: 500;
+}
+
+header nav {
+  display: flex;
+  font-family: var(--ff-sans-serif);
+}
+.tabs-item {
+  padding: var(--tab-vertical-padding) var(--tab-horizontal-padding);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--tab-color);
+  position: relative;
+  border-radius: 0.375rem;
+  transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms;
+  width: 100%;
+  border: none;
+  background: transparent;
+  margin: 0 0.25rem;
+  font-family: inherit;
+}
+.tabs-item.active {
+  font-weight: 500;
+  color: var(--tab-color-current);
+}
+
+.form-close {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
 }
 
 main {
