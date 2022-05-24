@@ -1,13 +1,19 @@
 <template>
   <div class="toolbar">
-    <button v-for="button in buttons" :key="button.name" class="btn icon-alone">
+    <button
+      v-for="button in buttons"
+      :key="button.name"
+      type="button"
+      @click="button.method"
+      class="btn icon-alone"
+    >
       <component :is="button.component" />
     </button>
     <button class="btn icon-alone"><DropDownIcon /></button>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BoldIcon from "./icons/toolbar/BoldIcon.vue";
 import ItalicIcon from "./icons/toolbar/ItalicIcon.vue";
 import LinkIcon from "./icons/toolbar/LinkIcon.vue";
@@ -19,58 +25,63 @@ import CodeIcon from "./icons/toolbar/CodeIcon.vue";
 import CodeBlockIcon from "./icons/toolbar/CodeBlockIcon.vue";
 import UploadImageIcon from "./icons/toolbar/UploadImageIcon.vue";
 import DropDownIcon from "./icons/toolbar/DropDownIcon.vue";
+import { ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
+import useToolbar from "../composables/toolbar";
+
+const targetEl = ref<HTMLTextAreaElement | null>(null);
+
+const { togglePairSign, toogleList, toggleUrl } = useToolbar(targetEl);
+
+onMounted(() => {
+  targetEl.value = document.getElementById(
+    "raw-markdown"
+  ) as HTMLTextAreaElement;
+});
 
 const buttons = [
   {
     name: "bold",
     component: BoldIcon,
-    // sign: "**",
-    // method: togglePairSign,
+    method: () => togglePairSign("**"),
   },
   {
     name: "italic",
     component: ItalicIcon,
-    // sign: "_",
-    // method: togglePairSign,
+    method: () => togglePairSign("_"),
   },
   {
     name: "link",
     component: LinkIcon,
-    // method: toggleUrl,
+    method: toggleUrl,
   },
   {
     name: "ol",
     component: OrderedListIcon,
-    // method: () => list({ ordered: true }),
+    method: () => toogleList({ ordered: true }),
   },
   {
     name: "ul",
     component: UnorderedListIcon,
-    // method: () => list({ ordered: false }),
+    method: () => toogleList({ ordered: false }),
   },
   {
     name: "heading",
     component: HeadingIcon,
-    // sign: "`",
-    // method: togglePairSign,
   },
   {
     name: "quote",
     component: QuoteIcon,
-    // sign: "`",
-    // method: togglePairSign,
   },
   {
     name: "code",
     component: CodeIcon,
-    // sign: "`",
-    // method: togglePairSign,
+    method: () => togglePairSign("`"),
   },
   {
     name: "codeBlock",
     component: CodeBlockIcon,
-    // sign: "\n```\n",
-    // method: togglePairSign,
+    method: () => togglePairSign("```"),
   },
   {
     name: "uploadImage",
