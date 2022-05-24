@@ -286,3 +286,7 @@ ul[class] {
   --color-hover: var(--button-primary-color-hover);
   font-weight: 500;
 }
+
+.icon-alone {
+  padding: 0.5rem;
+}

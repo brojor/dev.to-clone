@@ -32,7 +32,7 @@
       </div>
       <div class="form-content-body">
         <div class="toolbar-wrapper">
-          <div class="toolbar"></div>
+          <ToolBar />
         </div>
         <div class="body-textarea-container">
           <textarea
@@ -67,6 +67,7 @@
 import { ref } from "@vue/reactivity";
 import OptionsIcon from "../components/icons/OptionsIcon.vue";
 import CloseIcon from "../components/icons/CloseIcon.vue";
+import ToolBar from "../components/ToolBar.vue";
 
 const textarea = ref<HTMLTextAreaElement | null>(null);
 
@@ -266,7 +267,6 @@ form {
   font-size: 1rem;
 
   grid-template-rows: min-content 1fr min-content;
-
 }
 .form-content-top {
   padding: var(--content-padding-y) var(--content-padding-x);
@@ -335,11 +335,6 @@ form {
   margin: calc(var(--content-padding-y) * -1)
     calc(var(--content-padding-x) * -1) 1.5rem
     calc(var(--content-padding-x) * -1);
-}
-.toolbar {
-  margin-left: -0.5rem;
-  width: 686px;
-  height: 40px;
 }
 
 header {
@@ -460,9 +455,7 @@ footer button:last-child {
   font-size: 0.875rem;
 }
 
-.icon-alone {
-  padding: 0.5rem;
-}
+
 
 label {
   cursor: pointer;
