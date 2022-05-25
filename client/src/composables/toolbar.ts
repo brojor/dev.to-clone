@@ -36,20 +36,23 @@ const makeList = (items: string[], { ordered }: { ordered: boolean }) => {
 
 export default function useToolbar(target: Ref<HTMLTextAreaElement>) {
   const togglePairSign = (sign: string) => {
-    const { selectionStart, selectionEnd, value: textContent } = target.value;
+    if (target.value) {
+      console.log("není null");
+      const { selectionStart, selectionEnd, value: textContent } = target.value;
 
-    const before = textContent.slice(
-      selectionStart - sign.length,
-      selectionStart
-    );
-    const after = textContent.slice(selectionEnd, selectionEnd + sign.length);
+      const before = textContent.slice(
+        selectionStart - sign.length,
+        selectionStart
+      );
+      const after = textContent.slice(selectionEnd, selectionEnd + sign.length);
 
-    if (before === after && after === sign) {
-      removePairSign(target.value, sign);
-    } else {
-      addPairSign(target.value, sign);
+      if (before === after && after === sign) {
+        removePairSign(target.value, sign);
+      } else {
+        addPairSign(target.value, sign);
+      }
+      target.value.focus();
     }
-    target.value.focus();
   };
 
   const toogleList = ({ ordered }: { ordered: boolean }) => {
@@ -139,10 +142,54 @@ export default function useToolbar(target: Ref<HTMLTextAreaElement>) {
       target.value.focus();
     }
   };
+  const toggleHeading = () => {
+    const { selectionStart, selectionEnd, value: textContent } = target.value;
+
+    function getCurrentRow() {
+      const startIndex =
+        textContent.indexOf("\n") === -1
+          ? 0
+          : textContent.slice(0, selectionStart).lastIndexOf("\n");
+      return textContent.slice(startIndex, selectionEnd);
+    }
+
+    const currentRow = getCurrentRow();
+
+    function isHashOnRow() {
+      return /#{1,5}/.test(currentRow);
+    }
+
+    if (isHashOnRow()) {
+      const { 0: sign } = currentRow.match(/#{1,5}/);
+      if (sign.length === 4) {
+        target.value.value = currentRow.replace(`${sign} `, "");
+        target.value.setSelectionRange(
+          selectionStart - (sign.length + 1),
+          selectionEnd - (sign.length + 1)
+        );
+      } else {
+        const after = currentRow.slice(selectionStart);
+        target.value.value = `${"#".repeat(sign.length + 1)} ${after}`;
+        target.value.setSelectionRange(selectionStart + 1, selectionEnd + 1);
+      }
+    } else {
+      const beforeCursor = textContent.slice(0, selectionStart);
+      const afterCursor = textContent.slice(selectionStart);
+      const isOnStart = selectionStart === 0;
+      const offset = isOnStart ? "" : "\n\n";
+      target.value.value = `${beforeCursor}${offset}## ${afterCursor}`;
+      target.value.setSelectionRange(
+        selectionStart + 3 + offset.length,
+        selectionEnd + 3 + offset.length
+      );
+    }
+    target.value.focus();
+  };
 
   return {
     togglePairSign,
     toogleList,
     toggleUrl,
+    toggleHeading,
   };
 }

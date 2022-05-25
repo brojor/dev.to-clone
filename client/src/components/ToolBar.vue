@@ -6,6 +6,7 @@
       type="button"
       @click="button.method"
       class="btn icon-alone"
+      :data-test="button.name"
     >
       <component :is="button.component" />
     </button>
@@ -31,7 +32,8 @@ import useToolbar from "../composables/toolbar";
 
 const targetEl = ref<HTMLTextAreaElement | null>(null);
 
-const { togglePairSign, toogleList, toggleUrl } = useToolbar(targetEl);
+const { togglePairSign, toogleList, toggleUrl, toggleHeading } =
+  useToolbar(targetEl);
 
 onMounted(() => {
   targetEl.value = document.getElementById(
@@ -68,6 +70,7 @@ const buttons = [
   {
     name: "heading",
     component: HeadingIcon,
+    method: toggleHeading,
   },
   {
     name: "quote",

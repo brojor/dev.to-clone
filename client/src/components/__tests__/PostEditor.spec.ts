@@ -2,10 +2,8 @@ import { describe, it, expect } from "vitest";
 
 import { mount } from "@vue/test-utils";
 import NewPost from "../../views/NewPost.vue";
-import { nextTick } from "vue";
-import { json } from "stream/consumers";
 
-describe("Bold text", () => {
+describe.skip("Bold text", () => {
   it("adds **** and places the cursor in the middle.", async () => {
     const wrapper = mount(NewPost);
     const textarea = wrapper.get("textarea");
@@ -85,7 +83,7 @@ describe("Bold text", () => {
   });
 });
 
-describe("Italic text", () => {
+describe.skip("Italic text", () => {
   it("textarea is empty - adds __ and places the cursor in the middle.", async () => {
     const wrapper = mount(NewPost);
     const textarea = wrapper.get("textarea");
@@ -165,7 +163,7 @@ describe("Italic text", () => {
   });
 });
 
-describe("Link", () => {
+describe.skip("Link", () => {
   it('textarea is empty - adds "[](url)" and select "url" word', async () => {
     const wrapper = mount(NewPost);
     const textarea = wrapper.get("textarea");
@@ -244,7 +242,7 @@ describe("Link", () => {
   });
 });
 
-describe("Ordered list", () => {
+describe.skip("Ordered list", () => {
   it('textarea is empty - adds "1. "', async () => {
     const wrapper = mount(NewPost);
     const textarea = wrapper.get("textarea");
@@ -323,7 +321,7 @@ describe("Ordered list", () => {
   });
 });
 
-describe("unordered list", () => {
+describe.skip("unordered list", () => {
   it("paste indent between two words", async () => {
     const wrapper = mount(NewPost);
     const textarea = wrapper.get("textarea");
