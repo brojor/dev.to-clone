@@ -32,7 +32,7 @@ import useToolbar from "../composables/toolbar";
 
 const targetEl = ref<HTMLTextAreaElement | null>(null);
 
-const { togglePairSign, toogleList, toggleUrl, toggleHeading } =
+const { togglePairSign, toogleList, toggleUrl, toggleHeading, toggleQuote } =
   useToolbar(targetEl);
 
 onMounted(() => {
@@ -75,6 +75,7 @@ const buttons = [
   {
     name: "quote",
     component: QuoteIcon,
+    method: toggleQuote,
   },
   {
     name: "code",

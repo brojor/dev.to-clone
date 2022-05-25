@@ -1,4 +1,13 @@
+import { get } from "@vueuse/core";
 import type { Ref } from "vue";
+
+function getCurrentRow({ textContent, selectionStart, selectionEnd }) {
+  const startIndex =
+    textContent.indexOf("\n") === -1
+      ? 0
+      : textContent.slice(0, selectionStart).lastIndexOf("\n");
+  return textContent.slice(startIndex, selectionEnd);
+}
 
 const addPairSign = (textarea: HTMLTextAreaElement, sign: string) => {
   const { selectionStart, selectionEnd, value } = textarea;
@@ -145,15 +154,11 @@ export default function useToolbar(target: Ref<HTMLTextAreaElement>) {
   const toggleHeading = () => {
     const { selectionStart, selectionEnd, value: textContent } = target.value;
 
-    function getCurrentRow() {
-      const startIndex =
-        textContent.indexOf("\n") === -1
-          ? 0
-          : textContent.slice(0, selectionStart).lastIndexOf("\n");
-      return textContent.slice(startIndex, selectionEnd);
-    }
-
-    const currentRow = getCurrentRow();
+    const currentRow = getCurrentRow({
+      textContent,
+      selectionStart,
+      selectionEnd,
+    });
 
     function isHashOnRow() {
       return /#{1,5}/.test(currentRow);
@@ -186,10 +191,65 @@ export default function useToolbar(target: Ref<HTMLTextAreaElement>) {
     target.value.focus();
   };
 
+  const toggleQuote = () => {
+    let { selectionStart, selectionEnd, value: textContent } = target.value;
+
+    let { currentRow, beforeCurrentRow, afterCurrentRow } = splitContent({
+      textContent,
+      selectionStart,
+      selectionEnd,
+    });
+    const sign = "> ";
+
+    const signExistOnRow = /^> /m.test(currentRow);
+
+    if (signExistOnRow) {
+      currentRow = currentRow.replace(sign, "");
+      selectionStart -= sign.length;
+      selectionEnd -= sign.length;
+    } else {
+      const isOnStart = selectionStart === 0;
+      const isAfterNewLine = textContent.charAt(selectionStart - 1) === "\n";
+      const offset = isOnStart || isAfterNewLine ? "" : "\n\n";
+
+      currentRow = `${currentRow}${offset}${sign}`;
+      selectionStart += sign.length + offset.length;
+      selectionEnd += sign.length + offset.length;
+    }
+    target.value.value = `${beforeCurrentRow}${currentRow}${afterCurrentRow}`;
+    target.value.setSelectionRange(selectionStart, selectionEnd);
+    target.value.focus();
+  };
+
   return {
     togglePairSign,
     toogleList,
     toggleUrl,
     toggleHeading,
+    toggleQuote,
+  };
+}
+
+function splitContent({
+  textContent,
+  selectionStart,
+  selectionEnd,
+}: {
+  textContent: string;
+  selectionStart: number;
+  selectionEnd: number;
+}) {
+  const startIndex =
+    textContent.indexOf("\n") === -1
+      ? 0
+      : textContent.slice(0, selectionStart).lastIndexOf("\n");
+  const currentRow = textContent.slice(startIndex, selectionEnd);
+  const beforeCurrentRow = textContent.slice(0, startIndex);
+  const afterCurrentRow = textContent.slice(selectionEnd);
+
+  return {
+    currentRow,
+    beforeCurrentRow,
+    afterCurrentRow,
   };
 }

@@ -3,7 +3,7 @@ import useToolbar from "../toolbar";
 import { ref } from "vue";
 
 const elRef = ref(document.createElement("textarea"));
-const { togglePairSign, toggleHeading } = useToolbar(elRef);
+const { togglePairSign, toggleHeading, toggleQuote } = useToolbar(elRef);
 
 describe("bold", () => {
   it("adds **** and places the cursor in the middle.", async () => {
@@ -145,5 +145,48 @@ describe("headings - selected text", () => {
     expect(elRef.value.value).toBe("text\n\n## ");
     expect(elRef.value.selectionStart).toBe(9);
     expect(elRef.value.selectionEnd).toBe(9);
+  });
+});
+
+describe("quote", () => {
+  it("add > sign", () => {
+    elRef.value.value = "";
+    elRef.value.setSelectionRange(0, 0);
+
+    toggleQuote();
+
+    expect(elRef.value.value).toBe("> ");
+    expect(elRef.value.selectionStart).toBe(2);
+    expect(elRef.value.selectionEnd).toBe(2);
+  });
+  it("remove > sign", () => {
+    elRef.value.value = "> ";
+    elRef.value.setSelectionRange(2, 2);
+
+    toggleQuote();
+
+    expect(elRef.value.value).toBe("");
+    expect(elRef.value.selectionStart).toBe(0);
+    expect(elRef.value.selectionEnd).toBe(0);
+  });
+  it("add 2x newline and > sign if is text before cursor", () => {
+    elRef.value.value = "text";
+    elRef.value.setSelectionRange(4, 4);
+
+    toggleQuote();
+
+    expect(elRef.value.value).toBe("text\n\n> ");
+    expect(elRef.value.selectionStart).toBe(8);
+    expect(elRef.value.selectionEnd).toBe(8);
+  });
+  it("add > sign between rows", () => {
+    elRef.value.value = "row1\n\n> \nrow3";
+    elRef.value.setSelectionRange(8, 8);
+
+    toggleQuote();
+
+    expect(elRef.value.value).toBe("row1\n\n\nrow3");
+    expect(elRef.value.selectionStart).toBe(6);
+    expect(elRef.value.selectionEnd).toBe(6);
   });
 });
