@@ -32,8 +32,14 @@ import useToolbar from "../composables/toolbar";
 
 const targetEl = ref<HTMLTextAreaElement | null>(null);
 
-const { togglePairSign, toogleList, toggleUrl, toggleHeading, toggleQuote } =
-  useToolbar(targetEl);
+const {
+  togglePairSign,
+  toogleList,
+  toggleUrl,
+  toggleHeading,
+  toggleQuote,
+  toggleCodeBlock,
+} = useToolbar(targetEl);
 
 onMounted(() => {
   targetEl.value = document.getElementById(
@@ -85,7 +91,7 @@ const buttons = [
   {
     name: "codeBlock",
     component: CodeBlockIcon,
-    method: () => togglePairSign("```"),
+    method: toggleCodeBlock,
   },
   {
     name: "uploadImage",

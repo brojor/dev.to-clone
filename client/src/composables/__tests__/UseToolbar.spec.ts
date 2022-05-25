@@ -3,7 +3,8 @@ import useToolbar from "../toolbar";
 import { ref } from "vue";
 
 const elRef = ref(document.createElement("textarea"));
-const { togglePairSign, toggleHeading, toggleQuote } = useToolbar(elRef);
+const { togglePairSign, toggleHeading, toggleQuote, toggleCodeBlock } =
+  useToolbar(elRef);
 
 describe("bold", () => {
   it("adds **** and places the cursor in the middle.", async () => {
@@ -188,5 +189,48 @@ describe("quote", () => {
     expect(elRef.value.value).toBe("row1\n\n\nrow3");
     expect(elRef.value.selectionStart).toBe(6);
     expect(elRef.value.selectionEnd).toBe(6);
+  });
+});
+
+describe("code block", () => {
+  it("add code block sign", () => {
+    elRef.value.value = "";
+    elRef.value.setSelectionRange(0, 0);
+
+    toggleCodeBlock();
+
+    expect(elRef.value.value).toBe("```\n\n```");
+    expect(elRef.value.selectionStart).toBe(4);
+    expect(elRef.value.selectionEnd).toBe(4);
+  });
+  it("remove code block sign", () => {
+    elRef.value.value = "```\n\n```";
+    elRef.value.setSelectionRange(4, 4);
+
+    toggleCodeBlock();
+
+    expect(elRef.value.value).toBe("");
+    expect(elRef.value.selectionStart).toBe(0);
+    expect(elRef.value.selectionEnd).toBe(0);
+  });
+  it("wrap selected word by code block sign", () => {
+    elRef.value.value = "text";
+    elRef.value.setSelectionRange(0, 4);
+
+    toggleCodeBlock();
+
+    expect(elRef.value.value).toBe("```\ntext\n```");
+    expect(elRef.value.selectionStart).toBe(4);
+    expect(elRef.value.selectionEnd).toBe(8);
+  });
+  it("remove code block wraping", () => {
+    elRef.value.value = "```\ntext\n```";
+    elRef.value.setSelectionRange(4, 8);
+
+    toggleCodeBlock();
+
+    expect(elRef.value.value).toBe("text");
+    expect(elRef.value.selectionStart).toBe(0);
+    expect(elRef.value.selectionEnd).toBe(4);
   });
 });

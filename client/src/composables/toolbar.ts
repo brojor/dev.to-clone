@@ -221,12 +221,41 @@ export default function useToolbar(target: Ref<HTMLTextAreaElement>) {
     target.value.focus();
   };
 
+  const toggleCodeBlock = () => {
+    let { selectionStart, selectionEnd, value: textContent } = target.value;
+
+    const firstPart = textContent.slice(0, selectionStart);
+    const middlePart = textContent.slice(selectionStart, selectionEnd);
+    const lastPart = textContent.slice(selectionEnd);
+    const sign = "```";
+
+    const signExist =
+      textContent.slice(selectionStart - 4, selectionStart) === "```\n";
+
+    if (signExist) {
+      target.value.value = `${firstPart.slice(
+        0,
+        firstPart.length - (sign.length + 1)
+      )}${middlePart}${lastPart.slice(lastPart.length + sign.length + 1)}`;
+      selectionStart -= sign.length + 1;
+      selectionEnd -= sign.length + 1;
+    } else {
+      target.value.value = `${firstPart}${sign}\n${middlePart}\n${sign}${lastPart}`;
+      selectionStart += sign.length + 1;
+      selectionEnd += sign.length + 1;
+    }
+
+    target.value.setSelectionRange(selectionStart, selectionEnd);
+    target.value.focus();
+  };
+
   return {
     togglePairSign,
     toogleList,
     toggleUrl,
     toggleHeading,
     toggleQuote,
+    toggleCodeBlock,
   };
 }
 
