@@ -22,7 +22,12 @@
           <textarea placeholder="New post title here..."></textarea>
         </div>
         <div class="tags">
-          <input type="text" placeholder="Add up to 4 tags..." />
+          <input
+            type="text"
+            placeholder="Add up to 4 tags..."
+            v-model="tagInput"
+          />
+          <MultiPopover @select="handleTagSelect" :filter="tagInput" />
         </div>
       </div>
       <div class="form-content-body">
@@ -53,6 +58,14 @@ import OptionsIcon from "../components/icons/OptionsIcon.vue";
 import CloseIcon from "../components/icons/CloseIcon.vue";
 import ToolBar from "../components/ToolBar.vue";
 import NewPostCover from "../components/newPost/NewPostCover.vue";
+import MultiPopover from "../components/newPost/MultiPopover.vue";
+import { ref } from "@vue/reactivity";
+
+const tagInput = ref<string>("");
+
+const handleTagSelect = (tag: string) => {
+  console.log(tag);
+};
 </script>
 
 <style>
@@ -107,6 +120,10 @@ form {
 ::placeholder {
   color: #575757;
   opacity: 1;
+}
+
+.tags {
+  position: relative;
 }
 .tags input {
   outline: none;

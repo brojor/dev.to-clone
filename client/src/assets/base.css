@@ -25,6 +25,7 @@
 :root {
   --white: #ffffff;
 
+  --accent-brand-darker: rgb(79, 70, 229);
   --accent-danger: rgb(220, 38, 38);
   --accent-danger-darker: rgb(185, 28, 28);
   --article-form-actions-height: 88px;
@@ -56,6 +57,7 @@
 
 
   --body-color: rgb(250, 250, 250);
+  --body-bg: rgb(0, 0, 0);
 
   --btn-bg: transparent;
   --btn-bg-hover: rgba(49, 46, 129, 0.75);

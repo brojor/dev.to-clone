@@ -1,0 +1,501 @@
+[
+    {
+        "name": "javascript",
+        "color": "#f7df1e",
+        "description": "Once relegated to the browser as one of the 3 core technologies\n                    of the web, JavaScript can now be found almost anywhere you find code.\n\n                    JavaScript developers move fast and push software development forward; they can be as opinionated as\n                    the frameworks they use, so let's keep it clean here and make it a place to learn from each\n                    other!"
+    },
+    {
+        "name": "webdev",
+        "color": "#562765",
+        "description": "Because the internet..."
+    },
+    {
+        "name": "beginners",
+        "color": "#008335",
+        "description": "\"A journey of a thousand miles begins with a single step.\" -Chinese\n                    Proverb"
+    },
+    {
+        "name": "programming",
+        "color": "#890606",
+        "description": "The magic behind computers. 💻 🪄"
+    },
+    {
+        "name": "tutorial",
+        "color": "#FEFFA5",
+        "description": "Tutorial is a general purpose tag. We welcome all types of tutorial -\n                    code related or not!\n\n                    It's all about learning, and using tutorials to teach others!"
+    },
+    {
+        "name": "react",
+        "color": "#222222",
+        "description": "Official tag for Facebook's React JavaScript\n                    library for building user interfaces"
+    },
+    {
+        "name": "python",
+        "color": "#1E38BB",
+        "description": "import antigravity"
+    },
+    {
+        "name": "css",
+        "color": "#2965F1",
+        "description": "Cascading Style Sheets (CSS) is a simple language\n                    for adding style (e.g., fonts, colors, spacing) to HTML documents. It describes how HTML elements\n                    should be displayed."
+    },
+    {
+        "name": "discuss",
+        "color": "#1ad643",
+        "description": "What color should the bike shed be?"
+    },
+    {
+        "name": "productivity",
+        "color": "#2A0798",
+        "description": "Productivity includes tips on how to use tools and software, process\n                    optimization, useful references, experience, and mindstate optimization."
+    },
+    {
+        "name": "devops",
+        "color": "#06B500",
+        "description": "Content centering around the shifting left of responsibility,\n                    deconstruction of responsibility silos, and the automation of repetitive work tasks."
+    },
+    {
+        "name": "career",
+        "color": "#2A2566",
+        "description": "This tag is for anything relating to careers! Job offers, workplace\n                    conflict, interviews, resumes, promotions, etc."
+    },
+    {
+        "name": "opensource",
+        "color": "#26BE00",
+        "description": "May The Source Be With You!\n\n                    Articles about Open Source and Free Software as a philosophy, and its application to software\n                    development and project management."
+    },
+    {
+        "name": "node",
+        "color": "#3d8836",
+        "description": "A JavaScript runtime built on Chrome's V8\n                    JavaScript engine."
+    },
+    {
+        "name": "aws",
+        "color": "#212b3a",
+        "description": "Amazon Web Services (AWS) is a collection of web-services for computing,\n                    storage, machine learning, security, and more\n\n                    There are over 150+ AWS service with new services being announced yearly."
+    },
+    {
+        "name": "html",
+        "color": "#F53900",
+        "description": "Hypertext Markup Language — the standard markup language for documents\n                    designed to be displayed in a web browser."
+    },
+    {
+        "name": "typescript",
+        "color": "#234A84",
+        "description": "Optional static type-checking for JavaScript."
+    },
+    {
+        "name": "android",
+        "color": "#56a036",
+        "description": "Brought to you by the good folks at\n                    Google..."
+    },
+    {
+        "name": "github",
+        "color": "#000000",
+        "description": "\"Where the world builds software\""
+    },
+    {
+        "name": "showdev",
+        "color": "#091b47",
+        "description": "Show off what you've built!"
+    },
+    {
+        "name": "news",
+        "color": "#111111",
+        "description": "Expect to see announcements of new and updated products, services, and\n                    features for languages &amp; frameworks. You also will find high-level news relevant to the tech\n                    and software development industry covered here. "
+    },
+    {
+        "name": "codenewbie",
+        "color": "#57d700",
+        "description": "The most supportive community of programmers\n                    and people learning to code."
+    },
+    {
+        "name": "codepen",
+        "color": "#ad20a3",
+        "description": "A social development environment for front-end designers and\n                    developers."
+    },
+    {
+        "name": "linux",
+        "color": "#000000",
+        "description": "What are clouds made of?\n\n                    Linux servers, mostly."
+    },
+    {
+        "name": "php",
+        "color": "#23A1AA",
+        "description": "Home for all the PHP-related posts on\n                    Dev.to!"
+    },
+    {
+        "name": "cloud",
+        "color": "#FF9900",
+        "description": "There is no cloud, only other peoples computers."
+    },
+    {
+        "name": "java",
+        "color": "#7e4810",
+        "description": "More than just a cup of coffee, Java is a\n                    high-level, class-based, object-oriented programming language that is designed to have as few\n                    implementation dependencies as possible."
+    },
+    {
+        "name": "security",
+        "color": "#1bac80",
+        "description": "Hopefully not just an afterthought!"
+    },
+    {
+        "name": "machinelearning",
+        "color": "#E5FFE3",
+        "description": "A branch of artificial intelligence (AI) and computer science which\n                    focuses on the use of data and algorithms to imitate the way that humans learn, gradually improving\n                    its accuracy."
+    },
+    {
+        "name": "testing",
+        "color": "#019b65",
+        "description": "Find those bugs before your users do! 🐛"
+    },
+    {
+        "name": "angular",
+        "color": "#A9022A",
+        "description": "One of the world's most popular frontend\n                    JavaScript frameworks."
+    },
+    {
+        "name": "kubernetes",
+        "color": "#326de6",
+        "description": "An open-source container orchestration system for\n                    automating software deployment, scaling, and management."
+    },
+    {
+        "name": "api",
+        "color": "#9725ea",
+        "description": "Application Programming Interface"
+    },
+    {
+        "name": "docker",
+        "color": "#73c7e6",
+        "description": "Stories about Docker as a technology (containers,\n                    CLI, Engine) or company (Docker Hub, Docker Swarm)."
+    },
+    {
+        "name": "database",
+        "color": "#ED1556",
+        "description": "Posts on building, using, and learning about databases."
+    },
+    {
+        "name": "laravel",
+        "color": "#dc2d17",
+        "description": "A PHP web application framework with expressive, elegant syntax."
+    },
+    {
+        "name": "blockchain",
+        "color": "#113a62",
+        "description": "A decentralized, distributed, and oftentimes public, digital ledger\n                    consisting of records called blocks that are used to record transactions across many computers so\n                    that any involved block cannot be altered retroactively, without the alteration of all subsequent\n                    blocks."
+    },
+    {
+        "name": "vue",
+        "color": "#41b883",
+        "description": "Official tag for the Vue.js JavaScript\n                    Framework"
+    },
+    {
+        "name": "go",
+        "color": "#E0EBF5",
+        "description": "A statically typed, compiled programming language\n                    designed at Google"
+    },
+    {
+        "name": "ruby",
+        "color": "#CC342D",
+        "description": "This tag is for posts related to the Ruby\n                    language, including its libraries."
+    },
+    {
+        "name": "serverless",
+        "color": "#1C1C1C",
+        "description": "All computing — without servers!"
+    },
+    {
+        "name": "git",
+        "color": "#F54D27",
+        "description": "Software for tracking changes in any set of files,\n                    usually used for coordinating work among programmers collaboratively developing source code during\n                    software development."
+    },
+    {
+        "name": "dotnet",
+        "color": "#512ad5",
+        "description": ".NET is an open source developer platform, created by Microsoft, for\n                    building many types of applications. With .NET, you can use multiple languages, editors, and\n                    libraries to build for web, mobile, desktop, gaming, and IoT. Find more at https://dot.net"
+    },
+    {
+        "name": "datascience",
+        "color": "#009999",
+        "description": "Data Science allows us to extract meaning from and interpret data.\n                "
+    },
+    {
+        "name": "design",
+        "color": "#06ff6a",
+        "description": "More than just making things look nice..."
+    },
+    {
+        "name": "mobile",
+        "color": "#a3fc55",
+        "description": "iOS, Android, and any other types of mobile development... all are\n                    welcome!"
+    },
+    {
+        "name": "flutter",
+        "color": "#56C5F6",
+        "description": "An open source framework by Google for building beautiful, natively\n                    compiled, multi-platform applications from a single codebase."
+    },
+    {
+        "name": "computerscience",
+        "color": "#d98cd9",
+        "description": "This tag is for sharing and asking questions about anything related to\n                    computer science, including data structures, algorithms, research, and white papers! 🤓"
+    },
+    {
+        "name": "azure",
+        "color": "#007fff",
+        "description": "The dev.to tag for Microsoft Azure, the Cloud\n                    Computing Platform."
+    },
+    {
+        "name": "help",
+        "color": "#ff3232",
+        "description": "A place to ask questions and provide answers. We're here to work things\n                    out together. "
+    },
+    {
+        "name": "nextjs",
+        "color": "#000000",
+        "description": "Next.js gives you hybrid static and server\n                    rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config\n                    needed."
+    },
+    {
+        "name": "csharp",
+        "color": "#07CD00",
+        "description": "Official tag for the C# programming\n                    language."
+    },
+    {
+        "name": "vscode",
+        "color": "#3ca5ea",
+        "description": "Official tag for Visual Studio Code, Microsoft's open-source\n                    editor"
+    },
+    {
+        "name": "100daysofcode",
+        "color": "#004d4d",
+        "description": "The 100 Days of Code is a coding challenge created by Alexander Kallaway\n                    to encourage people to learn new coding skills. "
+    },
+    {
+        "name": "watercooler",
+        "color": "#D0ECFF",
+        "description": "Light, and off-topic conversation."
+    },
+    {
+        "name": "startup",
+        "color": "#E6FFFB",
+        "description": "A company or project undertaken by an entrepreneur to seek, develop, and\n                    validate a scalable business model."
+    },
+    {
+        "name": "algorithms",
+        "color": "#008000",
+        "description": "Heap, Binary Tree, Data Structure it doesn't matter. This tag should be\n                    used for anything Algorithm &amp; Data Structure focused.\n                "
+    },
+    {
+        "name": "django",
+        "color": "#103e2e",
+        "description": "Django is a high-level Python Web framework that encourages rapid\n                    development and clean, pragmatic design. Built by experienced developers, it takes care of much of\n                    the hassle of Web development, so you can focus on writing your app without needing to reinvent the\n                    wheel. It’s free and open source. "
+    },
+    {
+        "name": "architecture",
+        "color": "#ebdf37",
+        "description": "The fundamental structures of a software system."
+    },
+    {
+        "name": "rails",
+        "color": "#cc0000",
+        "description": "Ruby on Rails is a popular web framework that\n                    happens to power dev.to ❤️"
+    },
+    {
+        "name": "reactnative",
+        "color": "#1ddbe7",
+        "description": "An open-source JavaScript framework, designed for building apps on\n                    multiple platforms like iOS, Android, and also web applications."
+    },
+    {
+        "name": "ios",
+        "color": "#0c76e2",
+        "description": "This tag is for anything related to Apple's iOS devices, operating\n                    system, and development environment. Development, usage, apps, tips, requests for help: if it's\n                    related to iOS it's welcome here!"
+    },
+    {
+        "name": "gamedev",
+        "color": "#6a009f",
+        "description": "👾 👾 👾"
+    },
+    {
+        "name": "sql",
+        "color": "#ED1556",
+        "description": "Posts on tips and tricks, using and learning about SQL for database\n                    development and analysis."
+    },
+    {
+        "name": "graphql",
+        "color": "#171e26",
+        "description": "GraphQL is a query language and execution engine\n                    for client‐server applications"
+    },
+    {
+        "name": "microservices",
+        "color": "#000000",
+        "description": "An architectural and organizational approach to software development\n                    where software is composed of small independent services that communicate over well-defined\n                    APIs"
+    },
+    {
+        "name": "ubuntu",
+        "color": "#E95420",
+        "description": "Canonical, Ubuntu, Linux and related technology."
+    },
+    {
+        "name": "web3",
+        "color": "#f6690f",
+        "description": "A new kind of internet service that is built using decentralized\n                    blockchains."
+    },
+    {
+        "name": "a11y",
+        "color": "#083b15",
+        "description": "the practice of making your website usable by as\n                    many people as possible"
+    },
+    {
+        "name": "tailwindcss",
+        "color": "#000000",
+        "description": "A utility-first CSS framework"
+    },
+    {
+        "name": "rust",
+        "color": "#d4a174",
+        "description": "This tag is for posts related to the Rust\n                    programming language, including its libraries."
+    },
+    {
+        "name": "braziliandevs",
+        "color": "#cdcd00",
+        "description": "Tag dedicada a comunidade brasileira, com foco em conteúdo em Português\n                    do Brasil.\n                "
+    },
+    {
+        "name": "archlinux",
+        "color": "#0099bd",
+        "description": "A lightweight and flexible Linux distribution that tries to Keep It\n                    Simple."
+    },
+    {
+        "name": "todayilearned",
+        "color": "#ffedc9",
+        "description": "Summarize a concept that is new to you."
+    },
+    {
+        "name": "firebase",
+        "color": "#039be5",
+        "description": "Firebase helps you build and run successful apps. It offers products and\n                    solutions you can rely on through your app's journey."
+    },
+    {
+        "name": "performance",
+        "color": "#ffa364",
+        "description": "Tag for content related to software performance."
+    },
+    {
+        "name": "writing",
+        "color": "#8bebff",
+        "description": "\"Writing is the best way to talk without being interrupted.\" - Jules\n                    Renard"
+    },
+    {
+        "name": "management",
+        "color": "#f22e07",
+        "description": "\"Would I rather be feared or loved? Easy. Both. I want people to be\n                    afraid of how much they love me.\" - Michael Scott (The Office)"
+    },
+    {
+        "name": "wordpress",
+        "color": "#108EC2",
+        "description": "the world’s most popular website builder"
+    },
+    {
+        "name": "ai",
+        "color": "#2d2a2a",
+        "description": "Artificial intelligence leverages computers and machines to mimic the\n                    problem-solving and decision-making capabilities of the human mind."
+    },
+    {
+        "name": "dart",
+        "color": "#41C4FF",
+        "description": "On the language, SDK and ecosystem."
+    },
+    {
+        "name": "mongodb",
+        "color": "#7bcc7c",
+        "description": "a popular NoSQL database"
+    },
+    {
+        "name": "kotlin",
+        "color": "#1b1865",
+        "description": "a cross-platform, statically typed, general-purpose programming language\n                    with type inference"
+    },
+    {
+        "name": "cpp",
+        "color": "#014784",
+        "description": "Official tag for the C++ programming language."
+    },
+    {
+        "name": "tooling",
+        "color": "#c1d82f",
+        "description": "Working with a new tool you want to share? Created a new workflow for a\n                    task? Found some great configurations? Share them with the community! "
+    },
+    {
+        "name": "codequality",
+        "color": "#e5fffd",
+        "description": ""
+    },
+    {
+        "name": "c",
+        "color": "#B3BCC5",
+        "description": "Official tag for the C programming language."
+    },
+    {
+        "name": "redux",
+        "color": "#764ABC",
+        "description": "A predictable state container for JS apps"
+    },
+    {
+        "name": "spanish",
+        "color": "#fcb318",
+        "description": "¿Qué pasa?"
+    },
+    {
+        "name": "functional",
+        "color": "#FFF1F8",
+        "description": ""
+    },
+    {
+        "name": "npm",
+        "color": "#cb3837",
+        "description": "Node Package Manager"
+    },
+    {
+        "name": "postgres",
+        "color": "#ED1556",
+        "description": "Posts on tips and tricks, using and learning about PostgreSQL for\n                    database development and analysis."
+    },
+    {
+        "name": "agile",
+        "color": "#ffcc00",
+        "description": " Agile! A iterative and time boxed approach to software development where\n                    you build software incrementally from the start instead of trying to deliver all at once. "
+    },
+    {
+        "name": "svelte",
+        "color": "#ff3e00",
+        "description": "Tag to discuss Svelte, a JavaScript component\n                    framework, which aims at being simple and efficient."
+    },
+    {
+        "name": "swift",
+        "color": "#ea4e28",
+        "description": "a programming language created by Apple for building iOS and Mac\n                    apps"
+    },
+    {
+        "name": "leadership",
+        "color": "#4d004d",
+        "description": "Leadership is not a job title. Is guiding and empowering others."
+    },
+    {
+        "name": "terraform",
+        "description": "All subjects concerning Hashicorp's IaC tool `Terraform`."
+    },
+    {
+        "name": "oop",
+        "color": "#000000",
+        "description": "\"...because thinking inside the box is okay, as long as it's a black\n                    box.\""
+    },
+    {
+        "name": "devjournal",
+        "color": "#820000",
+        "description": "Dear Diary..."
+    },
+    {
+        "name": "podcast",
+        "color": "#339999",
+        "description": "Audiophiles unite! Learn on the go with dev podcasts, there are lots of\n                    different shows about lots of topics, done in a lot of different styles so hopefully you can find\n                    some that suit your needs."
+    }
+]
