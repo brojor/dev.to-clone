@@ -147,6 +147,7 @@ form {
   margin: calc(var(--content-padding-y) * -1)
     calc(var(--content-padding-x) * -1) 1.5rem
     calc(var(--content-padding-x) * -1);
+  overflow: visible;
 }
 
 header {
