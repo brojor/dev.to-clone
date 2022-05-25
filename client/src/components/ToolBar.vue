@@ -45,7 +45,7 @@ import CodeBlockIcon from "./icons/toolbar/CodeBlockIcon.vue";
 import UploadImageIcon from "./icons/toolbar/UploadImageIcon.vue";
 import DropDownIcon from "./icons/toolbar/DropDownIcon.vue";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { onMounted, onUnmounted } from "@vue/runtime-core";
 import useToolbar from "../composables/toolbar";
 import ToolTip from "./ToolTip.vue";
 
@@ -60,10 +60,29 @@ const {
   toggleCodeBlock,
 } = useToolbar(targetEl);
 
+const keydownHandler = (e: KeyboardEvent) => {
+  if (e.metaKey) {
+    if (e.key === "b") {
+      togglePairSign("**");
+    }
+    if (e.key === "i") {
+      togglePairSign("_");
+    }
+    if (e.key === "k") {
+      toggleUrl();
+    }
+  }
+};
+
 onMounted(() => {
   targetEl.value = document.getElementById(
     "raw-markdown"
   ) as HTMLTextAreaElement;
+  document.addEventListener("keydown", keydownHandler);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", keydownHandler);
 });
 
 const uploadImage = () => {
