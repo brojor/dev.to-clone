@@ -10,7 +10,23 @@
     >
       <component :is="button.component" />
     </button>
-    <button class="btn icon-alone"><DropDownIcon /></button>
+    <input
+      type="file"
+      id="image-upload-field"
+      accept="image/*"
+      class="screen-reader-only"
+    />
+    <button
+      class="btn icon-alone"
+      type="button"
+      data-test="uploadImage"
+      @click="uploadImage"
+    >
+      <UploadImageIcon />
+    </button>
+    <button class="btn icon-alone">
+      <DropDownIcon />
+    </button>
   </div>
 </template>
 
@@ -46,6 +62,13 @@ onMounted(() => {
     "raw-markdown"
   ) as HTMLTextAreaElement;
 });
+
+const uploadImage = () => {
+  const imageField = document.getElementById("image-upload-field");
+  if (imageField) {
+    imageField.click();
+  }
+};
 
 const buttons = [
   {
@@ -92,10 +115,6 @@ const buttons = [
     name: "codeBlock",
     component: CodeBlockIcon,
     method: toggleCodeBlock,
-  },
-  {
-    name: "uploadImage",
-    component: UploadImageIcon,
   },
 ];
 </script>
