@@ -24,6 +24,9 @@
 /* semantic color variables for this project */
 :root {
   --white: #ffffff;
+
+  --accent-danger: rgb(220, 38, 38);
+  --accent-danger-darker: rgb(185, 28, 28);
   --article-form-actions-height: 88px;
 
   --color-background: var(--vt-c-white);
@@ -84,6 +87,7 @@
   --button-ghost-dimmed-color-hover: rgb(249, 249, 249, );
   --button-ghost-bg: transparent;
   --button-ghost-bg-hover: rgba(255, 255, 255, 0.035);
+
 
   --header-height: 56px;
 
@@ -272,6 +276,7 @@ ul[class] {
   overflow-wrap: normal;
   background-color: var(--bg);
   color: var(--color);
+  font-weight: 500;
 }
 
 .btn:hover {
@@ -285,6 +290,15 @@ ul[class] {
   --color: var(--button-primary-color);
   --color-hover: var(--button-primary-color-hover);
   font-weight: 500;
+}
+
+.btn-ghost-danger {
+  --bg: var(--button-ghost-bg);
+  --bg-hover: var(--button-ghost-bg-hover);
+  --color: var(--accent-danger);
+  --color-hover: var(--accent-danger-darker);
+  --shadow: none;
+  --shadow-hover: none;
 }
 
 .icon-alone {

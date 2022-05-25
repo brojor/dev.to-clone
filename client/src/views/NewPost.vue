@@ -17,12 +17,7 @@
     </header>
     <main>
       <div class="form-content-top">
-        <div class="cover">
-          <label>
-            Add a cover image
-            <input type="file" accept="image/*" />
-          </label>
-        </div>
+        <NewPostCover />
         <div class="title">
           <textarea placeholder="New post title here..."></textarea>
         </div>
@@ -57,6 +52,7 @@
 import OptionsIcon from "../components/icons/OptionsIcon.vue";
 import CloseIcon from "../components/icons/CloseIcon.vue";
 import ToolBar from "../components/ToolBar.vue";
+import NewPostCover from "../components/newPost/NewPostCover.vue";
 </script>
 
 <style>
@@ -84,9 +80,7 @@ form {
   padding: var(--content-padding-y) var(--content-padding-x);
   border-radius: 0.375rem 0.375rem 0 0;
 }
-.form-content-top .cover {
-  margin-bottom: 1.25rem;
-}
+
 .form-content-top .title {
   margin-bottom: 0.5rem;
 }
@@ -266,28 +260,5 @@ footer button:nth-child(-n + 2) {
 footer button:last-child {
   font-weight: normal;
   font-size: 0.875rem;
-}
-
-label {
-  cursor: pointer;
-  padding: 6px 14px;
-  background: var(--button-outlined-bg);
-  border: var(--button-outlined-border);
-  color: var(--button-outlined-color);
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 0.375rem;
-  display: inline-block;
-  font-weight: 500;
-}
-
-label:hover {
-  background: var(--button-outlined-bg-hover);
-  border-color: var(--button-outlined-border-hover);
-  color: var(--button-outlined-color-hover);
-}
-
-input[type="file"] {
-  display: none;
 }
 </style>
