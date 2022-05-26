@@ -31,7 +31,7 @@
             <li>
               <input
                 type="text"
-                placeholder="Add up to 4 tags..."
+                :placeholder="selectedTags.length ? 'Add another...' : 'Add up to 4 tags...'"
                 v-model="tagInput"
               />
             </li>
@@ -150,6 +150,10 @@ form {
 .tag-list {
   display: flex;
   flex-wrap: wrap;
+}
+
+.tag-list li:last-child{
+  align-self: center;
 }
 .tags input {
   outline: none;
