@@ -29,7 +29,7 @@
               :tag="tag"
               :onRemove="removeTag"
             />
-            <li>
+            <li v-if="selectedTags.length < 4">
               <input
                 type="text"
                 :placeholder="selectedTags.length ? 'Add another...' : 'Add up to 4 tags...'"
