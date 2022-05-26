@@ -83,6 +83,7 @@ ul {
   color: var(--card-color);
   padding: 0.75rem;
   border-radius: 0.375rem;
+  cursor: pointer;
 }
 .tag-option:hover {
   background: var(--body-bg);
