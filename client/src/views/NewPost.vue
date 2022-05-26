@@ -22,12 +22,20 @@
           <textarea placeholder="New post title here..."></textarea>
         </div>
         <div class="tags">
-          <pre>{{ selectedTags }}</pre>
-          <input
-            type="text"
-            placeholder="Add up to 4 tags..."
-            v-model="tagInput"
-          />
+          <ul class="tag-list">
+            <TagListItem
+              v-for="tag in selectedTags"
+              :key="tag.name"
+              :tag="tag"
+            />
+            <li>
+              <input
+                type="text"
+                placeholder="Add up to 4 tags..."
+                v-model="tagInput"
+              />
+            </li>
+          </ul>
           <MultiPopover
             v-if="selectedTags.length < 4"
             @select="handleTagSelect"
@@ -66,6 +74,7 @@ import ToolBar from "../components/ToolBar.vue";
 import NewPostCover from "../components/newPost/NewPostCover.vue";
 import MultiPopover from "../components/newPost/MultiPopover.vue";
 import { ref } from "@vue/reactivity";
+import TagListItem from "../components/newPost/TagListItem.vue";
 
 interface Tag {
   name: string;
@@ -77,8 +86,6 @@ const tagInput = ref<string>("");
 const selectedTags = ref<Tag[]>([]);
 
 const handleTagSelect = (tag: Tag) => {
-  console.log(tag);
-
   selectedTags.value.push(tag);
 };
 </script>
@@ -136,9 +143,13 @@ form {
   color: #575757;
   opacity: 1;
 }
-
+/* TAGS */
 .tags {
   position: relative;
+}
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
 }
 .tags input {
   outline: none;
@@ -152,6 +163,7 @@ form {
 .tags input::placeholder {
   color: #757575;
 }
+
 
 .form-content-body {
   flex: 1 0 auto;
