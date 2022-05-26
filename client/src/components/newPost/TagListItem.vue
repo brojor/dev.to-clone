@@ -1,9 +1,10 @@
 <template>
-  <li class="tag-item">
+  <li class="tag-item" ref="myli">
     <button
       type="button"
       class="btn"
       :style="{ backgroundColor: `${props.tag.color}1a` }"
+      @click="$emit('change', { tag: props.tag, order: props.order })"
     >
       <span :style="{ color: props.tag.color }"># </span>{{ props.tag.name }}
     </button>
@@ -19,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 import CloseIcon from "../icons/CloseIcon.vue";
 
 interface Tag {
@@ -30,7 +33,16 @@ interface Tag {
 const props = defineProps<{
   tag: Tag;
   onRemove: (tag: Tag) => void;
+  order: number;
 }>();
+
+const myli = ref<HTMLLIElement | null>(null);
+
+onMounted(() => {
+  if (myli.value) {
+    myli.value.style.order = props.order.toString();
+  }
+});
 </script>
 
 <style>

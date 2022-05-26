@@ -24,15 +24,23 @@
         <div class="tags">
           <ul class="tag-list">
             <TagListItem
-              v-for="tag in selectedTags"
+              v-for="(tag, index) in selectedTags"
               :key="tag.name"
               :tag="tag"
-              :onRemove="removeTag"
+              @remove="removeTag"
+              @change="changeTag"
+              :order="index + 1"
             />
-            <li v-if="selectedTags.length < 4">
+            <li
+              v-show="selectedTags.length < 4"
+              ref="inputParent"
+              :style="{ order: 5 }"
+            >
               <input
                 type="text"
-                :placeholder="selectedTags.length ? 'Add another...' : 'Add up to 4 tags...'"
+                :placeholder="
+                  selectedTags.length ? 'Add another...' : 'Add up to 4 tags...'
+                "
                 v-model="tagInput"
               />
             </li>
@@ -76,6 +84,7 @@ import NewPostCover from "../components/newPost/NewPostCover.vue";
 import MultiPopover from "../components/newPost/MultiPopover.vue";
 import { ref } from "@vue/reactivity";
 import TagListItem from "../components/newPost/TagListItem.vue";
+import { nextTick } from "vue";
 
 interface Tag {
   name: string;
@@ -85,14 +94,32 @@ interface Tag {
 
 const tagInput = ref<string>("");
 const selectedTags = ref<Tag[]>([]);
+const inputParent = ref<HTMLLIElement | null>(null);
 
 const handleTagSelect = (tag: Tag) => {
   selectedTags.value.push(tag);
 };
 const removeTag = (tag: Tag) => {
-  selectedTags.value = selectedTags.value.filter(t => t.name !== tag.name);
+  selectedTags.value = selectedTags.value.filter((t) => t.name !== tag.name);
 };
 
+const changeTag = ({ tag, order }: { tag: Tag; order: number }) => {
+  // console.log("měním tag", tag);
+  if (
+    inputParent.value &&
+    inputParent.value.firstChild instanceof HTMLInputElement
+  ) {
+    console.log({ order });
+    const tagName = tag.name;
+    removeTag(tag);
+    tagInput.value = tagName;
+
+    inputParent.value.style.order = order.toString();
+    nextTick(() => {
+      inputParent.value.firstChild.focus();
+    });
+  }
+};
 </script>
 
 <style>
@@ -157,7 +184,7 @@ form {
   flex-wrap: wrap;
 }
 
-.tag-list li:last-child{
+.tag-list li:last-child {
   align-self: center;
 }
 .tags input {
@@ -172,7 +199,6 @@ form {
 .tags input::placeholder {
   color: #757575;
 }
-
 
 .form-content-body {
   flex: 1 0 auto;
