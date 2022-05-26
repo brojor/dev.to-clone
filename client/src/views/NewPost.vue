@@ -106,6 +106,7 @@ const handleTagSelect = (tag: Tag) => {
       );
     }
     inputParent.value.style.order = selectedTags.value.length + 2 + "";
+    tagInput.value = "";
   }
 };
 const removeTag = (tag: Tag) => {
@@ -116,8 +117,8 @@ const changeTag = ({ tag, order }: { tag: Tag; order: number }) => {
   if (inputParent.value) {
     tagInput.value = tag.name;
     removeTag(tag);
-
     inputParent.value.style.order = order.toString();
+
     nextTick(() => {
       if (inputParent.value?.firstChild instanceof HTMLInputElement) {
         inputParent.value?.firstChild.focus();
