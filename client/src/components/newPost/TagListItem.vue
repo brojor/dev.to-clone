@@ -11,6 +11,7 @@
       :style="{ backgroundColor: `${props.tag.color}1a` }"
       type="button"
       class="btn"
+      @click="props.onRemove(props.tag)"
     >
       <CloseIcon />
     </button>
@@ -28,6 +29,7 @@ interface Tag {
 
 const props = defineProps<{
   tag: Tag;
+  onRemove: (tag: Tag) => void;
 }>();
 </script>
 

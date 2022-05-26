@@ -27,6 +27,7 @@
               v-for="tag in selectedTags"
               :key="tag.name"
               :tag="tag"
+              :onRemove="removeTag"
             />
             <li>
               <input
@@ -88,6 +89,10 @@ const selectedTags = ref<Tag[]>([]);
 const handleTagSelect = (tag: Tag) => {
   selectedTags.value.push(tag);
 };
+const removeTag = (tag: Tag) => {
+  selectedTags.value = selectedTags.value.filter(t => t.name !== tag.name);
+};
+
 </script>
 
 <style>
