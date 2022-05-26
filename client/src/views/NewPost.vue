@@ -97,26 +97,31 @@ const selectedTags = ref<Tag[]>([]);
 const inputParent = ref<HTMLLIElement | null>(null);
 
 const handleTagSelect = (tag: Tag) => {
-  selectedTags.value.push(tag);
+  if (inputParent.value) {
+    if (inputParent.value.style && inputParent.value.style.order) {
+      selectedTags.value.splice(
+        Number(inputParent.value.style.order) - 1,
+        0,
+        tag
+      );
+    }
+    inputParent.value.style.order = selectedTags.value.length + 2 + "";
+  }
 };
 const removeTag = (tag: Tag) => {
   selectedTags.value = selectedTags.value.filter((t) => t.name !== tag.name);
 };
 
 const changeTag = ({ tag, order }: { tag: Tag; order: number }) => {
-  // console.log("měním tag", tag);
-  if (
-    inputParent.value &&
-    inputParent.value.firstChild instanceof HTMLInputElement
-  ) {
-    console.log({ order });
-    const tagName = tag.name;
+  if (inputParent.value) {
+    tagInput.value = tag.name;
     removeTag(tag);
-    tagInput.value = tagName;
 
     inputParent.value.style.order = order.toString();
     nextTick(() => {
-      inputParent.value.firstChild.focus();
+      if (inputParent.value?.firstChild instanceof HTMLInputElement) {
+        inputParent.value?.firstChild.focus();
+      }
     });
   }
 };
