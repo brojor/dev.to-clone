@@ -22,12 +22,18 @@
           <textarea placeholder="New post title here..."></textarea>
         </div>
         <div class="tags">
+          <pre>{{ selectedTags }}</pre>
           <input
             type="text"
             placeholder="Add up to 4 tags..."
             v-model="tagInput"
           />
-          <MultiPopover @select="handleTagSelect" :filter="tagInput" />
+          <MultiPopover
+            v-if="selectedTags.length < 4"
+            @select="handleTagSelect"
+            :filter="tagInput"
+            :selected-tags="selectedTags"
+          />
         </div>
       </div>
       <div class="form-content-body">
@@ -61,10 +67,19 @@ import NewPostCover from "../components/newPost/NewPostCover.vue";
 import MultiPopover from "../components/newPost/MultiPopover.vue";
 import { ref } from "@vue/reactivity";
 
-const tagInput = ref<string>("");
+interface Tag {
+  name: string;
+  description: string;
+  color: string;
+}
 
-const handleTagSelect = (tag: string) => {
+const tagInput = ref<string>("");
+const selectedTags = ref<Tag[]>([]);
+
+const handleTagSelect = (tag: Tag) => {
   console.log(tag);
+
+  selectedTags.value.push(tag);
 };
 </script>
 

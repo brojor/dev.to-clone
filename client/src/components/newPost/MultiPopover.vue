@@ -3,7 +3,7 @@
     <h2 class="tags-heading">Top tags</h2>
     <ul>
       <li v-for="tag in tags" :key="tag.name">
-        <div class="tag-option" @click="$emit('select', tag.name)">
+        <div class="tag-option" @click="$emit('select', tag)">
           <div class="option-title">
             <span class="prefix" :style="{ color: tag.color }"># </span
             ><span class="option-name">{{ tag.name }}</span>
@@ -19,18 +19,31 @@
 import { computed } from "@vue/runtime-core";
 import _tags from "../../data/tags.json";
 
+interface Tag {
+  name: string;
+  description: string;
+  color: string;
+}
+
 const props = defineProps<{
   filter: string;
+  selectedTags: Tag[];
 }>();
 
 const tags = computed(() => {
+  const unselectedTags = _tags.filter(
+    (tag) =>
+      !props.selectedTags.find((selectedTag) => selectedTag.name === tag.name)
+  );
   if (props.filter) {
-    const filtredTags = _tags.filter((tag) =>
+    const filtredTags = unselectedTags.filter((tag) =>
       tag.name.toLowerCase().includes(props.filter.toLowerCase())
     );
-    return filtredTags.length ? filtredTags : [{ name: props.filter }];
+    return filtredTags.length
+      ? filtredTags
+      : [{ name: props.filter, color: "#fafafa", description: "" }];
   } else {
-    return _tags;
+    return unselectedTags;
   }
 });
 </script>
