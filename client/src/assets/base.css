@@ -25,6 +25,9 @@
 :root {
   --white: #ffffff;
 
+  color-scheme: dark;
+
+
   --accent-brand-darker: rgb(79, 70, 229);
   --accent-danger: rgb(220, 38, 38);
   --accent-danger-darker: rgb(185, 28, 28);
