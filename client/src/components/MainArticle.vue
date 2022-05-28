@@ -112,15 +112,19 @@ const handleCommentChange = async () => {
 
 /** OTHER */
 const md = new MarkdownIt({
-  highlight: function (str, lang) {
+  highlight: (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
-      } catch (__) {}
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     return ""; // use external default escaping
   },
+  breaks: true,
+  html: true,
 });
 </script>
 
