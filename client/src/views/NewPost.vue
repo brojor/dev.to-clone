@@ -17,18 +17,22 @@
     </header>
     <main>
       <div class="form-content-top">
-        <NewPostCover />
+        <NewPostCover
+          @change="post.cover = $event.file"
+          :coverImage="post.cover"
+        />
         <div class="title">
           <textarea
             @input="autoGrow"
             @keydown.enter.prevent
             placeholder="New post title here..."
+            v-model="post.title"
           ></textarea>
         </div>
         <div class="tags">
           <ul class="tag-list">
             <TagListItem
-              v-for="(tag, index) in selectedTags"
+              v-for="(tag, index) in post.tags"
               :key="tag.name"
               :tag="tag"
               @remove="removeTag"
@@ -36,14 +40,14 @@
               :order="index + 1"
             />
             <li
-              v-show="selectedTags.length < 4"
+              v-show="post.tags.length < 4"
               ref="inputParent"
               :style="{ order: 5 }"
             >
               <input
                 type="text"
                 :placeholder="
-                  selectedTags.length ? 'Add another...' : 'Add up to 4 tags...'
+                  post.tags.length ? 'Add another...' : 'Add up to 4 tags...'
                 "
                 v-model="tagInput"
                 ref="inputElement"
@@ -52,10 +56,10 @@
             </li>
           </ul>
           <MultiPopover
-            v-if="isOpen && selectedTags.length < 4"
+            v-if="isOpen && post.tags.length < 4"
             @select="handleTagSelect"
             :filter="tagInput"
-            :selected-tags="selectedTags"
+            :selected-tags="post.tags"
           />
         </div>
       </div>
@@ -68,6 +72,7 @@
             id="raw-markdown"
             placeholder="Write your post content here..."
             name="body-markdown"
+            v-model="post.body"
           ></textarea>
         </div>
       </div>
@@ -88,7 +93,7 @@ import CloseIcon from "../components/icons/CloseIcon.vue";
 import ToolBar from "../components/ToolBar.vue";
 import NewPostCover from "../components/newPost/NewPostCover.vue";
 import MultiPopover from "../components/newPost/MultiPopover.vue";
-import { ref } from "@vue/reactivity";
+import { ref, reactive } from "@vue/reactivity";
 import TagListItem from "../components/newPost/TagListItem.vue";
 import { nextTick } from "vue";
 import { onClickOutside } from "@vueuse/core";
@@ -100,11 +105,22 @@ interface Tag {
 }
 
 const tagInput = ref<string>("");
-const selectedTags = ref<Tag[]>([]);
 const inputParent = ref<HTMLLIElement | null>(null);
 const inputElement = ref<HTMLInputElement | null>(null);
 
 const isOpen = ref<boolean>(false);
+
+const post = reactive<{
+  title: string;
+  body: string;
+  tags: Tag[];
+  cover: string | null;
+}>({
+  title: "",
+  body: "",
+  tags: [],
+  cover: null,
+});
 
 const autoGrow = (e) => {
   e.target.style.minHeight = "1px";
@@ -124,19 +140,15 @@ onClickOutside(inputElement, (event) => {
 const handleTagSelect = (tag: Tag) => {
   if (inputParent.value) {
     if (inputParent.value.style && inputParent.value.style.order) {
-      selectedTags.value.splice(
-        Number(inputParent.value.style.order) - 1,
-        0,
-        tag
-      );
+      post.tags.splice(Number(inputParent.value.style.order) - 1, 0, tag);
     }
-    inputParent.value.style.order = selectedTags.value.length + 2 + "";
+    inputParent.value.style.order = post.tags.length + 2 + "";
     tagInput.value = "";
     inputElement.value?.focus();
   }
 };
 const removeTag = (tag: Tag) => {
-  selectedTags.value = selectedTags.value.filter((t) => t.name !== tag.name);
+  post.tags = post.tags.filter((t) => t.name !== tag.name);
 };
 
 const changeTag = ({ tag, order }: { tag: Tag; order: number }) => {

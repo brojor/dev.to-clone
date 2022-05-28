@@ -1,6 +1,6 @@
 <template>
   <div class="cover">
-    <img v-if="currentImage" :src="previewImage" alt="Post cover" />
+    <img v-if="coverImage" :src="previewImage" alt="Post cover" />
     <div class="btns-container">
       <label @change="selectImage">
         {{ labelText }}
@@ -8,8 +8,8 @@
       </label>
       <button
         class="btn btn-ghost-danger"
-        v-if="currentImage"
-        @click="removeImage"
+        v-if="coverImage"
+        @click="$emit('change', { file: null })"
       >
         Remove
       </button>
@@ -18,26 +18,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "@vue/runtime-core";
+import { computed } from "@vue/runtime-core";
 
-const input = ref<HTMLInputElement | null>(null);
-const currentImage = ref<File | null>(null);
-const previewImage = ref<string | undefined>(undefined);
+const props = defineProps<{
+  coverImage: File | null;
+}>();
 
-const labelText = computed(() => {
-  return currentImage.value ? "Change" : "Add a cover image";
+const emit = defineEmits(["change"]);
+
+const previewImage = computed(() => {
+  return props.coverImage ? URL.createObjectURL(props.coverImage) : "";
 });
 
-const selectImage = () => {
-  console.dir(input.value);
-  if (input.value && input.value.files && input.value.files.length) {
-    currentImage.value = input.value.files[0];
-    previewImage.value = URL.createObjectURL(currentImage.value);
+const labelText = computed(() => {
+  return props.coverImage ? "Change" : "Add a cover image";
+});
+
+const selectImage = (event: Event) => {
+  if (event.target as HTMLInputElement) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      emit("change", { file });
+    }
   }
-};
-const removeImage = () => {
-  currentImage.value = null;
-  previewImage.value = undefined;
 };
 </script>
 
