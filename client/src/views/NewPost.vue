@@ -21,6 +21,7 @@
         <div class="title">
           <textarea
             @input="autoGrow"
+            @keydown.enter.prevent
             placeholder="New post title here..."
           ></textarea>
         </div>
