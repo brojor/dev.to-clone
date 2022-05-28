@@ -14,7 +14,7 @@
         </button>
       </div>
       <div class="header-items-right">
-        <a class="create-post">Create Post</a>
+        <router-link to="/new" class="create-post">Create Post</router-link>
         <a class="notifications"><BellIcon /></a>
         <div class="menu">
           <button>
@@ -32,8 +32,8 @@
 </template>
 
 <script setup>
-import BellIcon from './icons/BellIcon.vue';
-import SearchIcon from './icons/SearchIcon.vue';
+import BellIcon from "./icons/BellIcon.vue";
+import SearchIcon from "./icons/SearchIcon.vue";
 </script>
 
 <style>
@@ -89,8 +89,8 @@ import SearchIcon from './icons/SearchIcon.vue';
 .search-bar input::placeholder {
   color: #575757;
   opacity: 1; /* Firefox */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .submit-btn {
@@ -121,6 +121,7 @@ import SearchIcon from './icons/SearchIcon.vue';
   border-radius: 0.375rem;
   font-size: 1rem;
   font-weight: 500;
+  text-decoration: none;
 }
 .notifications {
   margin: 0 0.25rem;
