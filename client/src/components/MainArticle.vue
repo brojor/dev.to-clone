@@ -77,7 +77,7 @@ const articleBody = computed(() => {
 
 const date1 = computed(() => {
   const published = DateTime.fromISO(post.value.published_at);
-  const updated = DateTime.fromISO(post.updated_at);
+  const updated = DateTime.fromISO(post.value.updated_at);
   const now = DateTime.now();
   const format = published.year === now.year ? "dd. L" : "dd. L. yyyy";
 
