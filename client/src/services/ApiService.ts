@@ -9,7 +9,7 @@ interface Tag {
 interface Article {
   title: string;
   bodyMarkdown: string;
-  cover: File | null;
+  coverImageUrl?: string;
   tags: Tag[];
 }
 
@@ -18,11 +18,5 @@ const api = axios.create({
 });
 
 export const createArticle = (article: Article) => {
-  const formData = new FormData();
-  formData.append("title", article.title);
-  formData.append("bodyMarkdown", article.bodyMarkdown);
-  formData.append("coverImage", article.cover || "");
-  formData.append("tags", JSON.stringify(article.tags));
-
-  return api.post("/articles", formData);
+  return api.post("/articles", article);
 };

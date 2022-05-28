@@ -100,6 +100,7 @@ import TagListItem from "../components/newPost/TagListItem.vue";
 import { nextTick } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { createArticle } from "@/services/ApiService";
+import { uploadFile } from "../services/Cloudinary";
 
 interface Tag {
   name: string;
@@ -175,10 +176,27 @@ const setDefaultValues = () => {
   post.cover = null;
 };
 
+interface Article {
+  title: string;
+  bodyMarkdown: string;
+  coverImageUrl?: string;
+  tags: Tag[];
+}
+
 const handlePublish = async () => {
-  const response = await createArticle(post);
-  if (response.status === 201) {
-    alert("Post created successfully");
+  const article: Article = {
+    title: post.title,
+    bodyMarkdown: post.bodyMarkdown,
+    tags: post.tags,
+  };
+
+  if (post.cover) {
+    const url = await uploadFile(post.cover);
+    article.coverImageUrl = url;
+  }
+
+  const response = await createArticle(article);
+  if (response && response.status === 200) {
     setDefaultValues();
   }
 };

@@ -32,24 +32,20 @@ export default class PostsController {
       }))
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request }: HttpContextContract) {
     const user = await User.firstOrFail() // TODO: get user from auth
-    const { title, bodyMarkdown, tags } = request.body()
+    const { title, bodyMarkdown, tags, coverImageUrl } = request.body()
 
     const post = await Post.create({
       title,
       body: bodyMarkdown,
       userId: user.id,
       publishedAt: DateTime.local(),
+      image: coverImageUrl,
     })
-    const coverImage = request.file('coverImage')
-
-    if (coverImage) {
-      await coverImage.move(Application.tmpPath('uploads'))
-    }
 
     const tagsId: number[] = []
-    for (const tag of JSON.parse(tags)) {
+    for (const tag of tags) {
       const dbTag = await Tag.firstOrCreate({ name: tag.name }, { name: tag.name })
       tagsId.push(dbTag.id)
     }
@@ -57,7 +53,6 @@ export default class PostsController {
     await post.related('tags').attach(tagsId)
     await post.related('author').associate(user)
 
-    response.status(201)
     return post
   }
   // public async store({ request, response }: HttpContextContract) {
