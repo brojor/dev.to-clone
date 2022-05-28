@@ -27,7 +27,7 @@ Route.get('/', 'PostsController.index')
 
 Route.get('/:author/:slug', 'PostsController.show')
 
-Route.post('/new', 'PostsController.store')
+// Route.post('/new', 'PostsController.store')
 
 Route.post('/comments', 'CommentsController.store')
 Route.get('/comments', 'CommentsController.show')
@@ -38,3 +38,5 @@ Route.delete('/reactions', 'ReactionsController.destroy')
 Route.get('/reactions', 'ReactionsController.index')
 
 Route.get(':author', 'UsersController.show')
+
+Route.post('/articles', 'PostsController.store')

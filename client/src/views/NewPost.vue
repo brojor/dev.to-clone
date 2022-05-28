@@ -72,14 +72,16 @@
             id="raw-markdown"
             placeholder="Write your post content here..."
             name="body-markdown"
-            v-model="post.body"
+            v-model="post.bodyMarkdown"
           ></textarea>
         </div>
       </div>
     </main>
     <aside></aside>
     <footer>
-      <button class="btn btn-primary">Publish</button>
+      <button class="btn btn-primary" type="button" @click="handlePublish">
+        Publish
+      </button>
       <button class="btn">Save draft</button>
       <button class="btn icon-alone"><OptionsIcon /></button>
       <button class="btn">Revert new changes</button>
@@ -97,6 +99,7 @@ import { ref, reactive } from "@vue/reactivity";
 import TagListItem from "../components/newPost/TagListItem.vue";
 import { nextTick } from "vue";
 import { onClickOutside } from "@vueuse/core";
+import { createArticle } from "@/services/ApiService";
 
 interface Tag {
   name: string;
@@ -112,12 +115,12 @@ const isOpen = ref<boolean>(false);
 
 const post = reactive<{
   title: string;
-  body: string;
+  bodyMarkdown: string;
   tags: Tag[];
-  cover: string | null;
+  cover: File | null;
 }>({
   title: "",
-  body: "",
+  bodyMarkdown: "",
   tags: [],
   cover: null,
 });
@@ -162,6 +165,21 @@ const changeTag = ({ tag, order }: { tag: Tag; order: number }) => {
         inputParent.value?.firstChild.focus();
       }
     });
+  }
+};
+
+const setDefaultValues = () => {
+  post.title = "";
+  post.bodyMarkdown = "";
+  post.tags = [];
+  post.cover = null;
+};
+
+const handlePublish = async () => {
+  const response = await createArticle(post);
+  if (response.status === 201) {
+    alert("Post created successfully");
+    setDefaultValues();
   }
 };
 </script>
