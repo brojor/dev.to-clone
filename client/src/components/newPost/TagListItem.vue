@@ -66,4 +66,7 @@ onMounted(() => {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+.tag-item button:last-child:hover {
+  color: rgb(200, 0, 0);
+}
 </style>
