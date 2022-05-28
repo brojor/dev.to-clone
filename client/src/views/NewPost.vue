@@ -48,7 +48,7 @@
             </li>
           </ul>
           <MultiPopover
-            v-if="isOpen"
+            v-if="isOpen && selectedTags.length < 4"
             @select="handleTagSelect"
             :filter="tagInput"
             :selected-tags="selectedTags"
