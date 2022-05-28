@@ -19,7 +19,10 @@
       <div class="form-content-top">
         <NewPostCover />
         <div class="title">
-          <textarea placeholder="New post title here..."></textarea>
+          <textarea
+            @input="autoGrow"
+            placeholder="New post title here..."
+          ></textarea>
         </div>
         <div class="tags">
           <ul class="tag-list">
@@ -99,9 +102,16 @@ const tagInput = ref<string>("");
 const selectedTags = ref<Tag[]>([]);
 const inputParent = ref<HTMLLIElement | null>(null);
 const inputElement = ref<HTMLInputElement | null>(null);
-const tags = ref<HTMLElement | null>(null);
 
 const isOpen = ref<boolean>(false);
+
+const autoGrow = (e) => {
+  e.target.style.minHeight = "1px";
+  e.target.style.maxHeight = "1px";
+
+  e.target.style.minHeight = e.target.scrollHeight + "px";
+  e.target.style.maxHeight = e.target.scrollHeight + "px";
+};
 
 onClickOutside(inputElement, (event) => {
   const popover = document.querySelector(".multi-popover");
