@@ -2,7 +2,7 @@
   <main class="article-wrapper" v-if="post">
     <article class="article">
       <header class="article-header">
-        <figure>
+        <figure v-if="post.image">
           <img
             :src="post.image"
             alt="article cover image"
@@ -47,16 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js';
-import { DateTime } from 'luxon';
-import PrefixedTag from '../components/PrefixedTag.vue';
-import { computed, onMounted, ref } from 'vue';
-import axios from 'axios';
-import ArticleDiscussion from './ArticleDiscussion.vue';
+import MarkdownIt from "markdown-it";
+import hljs from "highlight.js";
+import { DateTime } from "luxon";
+import PrefixedTag from "../components/PrefixedTag.vue";
+import { computed, onMounted, ref } from "vue";
+import axios from "axios";
+import ArticleDiscussion from "./ArticleDiscussion.vue";
 
-import type { Post, Author, Comment } from '../interfaces';
-import { useRoute } from 'vue-router';
+import type { Post, Author, Comment } from "../interfaces";
+import { useRoute } from "vue-router";
 
 /* REFs */
 const post = ref<Post>();
@@ -72,14 +72,14 @@ const articleBody = computed(() => {
   if (post.value?.body) {
     return md.render(post.value.body);
   }
-  return '';
+  return "";
 });
 
 const date1 = computed(() => {
   const published = DateTime.fromISO(post.value.published_at);
   const updated = DateTime.fromISO(post.updated_at);
   const now = DateTime.now();
-  const format = published.year === now.year ? 'dd. L' : 'dd. L. yyyy';
+  const format = published.year === now.year ? "dd. L" : "dd. L. yyyy";
 
   const part1 = `Posted on ${published.toFormat(format)}`;
   const part2 = `Updated on ${updated.toFormat(format)}`;
@@ -119,7 +119,7 @@ const md = new MarkdownIt({
       } catch (__) {}
     }
 
-    return ''; // use external default escaping
+    return ""; // use external default escaping
   },
 });
 </script>
