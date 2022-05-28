@@ -318,3 +318,13 @@ ul[class] {
   height: 1px;
   overflow: hidden;
 }
+
+.article-body blockquote {
+  border-left: 4px solid #3d3d3d;
+  padding: 0 0 0 var(--content-rhythm);
+  margin: 0 0 var(--content-rhythm) 0;
+}
+
+.article-body:last-child {
+  margin-bottom: 0;
+}
