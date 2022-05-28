@@ -126,12 +126,13 @@ const post = reactive<{
   cover: null,
 });
 
-const autoGrow = (e) => {
-  e.target.style.minHeight = "1px";
-  e.target.style.maxHeight = "1px";
+const autoGrow = (e: Event) => {
+  const target = e.target as HTMLTextAreaElement;
+  target.style.minHeight = "1px";
+  target.style.maxHeight = "1px";
 
-  e.target.style.minHeight = e.target.scrollHeight + "px";
-  e.target.style.maxHeight = e.target.scrollHeight + "px";
+  target.style.minHeight = target.scrollHeight + "px";
+  target.style.maxHeight = target.scrollHeight + "px";
 };
 
 onClickOutside(inputElement, (event) => {
