@@ -42,11 +42,13 @@
                   selectedTags.length ? 'Add another...' : 'Add up to 4 tags...'
                 "
                 v-model="tagInput"
+                ref="inputElement"
+                @focusin="isOpen = true"
               />
             </li>
           </ul>
           <MultiPopover
-            v-if="selectedTags.length < 4"
+            v-if="isOpen"
             @select="handleTagSelect"
             :filter="tagInput"
             :selected-tags="selectedTags"
@@ -85,6 +87,7 @@ import MultiPopover from "../components/newPost/MultiPopover.vue";
 import { ref } from "@vue/reactivity";
 import TagListItem from "../components/newPost/TagListItem.vue";
 import { nextTick } from "vue";
+import { onClickOutside } from "@vueuse/core";
 
 interface Tag {
   name: string;
@@ -95,6 +98,17 @@ interface Tag {
 const tagInput = ref<string>("");
 const selectedTags = ref<Tag[]>([]);
 const inputParent = ref<HTMLLIElement | null>(null);
+const inputElement = ref<HTMLInputElement | null>(null);
+const tags = ref<HTMLElement | null>(null);
+
+const isOpen = ref<boolean>(false);
+
+onClickOutside(inputElement, (event) => {
+  const popover = document.querySelector(".multi-popover");
+  if (popover && !popover.contains(event.target as Node)) {
+    isOpen.value = false;
+  }
+});
 
 const handleTagSelect = (tag: Tag) => {
   if (inputParent.value) {
@@ -107,6 +121,7 @@ const handleTagSelect = (tag: Tag) => {
     }
     inputParent.value.style.order = selectedTags.value.length + 2 + "";
     tagInput.value = "";
+    inputElement.value?.focus();
   }
 };
 const removeTag = (tag: Tag) => {
