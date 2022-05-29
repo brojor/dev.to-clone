@@ -16,6 +16,7 @@
       id="image-upload-field"
       accept="image/*"
       class="screen-reader-only"
+      @change="selectImage"
     />
     <button
       class="btn icon-alone"
@@ -48,6 +49,7 @@ import { ref } from "@vue/reactivity";
 import { onMounted, onUnmounted } from "@vue/runtime-core";
 import useToolbar from "../composables/toolbar";
 import ToolTip from "./ToolTip.vue";
+import { uploadFile } from "@/services/Cloudinary";
 
 const targetEl = ref<HTMLTextAreaElement | null>(null);
 
@@ -85,10 +87,31 @@ onUnmounted(() => {
   document.removeEventListener("keydown", keydownHandler);
 });
 
-const uploadImage = () => {
+const uploadImage = async () => {
   const imageField = document.getElementById("image-upload-field");
   if (imageField) {
     imageField.click();
+  }
+  // TODO: add loader start
+};
+const selectImage = async (event: Event) => {
+  if (event.target as HTMLInputElement) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      if (targetEl.value) {
+        const { selectionStart, selectionEnd } = targetEl.value;
+        targetEl.value.setRangeText("\n![Uploading image]()");
+
+        const fileUrl = await uploadFile(file);
+        // TODO: add loader end
+
+        targetEl.value.setRangeText(
+          `\n![Image description](${fileUrl})`,
+          selectionStart,
+          targetEl.value.value.length
+        );
+      }
+    }
   }
 };
 
