@@ -34,9 +34,7 @@
           </div>
         </div>
       </header>
-      <div class="article-body">
-        <span v-html="articleBody"></span>
-      </div>
+      <ArticleBody :article-body="articleBody" />
       <ArticleDiscussion
         :comments="comments"
         :comments-count="post.meta.comments_count"
@@ -57,6 +55,7 @@ import ArticleDiscussion from "./ArticleDiscussion.vue";
 
 import type { Post, Author, Comment } from "../interfaces";
 import { useRoute } from "vue-router";
+import ArticleBody from "./ArticleBody.vue";
 
 /* REFs */
 const post = ref<Post>();
