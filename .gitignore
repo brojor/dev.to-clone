@@ -1,3 +1,6 @@
+parser/
+scrapper/
+
 # Logs
 logs
 *.log
